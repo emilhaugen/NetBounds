@@ -1,0 +1,111 @@
+{
+  "accumulation_dtype": "float64",
+  "affine_l2": 0.0030088423312982226,
+  "affine_l2_squared": 9.053132174612123e-06,
+  "all_cells_enumerated": true,
+  "bound_to_affine_ratio": 3.4416935018785555,
+  "bound_to_midpoint_ratio": 3.454796493605274,
+  "certification_caveat": "Analytically rigorous conditional on the existing derivative-bound machinery; ordinary float32 arithmetic is not an outward-rounded interval computation.",
+  "certified": true,
+  "checkpoint_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/wave3d-standard-pde-stop/experiments/Wave/3d_standard_continuation/L3_W256_pde10_from310278_v4/checkpoints/checkpoint_epoch_317837.pt",
+  "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+  "coverage": {
+    "start_flat_index": 0,
+    "stop_flat_index": 1000000000
+  },
+  "diagnostics": {
+    "max_rho": 0.12134961038827896,
+    "mean_rho": 0.0218241262913856,
+    "mean_rho_boundary": 0.005968428636233794,
+    "mean_rho_hyper": 0.01585569765512477,
+    "rho_boundary_sum": 5968428.6362337945,
+    "rho_hyper_sum": 15855697.65512477,
+    "rho_sum": 21824126.2913856
+  },
+  "dimension": 3,
+  "equation": "Wave",
+  "global_configuration": {
+    "accumulation_dtype": "float64",
+    "architecture": {
+      "layers": 3,
+      "width": 256
+    },
+    "certificate": "hyper_taylor_centered_quadratic_moment_cross_min",
+    "checkpoint_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/wave3d-standard-pde-stop/experiments/Wave/3d_standard_continuation/L3_W256_pde10_from310278_v4/checkpoints/checkpoint_epoch_317837.pt",
+    "checkpoint_format": "nested_model_state_dict",
+    "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+    "dimension": 3,
+    "dtype": "float32",
+    "equation": "Wave",
+    "git_commit": "9ae849bcdbb665479d52021657f50e936acab88a",
+    "grid": [
+      200,
+      100,
+      100,
+      500
+    ],
+    "input_dimension": 4,
+    "lambda_ic_grad": 0.0,
+    "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+    "n_taylor": null,
+    "rigorous_remainder": "componentwise_centered_BA_plus_boundary_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
+    "spatial_cells_per_axis": [
+      200,
+      100,
+      100
+    ],
+    "time_cells": 500,
+    "total_boxes": 1000000000,
+    "wave_speed": 1.0
+  },
+  "global_configuration_sha256": "81cf95f7e7e9cd7c3bade582764172cf920aa9723f55f0c2ca87f21040b61550",
+  "grid": [
+    200,
+    100,
+    100,
+    500
+  ],
+  "kind": "ima_pde_q1_d3_wave_moment_merged_certificate",
+  "l2_bound": 0.010355513099806217,
+  "l2_squared_bound": 0.00010723665156025818,
+  "merged_utc": "2026-08-06T20:04:40.090053+00:00",
+  "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+  "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+  "midpoint_l2": 0.002997430707995092,
+  "midpoint_l2_squared": 8.984590849231958e-06,
+  "moment_cross_integral": 1.6215993254559353e-05,
+  "moment_cross_l2": 0.010396828670814005,
+  "moment_cross_l2_squared": 0.00010809404641026011,
+  "moment_minkowski_l2": 0.010444559973446536,
+  "moment_minkowski_l2_squared": 0.0001090888330389215,
+  "moment_remainder_l2": 0.008161429269836496,
+  "moment_remainder_l2_squared": 6.660892772654389e-05,
+  "num_boxes": 1000000000,
+  "num_shards": 7,
+  "ordinary_float32_not_outward_rounded": true,
+  "processed_boxes": 1000000000,
+  "schema_version": 2,
+  "shards_merged": [
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0000_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0001_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0002_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0003_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0004_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0005_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d3_wave_xsplit_moment_full/L3_W256_epoch317837_sha_4ad49e03_grid200x100x100x500_commit9ae849b/shards/shard_0006_of_0007.json"
+  ],
+  "sums": {
+    "affine_l2_squared": 9.053132174612123e-06,
+    "bound_l2_squared": 0.00010723665156025818,
+    "midpoint_l2_squared": 8.984590849231958e-06,
+    "moment_cross_integral": 1.6215993254559353e-05,
+    "moment_cross_l2_squared": 0.00010809404641026011,
+    "moment_minkowski_l2_squared": 0.0001090888330389215,
+    "moment_remainder_l2_squared": 6.660892772654389e-05,
+    "rho": 21824126.2913856,
+    "rho_boundary": 5968428.6362337945,
+    "rho_hyper": 15855697.65512477
+  },
+  "total_shard_elapsed_seconds": 479715.692057813
+}

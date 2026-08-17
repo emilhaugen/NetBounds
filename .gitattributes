@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.json text eol=lf
+*.tex text eol=lf
+*.md text eol=lf
+*.sha256 text eol=lf
+*.pt binary
