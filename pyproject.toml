@@ -9,7 +9,7 @@ description = "Reproduce the numerical tables for NetBounds."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "NetBounds authors"}]
-dependencies = []
+dependencies = ["torch==2.12.0"]
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
@@ -20,6 +20,14 @@ netbounds-paper = "netbounds.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+netbounds = [
+  "_payload/data/**/*",
+  "_payload/paper/**/*",
+  "_payload/provenance/**/*",
+]
+
 [tool.pytest.ini_options]
 addopts = "-ra"
+markers = ["torch: requires the declared PyTorch numerical dependency"]
 testpaths = ["tests"]

@@ -25,7 +25,10 @@ def repository_root(explicit: Path | None = None) -> Path:
     else:
         candidates.extend((Path.cwd(), *Path.cwd().parents))
         source_checkout = Path(__file__).resolve().parents[2]
-        candidates.extend((source_checkout, *source_checkout.parents))
+        packaged_payload = Path(__file__).resolve().parent / "_payload"
+        candidates.extend(
+            (packaged_payload, source_checkout, *source_checkout.parents)
+        )
 
     seen: set[Path] = set()
     for candidate in candidates:
@@ -113,3 +116,73 @@ def read_hashed_json(
     if not isinstance(value, dict):
         raise VerificationError(f"{path}: expected a JSON object")
     return path, value
+
+
+def verify_numerical_source_closure(root: Path, catalog: Mapping[str, Any]) -> int:
+    """Verify the fixed 1D source closure declared by bundled provenance.
+
+    A checkout uses the recorded ``src/netbounds`` paths.  An installed wheel
+    instead checks its installed ``netbounds`` module files against the same
+    declarations.  This is intentionally a fixed provenance contract.
+    """
+
+    provenance_entries = [
+        entry
+        for entry in catalog.get("payload_files", [])
+        if isinstance(entry, Mapping)
+        and entry.get("path") == "provenance/checkpoint-reproduction-1d.json"
+    ]
+    if len(provenance_entries) != 1:
+        raise VerificationError("expected exactly one 1D checkpoint provenance payload")
+    _, provenance = read_hashed_json(root, provenance_entries[0])
+    closure = provenance.get("extracted_source_closure")
+    if not isinstance(closure, Mapping):
+        raise VerificationError("1D provenance has no extracted source closure")
+    expected_manifest = closure.get("source_manifest_sha256")
+    declared_sources = closure.get("sources")
+    if (
+        not isinstance(expected_manifest, str)
+        or len(expected_manifest) != 64
+        or not isinstance(declared_sources, list)
+        or not declared_sources
+    ):
+        raise VerificationError("malformed 1D numerical source closure")
+
+    prefix = "src/netbounds/"
+    package_root = Path(__file__).resolve().parent
+    actual_sources: list[dict[str, str]] = []
+    declared_paths: set[str] = set()
+    for entry in declared_sources:
+        if not isinstance(entry, Mapping):
+            raise VerificationError("malformed numerical source entry")
+        relative = entry.get("path")
+        expected_hash = entry.get("sha256")
+        if (
+            not isinstance(relative, str)
+            or not relative.startswith(prefix)
+            or not relative.endswith(".py")
+            or not isinstance(expected_hash, str)
+            or len(expected_hash) != 64
+            or relative in declared_paths
+        ):
+            raise VerificationError("malformed numerical source entry")
+        declared_paths.add(relative)
+        checkout_path = safe_path(root, relative)
+        source_path = (
+            checkout_path
+            if checkout_path.is_file()
+            else package_root / relative.removeprefix(prefix)
+        )
+        if not source_path.is_file():
+            raise VerificationError(f"missing numerical source: {relative}")
+        actual_hash = sha256_file(source_path)
+        if actual_hash != expected_hash:
+            raise VerificationError(f"{relative}: numerical source SHA-256 mismatch")
+        actual_sources.append({"path": relative, "sha256": actual_hash})
+
+    actual_manifest = hashlib.sha256(
+        json.dumps(actual_sources, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    if actual_manifest != expected_manifest:
+        raise VerificationError("1D numerical source closure manifest SHA-256 mismatch")
+    return len(actual_sources)
