@@ -10,7 +10,7 @@ from typing import Any, Iterator, Mapping
 from netbounds.data import load_catalog, read_hashed_json, repository_root
 from netbounds.tables import load_initial_pairs, load_pde_rows
 
-from .cases import CASES, Case
+from .cases import CASES, Case, case_names
 
 
 CUDA_INITIAL_TOLERANCE = {"rtol": 5e-5, "atol": 5e-12}
@@ -382,6 +382,10 @@ def compare_reproduction(
     case_name = str(reproduction.get("case", ""))
     if case_name not in CASES:
         raise ValueError(f"unknown reproduction case: {case_name}")
+    if case_name not in case_names():
+        raise ValueError(
+            f"reproduction case is declared but not yet public: {case_name}"
+        )
     case = CASES[case_name]
     if reproduction.get("authority") != case.authority:
         raise ValueError("reproduction authority path does not match the case registry")
@@ -410,6 +414,8 @@ def compare_reproduction(
 
     device = str(execution.get("device", ""))
     if case.quantity == "pde":
+        if device != "cpu":
+            raise ValueError("frozen 1D PDE comparison requires execution.device=cpu")
         tolerance = PDE_TOLERANCE
         tolerance_class = "pde_float32_float64_accumulation"
         compared = list(_leaves(numerical))

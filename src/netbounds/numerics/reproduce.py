@@ -27,7 +27,7 @@ from .initial_data import (
 )
 from .model import TanhNetwork, load_checkpoint
 from .pde import heat_hyper_taylor_rect_batch, wave_hyper_taylor_rect_batch
-from .cases import CASES, Case
+from .cases import CASES, Case, case_names
 
 
 def _checked_model(case: Case, root: Path, device: torch.device) -> TanhNetwork:
@@ -325,20 +325,26 @@ def reproduce(
 ) -> dict[str, object]:
     """Recompute one fixed paper case from its hash-pinned checkpoint.
 
-    Both initial-condition and PDE cases prefer CUDA when available,
-    because their retained authority was generated on CUDA.  The returned
-    JSON-shaped object deliberately contains only identity, execution,
-    and semantically compared numerical fields.
+    Initial-condition cases prefer CUDA when available because their retained
+    authority was generated on CUDA. The frozen 1D PDE portability policy is
+    CPU-only with batch size 4096. The returned JSON-shaped object deliberately
+    contains only identity, execution, and semantically compared numerical
+    fields.
     """
 
     try:
         case = CASES[case_name]
     except KeyError as error:
         raise ValueError(f"unknown reproduction case: {case_name}") from error
+    if case_name not in case_names():
+        raise ValueError(
+            f"reproduction case is declared but not yet public: {case_name}"
+        )
     checkout = repository_root(root)
     if case.quantity == "pde":
-        default = "cuda" if torch.cuda.is_available() else "cpu"
-        selected = _select_device(device, default=default)
+        if device not in (None, "cpu"):
+            raise ValueError("frozen 1D PDE paper cases require device=cpu")
+        selected = torch.device("cpu")
         if batch_size is not None and batch_size != 4096:
             raise ValueError("PDE paper cases require the recorded batch_size=4096")
         selected_batch = 4096

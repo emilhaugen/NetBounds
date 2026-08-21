@@ -74,6 +74,60 @@ def test_comparator_rejects_empty_pde_payload_before_authority_read() -> None:
         compare_reproduction(payload, root=ROOT)
 
 
+def test_comparator_rejects_declared_but_unvalidated_case() -> None:
+    with pytest.raises(ValueError, match="declared but not yet public"):
+        compare_reproduction(
+            {
+                "schema_version": 1,
+                "kind": "netbounds_paper_checkpoint_reproduction",
+                "case": "wave2-displacement-q0",
+            },
+            root=ROOT,
+        )
+
+
+def test_pde_comparator_rejects_non_cpu_execution() -> None:
+    from netbounds.numerics.compare import _PDE_NUMERICAL_FIELDS
+
+    case = CASES["heat1-pde-q1"]
+    authority = json.loads((ROOT / case.authority).read_text())
+    payload = {
+        "schema_version": 1,
+        "kind": "netbounds_paper_checkpoint_reproduction",
+        "case": case.name,
+        "authority": case.authority,
+        "identity": {
+            "equation": case.equation,
+            "quantity": case.quantity,
+            "quadrature_rule": case.rule.upper(),
+            "architecture": {"layers": case.L, "width": case.width},
+            "checkpoint": case.checkpoint,
+            "checkpoint_sha256": case.checkpoint_sha256,
+            "dtype": "float32",
+            "grid": list(case.grid),
+        },
+        "execution": {
+            "device": "cuda:7",
+            "batch_size": 4096,
+            "accumulation_dtype": "float64",
+        },
+        "numerical": {field: authority[field] for field in _PDE_NUMERICAL_FIELDS},
+    }
+    with pytest.raises(ValueError, match="requires execution.device=cpu"):
+        compare_reproduction(payload, root=ROOT)
+
+
+@pytest.mark.torch
+def test_python_reproducer_rejects_pending_and_non_cpu_pde_cases() -> None:
+    _torch()
+    from netbounds.numerics.reproduce import reproduce
+
+    with pytest.raises(ValueError, match="declared but not yet public"):
+        reproduce("wave2-displacement-q0", root=ROOT, device="cpu")
+    with pytest.raises(ValueError, match="require device=cpu"):
+        reproduce("heat1-pde-q1", root=ROOT, device="cuda:7")
+
+
 @pytest.mark.torch
 @pytest.mark.parametrize("case_name", ["heat1-displacement-q0", "wave1-displacement-q0"])
 def test_bundled_checkpoint_schema_and_fixed_model_load(case_name: str) -> None:

@@ -1,6 +1,7 @@
-"""Private fixed 1D numerical kernels; the public API is the CLI only."""
+"""Private numerical implementation for fixed paper cases.
 
-from .cases import CASES, case_names
-from .compare import compare_reproduction
+The supported user interface is ``netbounds-paper``. Numerical modules remain
+importable for tests and review, but this package exports no stable Python API.
+"""
 
-__all__ = ["CASES", "case_names", "compare_reproduction"]
+__all__: list[str] = []

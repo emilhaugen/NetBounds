@@ -17,7 +17,7 @@ netbounds-paper reproduce --case heat1-displacement-q0 --device cpu --check
 - `tables --check` is a fail-closed, no-write table check.
 - `tables` atomically regenerates the tracked TeX tables from the retained JSON artifacts.
 - `reproduce` accepts only the twelve fixed 1D paper cases. With `--check`, it rejects missing, unknown, empty, or numerically mismatched fields against the hash-pinned retained authority.
-- PDE cases are deliberate full CPU computations: use `--allow-full-pde`, for example `netbounds-paper reproduce --case heat1-pde-q1 --allow-full-pde --check`. They freeze the authority-recorded batch size of 4096; overriding it can change CPU float32 kernels enough to violate the strict comparison gate.
+- PDE cases are deliberate full CPU computations: use `--allow-full-pde`, for example `netbounds-paper reproduce --case heat1-pde-q1 --device cpu --allow-full-pde --check`. They freeze the authority-recorded batch size of 4096; overriding it can change CPU float32 kernels enough to violate the strict comparison gate.
 
 The five outputs are:
 
@@ -51,7 +51,7 @@ No network, GPU, another NetBounds checkout, or `/mn/...` filesystem is needed a
 
 ## Reproduction boundary
 
-All five frozen table snapshots are reproduced exactly from their 36 retained, hash-checked JSON artifacts. All six selected checkpoints are bundled and integrity checked. Checkpoint-backed recomputation currently exposes the twelve 1D artifact computations associated with Heat-1 L2/W128 and Wave-1 L2/W256; the remaining checkpoints are present so the fixed 2D/3D closures can be added without changing model authority. The 2D/3D cases remain unavailable through the public CLI until their current-paper implementations, slow/GPU tests, and authority comparisons pass. `data/catalog.json` records the implemented recomputation scope as 12 of 36 computations and does not claim release completion or full GPU reproduction.
+All five frozen table snapshots are reproduced exactly from their 36 retained, hash-checked JSON artifacts. All six selected checkpoints are bundled and integrity checked. Checkpoint-backed recomputation currently exposes the twelve 1D artifact computations associated with Heat-1 L2/W128 and Wave-1 L2/W256; the remaining checkpoints are present so the fixed 2D/3D closures can be implemented against explicit, hash-pinned model inputs. The 2D/3D cases remain unavailable through the public CLI until their current-paper implementations, slow/GPU tests, and authority comparisons pass. `data/catalog.json` records the implemented recomputation scope as 12 of 36 computations and does not claim release completion or full GPU reproduction.
 
 The supported execution boundary is fixed rather than generic: historical 1D initial-condition cases use CUDA float32 kernels (with a CPU float32 portability gate), while 1D PDE cases use CPU float32 kernels with float64 accumulation. The retained artifacts and portable replays are ordinary floating-point computations, not outward-rounded interval arithmetic. See `provenance/numerical-trust-boundary.md` and `provenance/checkpoint-reproduction-1d.json` for the exact comparison policy and producer-trace basis.
 
@@ -72,4 +72,4 @@ provenance/                 producer inventory and numerical trust boundary
 tests/                      fail-closed integrity and rendering tests
 ```
 
-The original campaign manifests are retained as provenance and therefore contain historical absolute paths. Runtime code never reads those paths; all operational paths come from the portable catalog.
+The retained raw artifacts and original campaign manifests are provenance evidence and therefore contain historical absolute paths. Runtime code never reads those paths; all operational paths come from the portable catalog.
