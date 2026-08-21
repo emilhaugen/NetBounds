@@ -22,7 +22,10 @@ def _product_interval(lower: torch.Tensor, upper: torch.Tensor) -> tuple[torch.T
     stacked = torch.stack(products, dim=0)
     return stacked.min(dim=0).values, stacked.max(dim=0).values
 
-def _s_interval(x: torch.Tensor, eps: float) -> tuple[torch.Tensor, torch.Tensor]:
+def _s_interval(
+    x: torch.Tensor,
+    eps: float | torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor]:
     lower = x - eps
     upper = x + eps
     s_lower = lower * (1.0 - lower)
@@ -35,7 +38,10 @@ def _s_interval(x: torch.Tensor, eps: float) -> tuple[torch.Tensor, torch.Tensor
     )
     return torch.minimum(s_lower, s_upper), s_max
 
-def _d_interval(x: torch.Tensor, eps: float) -> tuple[torch.Tensor, torch.Tensor]:
+def _d_interval(
+    x: torch.Tensor,
+    eps: float | torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor]:
     lower = x - eps
     upper = x + eps
     return 1.0 - 2.0 * upper, 1.0 - 2.0 * lower
@@ -52,14 +58,19 @@ def _interval_variation(
 
 def _boundary_center_and_variations(
     y: torch.Tensor,
-    eps: float,
+    eps: float | torch.Tensor,
     d: int,
 ) -> dict[str, torch.Tensor | list[torch.Tensor]]:
     x = y[:, :d]
+    eps_tensor = torch.as_tensor(eps, dtype=x.dtype, device=x.device)
+    if eps_tensor.ndim == 0:
+        eps_tensor = eps_tensor.repeat(d)
+    if eps_tensor.shape != (d,):
+        raise ValueError("spatial radius must be scalar or have shape (d,)")
     s = x * (1.0 - x)
     dx = 1.0 - 2.0 * x
-    s_lower, s_upper = _s_interval(x, eps)
-    d_lower, d_upper = _d_interval(x, eps)
+    s_lower, s_upper = _s_interval(x, eps_tensor)
+    d_lower, d_upper = _d_interval(x, eps_tensor)
 
     B = s.prod(dim=-1)
     B_lower, B_upper = _product_interval(s_lower, s_upper)

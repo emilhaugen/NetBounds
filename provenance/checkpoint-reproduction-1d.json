@@ -75,7 +75,7 @@
   },
   "extracted_source_closure": {
     "hash_algorithm": "sha256 of each UTF-8 source byte stream; manifest digest is sha256 of canonical JSON sorted by path with compact separators",
-    "source_manifest_sha256": "ab31df113e001eed6df9db1babd08c6cde03f98efd1a1921c98a06d00234cb57",
+    "source_manifest_sha256": "824fdeef35655ca4fa596db0c47c98906ca7bc36d27824c3eab43942dd962549",
     "sources": [
       {
         "path": "src/netbounds/numerics/__init__.py",
@@ -139,7 +139,7 @@
       },
       {
         "path": "src/netbounds/numerics/_pde_helpers.py",
-        "sha256": "1ab3b1ede1d89c53495e20a10fc0a97c3b0fe6e865241382c3f8196a50ff4e09"
+        "sha256": "257fe1d9a16c65254b4aeed131704960541991b8510ba5e77697d2e70323d735"
       },
       {
         "path": "src/netbounds/numerics/cases.py",
@@ -175,7 +175,7 @@
       },
       {
         "path": "src/netbounds/numerics/pde.py",
-        "sha256": "d2091cfe78757c85ff251363e9f8cb0c926864e8cb9e6a11bc85fd2b61558847"
+        "sha256": "45c518739f117b52dbdfe42f3dc5772a67c16aaa0d273f6b63a225d569664f4e"
       },
       {
         "path": "src/netbounds/numerics/reproduce.py",
