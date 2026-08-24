@@ -59,7 +59,7 @@ def parser() -> argparse.ArgumentParser:
     reproduce.add_argument(
         "--batch-size",
         type=int,
-        help="positive initial-condition batch size; PDE replay is fixed at 4096",
+        help="positive initial-condition batch size; each PDE case pins its production batch",
     )
     reproduce.add_argument(
         "--check",
@@ -69,7 +69,12 @@ def parser() -> argparse.ArgumentParser:
     reproduce.add_argument(
         "--allow-full-pde",
         action="store_true",
-        help="acknowledge the 250,000-cell CPU PDE computation",
+        help="acknowledge the potentially large fixed PDE computation",
+    )
+    reproduce.add_argument(
+        "--allow-large-initial",
+        action="store_true",
+        help="acknowledge a fixed 125-million-cell 3D initial-data computation",
     )
     return command
 
@@ -87,7 +92,7 @@ def _verify(root: Path, catalog: dict[str, Any]) -> None:
     print(
         "NOTE checkpoint reproduction: "
         f"{bundled}/{len(checkpoints)} checkpoints bundled; "
-        "2D/3D checkpoint-backed recomputation is a later extension"
+        "34/36 fixed computations exposed (all initial data and PDE d=1/2)"
     )
 
 
@@ -106,8 +111,13 @@ def _tables(root: Path, catalog: dict[str, Any], *, check: bool) -> None:
 def _reproduce(args: argparse.Namespace, root: Path) -> None:
     """Run a closed paper case without importing PyTorch for other commands."""
 
-    if "-pde-" in args.case and not args.allow_full_pde:
-        raise ValueError("PDE replay needs --allow-full-pde (250,000 CPU cells)")
+    from .numerics.cases import CASES
+
+    case = CASES[args.case]
+    if case.quantity == "pde" and not args.allow_full_pde:
+        raise ValueError("PDE replay needs --allow-full-pde")
+    if case.quantity != "pde" and case.d == 3 and not args.allow_large_initial:
+        raise ValueError("3D initial-data replay needs --allow-large-initial")
     from .numerics.compare import compare_reproduction
     from .numerics.reproduce import reproduce
 

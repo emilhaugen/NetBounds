@@ -59,6 +59,7 @@ class Case:
     storage_dtype: str
     nested: bool
     authority: str
+    batch_size: int
 
 
 def _case(equation: str, dimension: int, quantity: str, rule: str) -> Case:
@@ -71,9 +72,17 @@ def _case(equation: str, dimension: int, quantity: str, rule: str) -> Case:
     if quantity == "pde":
         authority = f"data/artifacts/pde/q1/{key}.json"
         grid = _PDE_GRIDS[key]
+        batch_size = 8192 if dimension == 2 else (32768 if key == "wave1" else 65536)
     else:
         authority = f"data/artifacts/initial/{rule}/{key}_{quantity}.json"
         grid = (_INITIAL_CELLS_PER_DIM,) * d
+        batch_size = (
+            32768
+            if dimension == 3 and quantity in {"gradient", "velocity"} and rule == "q0"
+            else 8192
+            if dimension == 3 and quantity in {"gradient", "velocity"} and rule == "q1"
+            else 65536
+        )
     return Case(
         name=f"{key}-{quantity}-{rule}",
         equation=equation,
@@ -89,6 +98,7 @@ def _case(equation: str, dimension: int, quantity: str, rule: str) -> Case:
         storage_dtype=storage_dtype,
         nested=nested,
         authority=authority,
+        batch_size=batch_size,
     )
 
 
@@ -120,11 +130,12 @@ def all_case_names() -> tuple[str, ...]:
 
 
 def case_names() -> tuple[str, ...]:
-    """Return the currently validated public reproduction cases.
+    """Return current public cases: all initial data and d=1/2 PDE bounds."""
 
-    The six selected checkpoints are bundled, but only the complete 1D
-    numerical closure is exposed until the fixed 2D/3D implementations pass
-    their authority comparisons and slow/GPU release gates.
-    """
-
-    return tuple(sorted(name for name, case in CASES.items() if case.d == 1))
+    return tuple(
+        sorted(
+            name
+            for name, case in CASES.items()
+            if case.quantity != "pde" or case.d <= 2
+        )
+    )

@@ -21,6 +21,8 @@ from ._bounds import (
 from .model import TanhNetwork as RigPINN_tanh
 
 from ._initial_support.boundary import (
+    product_boundary_derivative_modulus,
+    product_boundary_derivative_value,
     require_spatial_product_boundary,
 )
 
@@ -257,6 +259,35 @@ def _bf_derivative_sup(
         )
     return require_nonnegative("bf_derivative_sup", total)
 
+
+def _bf_derivative_paper_sup(
+    *,
+    spatial: torch.Tensor,
+    counts: tuple[int, ...],
+    spatial_eps: float,
+    first,
+    second,
+) -> torch.Tensor:
+    total = torch.zeros(
+        spatial.shape[0], dtype=spatial.dtype, device=spatial.device
+    )
+    for beta in _sub_counts(counts):
+        gamma = tuple(a - b for a, b in zip(counts, beta))
+        boundary_sup = (
+            product_boundary_derivative_value(spatial, beta).abs()
+            + product_boundary_derivative_modulus(spatial, spatial_eps, beta)
+        )
+        total = total + float(_multi_choose(counts, beta)) * boundary_sup * (
+            _network_derivative_sup(
+                counts=gamma,
+                spatial_eps=spatial_eps,
+                first=first,
+                second=second,
+            )
+        )
+    return require_nonnegative("paper_bf_derivative_sup", total)
+
+
 def _initial_displacement_taylor_cell_integrals(
     *,
     model: RigPINN_tanh,
@@ -338,14 +369,12 @@ def _initial_displacement_taylor_cell_integrals(
         for j in range(d):
             counts_ij = list(counts_i)
             counts_ij[j] += 1
-            approx_hessian_abs[:, i, j] = _bf_derivative_sup(
-                lower=lower,
-                upper=upper,
+            approx_hessian_abs[:, i, j] = _bf_derivative_paper_sup(
+                spatial=centers,
                 counts=tuple(counts_ij),
                 spatial_eps=spatial_eps,
                 first=first,
                 second=second,
-                input_dim=model.input_dim,
             )
 
     approx_hessian_l1 = approx_hessian_abs.sum(dim=(-2, -1))
@@ -634,6 +663,38 @@ def _bft_derivative_sup(
         )
     return require_nonnegative("bft_derivative_sup", total)
 
+
+def _bft_derivative_paper_sup(
+    *,
+    spatial: torch.Tensor,
+    counts: tuple[int, ...],
+    spatial_eps: float,
+    time_idx: int,
+    first,
+    second,
+    third,
+) -> torch.Tensor:
+    total = torch.zeros(
+        spatial.shape[0], dtype=spatial.dtype, device=spatial.device
+    )
+    for beta in _sub_counts(counts):
+        gamma = tuple(a - b for a, b in zip(counts, beta))
+        boundary_sup = (
+            product_boundary_derivative_value(spatial, beta).abs()
+            + product_boundary_derivative_modulus(spatial, spatial_eps, beta)
+        )
+        total = total + float(_multi_choose(counts, beta)) * boundary_sup * (
+            _network_time_derivative_sup(
+                counts=gamma,
+                time_idx=time_idx,
+                first=first,
+                second=second,
+                third=third,
+            )
+        )
+    return require_nonnegative("paper_bft_derivative_sup", total)
+
+
 def _initial_velocity_taylor_cell_integrals(
     *,
     model: RigPINN_tanh,
@@ -743,15 +804,14 @@ def _initial_velocity_taylor_cell_integrals(
         for j in range(d):
             counts_ij = list(counts_i)
             counts_ij[j] += 1
-            approx_hessian_abs[:, i, j] = _bft_derivative_sup(
-                lower=lower,
-                upper=upper,
+            approx_hessian_abs[:, i, j] = _bft_derivative_paper_sup(
+                spatial=centers,
                 counts=tuple(counts_ij),
+                spatial_eps=spatial_eps,
                 time_idx=time_idx,
                 first=first,
                 second=second,
                 third=third,
-                input_dim=model.input_dim,
             )
 
     approx_hessian_l1 = approx_hessian_abs.sum(dim=(-2, -1))

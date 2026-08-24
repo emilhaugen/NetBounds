@@ -75,26 +75,26 @@ def sine_hessian_l1_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
 
 
 def sine_hessian_abs_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
-    """Entrywise Hessian absolute envelope $d\\pi^2$, shape [M, d, d]."""
+    """Entrywise Hessian envelope $\mathsf G^{e_q+e_\ell}=\pi^2$."""
 
     del radius
     d = x.shape[1]
     return torch.full(
         (x.shape[0], d, d),
-        d * math.pi**2,
+        math.pi**2,
         dtype=x.dtype,
         device=x.device,
     )
 
 
 def sine_gradient_third_abs_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
-    """Entrywise third-derivative envelope $d\\pi^3$, shape [M, d, d, d]."""
+    """Entrywise third-derivative envelope $\mathsf G^{e_j+e_q+e_\ell}=\pi^3$."""
 
     del radius
     d = x.shape[1]
     return torch.full(
         (x.shape[0], d, d, d),
-        d * math.pi**3,
+        math.pi**3,
         dtype=x.dtype,
         device=x.device,
     )
@@ -122,7 +122,8 @@ def zero_gradient(x: torch.Tensor) -> torch.Tensor:
 
 
 def displacement_q0(d: int = 1) -> LipschitzFunction:
-    return LipschitzFunction(sine_value, L=float(d) * math.pi)
+    del d
+    return LipschitzFunction(sine_value, L=math.pi)
 
 
 def displacement_q1(d: int = 1) -> initial_q1.TaylorInitialDatum:
@@ -137,7 +138,7 @@ def displacement_q1(d: int = 1) -> initial_q1.TaylorInitialDatum:
 def displacement_gradient_q0(d: int = 1) -> initial_gradient_q0.VectorLipschitzInitialDatum:
     return initial_gradient_q0.VectorLipschitzInitialDatum(
         value_fn=sine_gradient,
-        component_lipschitz_l1=float(d) * math.pi**2,
+        component_lipschitz_l1=math.pi**2,
     )
 
 

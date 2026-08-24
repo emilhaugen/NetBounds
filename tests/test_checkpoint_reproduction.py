@@ -35,14 +35,17 @@ def test_bundled_checkpoint_entries_are_integrity_checked() -> None:
     for entry in bundled:
         assert verify_file(ROOT, entry).is_file()
     assert catalog["checkpoint_reproduction"] == {
-        "covered_artifact_computations": 12,
+        "covered_artifact_computations": 34,
         "full_table_recomputation": False,
-        "supported_dimension": 1,
+        "supported_initial_dimensions": [1, 2, 3],
+        "supported_pde_dimensions": [1, 2],
         "total_artifact_computations": 36,
     }
     assert catalog["capabilities"]["checkpoint_backed_1d_sanity_reproduction"] is True
     assert catalog["capabilities"]["full_checkpoint_reproduction"] is False
-    assert catalog["capabilities"]["gpu_numerical_recomputation"] is False
+    assert catalog["capabilities"]["checkpoint_backed_initial_reproduction"] is True
+    assert catalog["capabilities"]["checkpoint_backed_pde_up_to_2d"] is True
+    assert catalog["capabilities"]["gpu_numerical_recomputation"] is True
     assert catalog["release_complete"] is False
 
 
@@ -63,14 +66,14 @@ def test_comparator_rejects_empty_pde_payload_before_authority_read() -> None:
             "dtype": "float32",
             "grid": [500, 500],
         },
-        "execution": {"device": "cpu", "batch_size": 4096, "accumulation_dtype": "float64"},
+        "execution": {"device": "cpu", "batch_size": case.batch_size, "accumulation_dtype": "float64"},
         "numerical": {},
     }
     with pytest.raises(ValueError, match="PDE numerical fields differ"):
         compare_reproduction(payload, root=ROOT)
 
-    payload["execution"]["batch_size"] = 8192
-    with pytest.raises(ValueError, match="recorded value 4096"):
+    payload["execution"]["batch_size"] = case.batch_size // 2
+    with pytest.raises(ValueError, match=f"recorded value {case.batch_size}"):
         compare_reproduction(payload, root=ROOT)
 
 
@@ -80,13 +83,13 @@ def test_comparator_rejects_declared_but_unvalidated_case() -> None:
             {
                 "schema_version": 1,
                 "kind": "netbounds_paper_checkpoint_reproduction",
-                "case": "wave2-displacement-q0",
+                "case": "wave3-pde-q1",
             },
             root=ROOT,
         )
 
 
-def test_pde_comparator_rejects_non_cpu_execution() -> None:
+def test_pde_comparator_rejects_unsupported_execution_device() -> None:
     from netbounds.numerics.compare import _PDE_NUMERICAL_FIELDS
 
     case = CASES["heat1-pde-q1"]
@@ -107,25 +110,25 @@ def test_pde_comparator_rejects_non_cpu_execution() -> None:
             "grid": list(case.grid),
         },
         "execution": {
-            "device": "cuda:7",
-            "batch_size": 4096,
+            "device": "mps",
+            "batch_size": case.batch_size,
             "accumulation_dtype": "float64",
         },
         "numerical": {field: authority[field] for field in _PDE_NUMERICAL_FIELDS},
     }
-    with pytest.raises(ValueError, match="requires execution.device=cpu"):
+    with pytest.raises(ValueError, match="unsupported PDE device"):
         compare_reproduction(payload, root=ROOT)
 
 
 @pytest.mark.torch
-def test_python_reproducer_rejects_pending_and_non_cpu_pde_cases() -> None:
+def test_python_reproducer_rejects_pending_pde_and_cpu_3d_initial() -> None:
     _torch()
     from netbounds.numerics.reproduce import reproduce
 
     with pytest.raises(ValueError, match="declared but not yet public"):
-        reproduce("wave2-displacement-q0", root=ROOT, device="cpu")
-    with pytest.raises(ValueError, match="require device=cpu"):
-        reproduce("heat1-pde-q1", root=ROOT, device="cuda:7")
+        reproduce("wave3-pde-q1", root=ROOT, device="cpu")
+    with pytest.raises(ValueError, match="require a CUDA device"):
+        reproduce("wave3-displacement-q0", root=ROOT, device="cpu")
 
 
 @pytest.mark.torch
@@ -160,12 +163,12 @@ def cpu_initial_reproductions() -> dict[str, dict[str, object]]:
 
     results: dict[str, dict[str, object]] = {}
     for case_name in case_names():
-        if CASES[case_name].quantity == "pde":
+        if CASES[case_name].quantity == "pde" or CASES[case_name].d != 1:
             continue
         result = reproduce(case_name, root=ROOT, device="cpu", batch_size=500)
         comparison = compare_reproduction(result, root=ROOT)
         assert comparison["passed"], comparison
-        assert comparison["tolerance_class"] == "initial_cpu_portability"
+        assert comparison["tolerance_class"] == "initial_cpu_portability_d1"
         results[case_name] = result
     return results
 
@@ -235,7 +238,7 @@ def test_pde_replay_rejects_non_authority_batch_size() -> None:
     _torch()
     from netbounds.numerics.reproduce import reproduce
 
-    with pytest.raises(ValueError, match="recorded batch_size=4096"):
+    with pytest.raises(ValueError, match="requires batch_size=65536"):
         reproduce("heat1-pde-q1", root=ROOT, device="cpu", batch_size=8192)
 
 

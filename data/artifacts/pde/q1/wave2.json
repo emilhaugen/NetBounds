@@ -7,8 +7,8 @@
     "layers": 3,
     "width": 256
   },
-  "bound_to_affine_ratio": 1.0450687867738147,
-  "bound_to_midpoint_ratio": 1.0453669016325655,
+  "bound_to_affine_ratio": 1.0482286978195268,
+  "bound_to_midpoint_ratio": 1.0485277140700777,
   "certification_caveat": "Analytically rigorous conditional on the existing derivative-bound machinery; ordinary float32 arithmetic is not an outward-rounded interval computation.",
   "certified": true,
   "coverage": {
@@ -17,30 +17,30 @@
   },
   "datum_family": "separable",
   "diagnostics": {
-    "max_rho": 0.003067991230636835,
-    "mean_rho": 0.0013395253262931963,
-    "mean_rho_boundary": 0.0005270928273245083,
+    "max_rho": 0.003068000078201294,
+    "mean_rho": 0.0013395343052425848,
+    "mean_rho_boundary": 0.0005271018062787861,
     "mean_rho_hyper": 0.0008124324989628832,
-    "rho_boundary_sum": 35578.76584440431,
+    "rho_boundary_sum": 35579.371923818064,
     "rho_hyper_sum": 54839.19367999462,
-    "rho_sum": 90417.95952479076
+    "rho_sum": 90418.56560387448
   },
   "dimension": 2,
   "equation": "Wave",
-  "git_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+  "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
   "global_configuration": {
     "accumulation_dtype": "float64",
     "architecture": {
       "layers": 3,
       "width": 256
     },
-    "certificate": "hyper_taylor_centered_quadratic_moment_cross_min",
+    "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
     "checkpoint_format": "plain_state_dict",
     "datum_family": "separable",
     "dimension": 2,
     "dtype": "float32",
     "equation": "Wave",
-    "git_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+    "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
     "grid": [
       300,
       300,
@@ -48,43 +48,44 @@
     ],
     "input_dimension": 3,
     "local_residual_model": "affine_spacetime",
-    "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
-    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+    "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
     "n_taylor": null,
     "pde_constants": {
       "wave_speed": 1.0
     },
     "quadrature_rule": "Q1",
-    "rigorous_remainder": "componentwise_centered_BA_plus_boundary_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
+    "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
     "spatial_cells_per_dimension": 300,
+    "spatial_radius_policy": "coordinatewise_eps_vec_spatial",
     "time_cells": 750,
     "total_boxes": 67500000,
     "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/ima-initial-residual-table-wave256/experiments/Wave/2d_separable/num_layers3_width256/num_layers3_width256_weights.pt",
     "weights_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
     "weights_storage_dtype": "float64"
   },
-  "global_configuration_sha256": "045ec378d18d0fbb61826b479d3a892496a1b3099083db65dcf439739b791ffc",
+  "global_configuration_sha256": "9e67f1d79c6c6436975bac4867dff5a75e32484bd92e16704feaf9e5f08e8f74",
   "grid": [
     300,
     300,
     750
   ],
   "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
-  "l2_bound": 0.006986909121320594,
-  "l2_squared_bound": 4.881689906959291e-05,
+  "l2_bound": 0.0070080350142639695,
+  "l2_squared_bound": 4.911255476114979e-05,
   "local_residual_model": "affine_spacetime",
-  "merged_utc": "2026-08-02T14:47:00.210729+00:00",
-  "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
-  "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+  "merged_utc": "2026-08-21T09:59:41.802771+00:00",
+  "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+  "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
   "midpoint_l2": 0.006683690779198223,
   "midpoint_l2_squared": 4.467172243193935e-05,
-  "moment_cross_integral": 1.9649566711731618e-06,
-  "moment_cross_l2": 0.006987550884894637,
-  "moment_cross_l2_squared": 4.882586736899183e-05,
-  "moment_minkowski_l2": 0.007027730788986201,
-  "moment_minkowski_l2_squared": 4.938900004246462e-05,
-  "moment_remainder_l2": 0.00044580486059190406,
-  "moment_remainder_l2_squared": 1.98741973727367e-07,
+  "moment_cross_integral": 2.0995795370338483e-06,
+  "moment_cross_l2": 0.007008704528856538,
+  "moment_cross_l2_squared": 4.912193917281414e-05,
+  "moment_minkowski_l2": 0.007052086290501071,
+  "moment_minkowski_l2_squared": 4.973192104867316e-05,
+  "moment_remainder_l2": 0.00047494004467409204,
+  "moment_remainder_l2_squared": 2.2556804603502855e-07,
   "num_boxes": 67500000,
   "num_shards": 7,
   "old_operator_aware_q1_preserved": true,
@@ -96,8 +97,8 @@
   "shard_execution": [
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:43:24.043716+00:00",
-      "elapsed_seconds": 5468.349010418002,
+      "completed_utc": "2026-08-20T18:06:43.628066+00:00",
+      "elapsed_seconds": 5468.727705145953,
       "execution": {
         "cuda_visible_devices": "0",
         "device": "cuda:0",
@@ -113,12 +114,12 @@
         0,
         9642857
       ],
-      "started_utc": "2026-08-02T13:12:15.115633+00:00"
+      "started_utc": "2026-08-20T16:35:34.266880+00:00"
     },
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:43:19.436187+00:00",
-      "elapsed_seconds": 5463.751444467001,
+      "completed_utc": "2026-08-20T18:06:41.861189+00:00",
+      "elapsed_seconds": 5466.868763936916,
       "execution": {
         "cuda_visible_devices": "1",
         "device": "cuda:0",
@@ -134,12 +135,12 @@
         9642857,
         19285714
       ],
-      "started_utc": "2026-08-02T13:12:15.105739+00:00"
+      "started_utc": "2026-08-20T16:35:34.522843+00:00"
     },
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:43:20.247590+00:00",
-      "elapsed_seconds": 5464.5719811450035,
+      "completed_utc": "2026-08-20T18:06:39.786801+00:00",
+      "elapsed_seconds": 5464.818064169958,
       "execution": {
         "cuda_visible_devices": "2",
         "device": "cuda:0",
@@ -155,12 +156,12 @@
         19285714,
         28928571
       ],
-      "started_utc": "2026-08-02T13:12:15.105808+00:00"
+      "started_utc": "2026-08-20T16:35:34.193308+00:00"
     },
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:43:14.552291+00:00",
-      "elapsed_seconds": 5458.866489520995,
+      "completed_utc": "2026-08-20T18:06:33.498331+00:00",
+      "elapsed_seconds": 5458.5194088937715,
       "execution": {
         "cuda_visible_devices": "3",
         "device": "cuda:0",
@@ -176,14 +177,14 @@
         28928571,
         38571428
       ],
-      "started_utc": "2026-08-02T13:12:15.222190+00:00"
+      "started_utc": "2026-08-20T16:35:34.381943+00:00"
     },
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:22:33.476220+00:00",
-      "elapsed_seconds": 4521.043865036998,
+      "completed_utc": "2026-08-21T03:11:09.952055+00:00",
+      "elapsed_seconds": 4522.483416395029,
       "execution": {
-        "cuda_visible_devices": "1",
+        "cuda_visible_devices": "0",
         "device": "cuda:0",
         "device_name": "NVIDIA A10",
         "durable_checkpoint_interval_seconds": 30.0,
@@ -197,14 +198,14 @@
         38571428,
         48214285
       ],
-      "started_utc": "2026-08-02T13:07:12.116597+00:00"
+      "started_utc": "2026-08-21T01:55:47.185072+00:00"
     },
     {
       "box_count": 9642857,
-      "completed_utc": "2026-08-02T14:22:37.428377+00:00",
-      "elapsed_seconds": 4525.005889471002,
+      "completed_utc": "2026-08-21T03:11:06.400507+00:00",
+      "elapsed_seconds": 4518.926472102059,
       "execution": {
-        "cuda_visible_devices": "2",
+        "cuda_visible_devices": "1",
         "device": "cuda:0",
         "device_name": "NVIDIA A10",
         "durable_checkpoint_interval_seconds": 30.0,
@@ -218,12 +219,12 @@
         48214285,
         57857142
       ],
-      "started_utc": "2026-08-02T13:07:12.116597+00:00"
+      "started_utc": "2026-08-21T01:55:47.185042+00:00"
     },
     {
       "box_count": 9642858,
-      "completed_utc": "2026-08-02T14:22:29.850154+00:00",
-      "elapsed_seconds": 4517.421711209994,
+      "completed_utc": "2026-08-21T03:11:07.305265+00:00",
+      "elapsed_seconds": 4519.827150239842,
       "execution": {
         "cuda_visible_devices": "3",
         "device": "cuda:0",
@@ -239,32 +240,32 @@
         57857142,
         67500000
       ],
-      "started_utc": "2026-08-02T13:07:12.116582+00:00"
+      "started_utc": "2026-08-21T01:55:47.185069+00:00"
     }
   ],
   "shards_merged": [
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0000_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0001_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0002_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0003_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0004_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0005_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0006_of_0007.json"
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0000_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0001_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0002_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0003_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0004_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0005_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0006_of_0007.json"
   ],
   "source_tracked_dirty": false,
   "sums": {
     "affine_l2_squared": 4.469721205296582e-05,
-    "bound_l2_squared": 4.881689906959291e-05,
+    "bound_l2_squared": 4.911255476114979e-05,
     "midpoint_l2_squared": 4.467172243193935e-05,
-    "moment_cross_integral": 1.9649566711731618e-06,
-    "moment_cross_l2_squared": 4.882586736899183e-05,
-    "moment_minkowski_l2_squared": 4.938900004246462e-05,
-    "moment_remainder_l2_squared": 1.98741973727367e-07,
-    "rho": 90417.95952479076,
-    "rho_boundary": 35578.76584440431,
+    "moment_cross_integral": 2.0995795370338483e-06,
+    "moment_cross_l2_squared": 4.912193917281414e-05,
+    "moment_minkowski_l2_squared": 4.973192104867316e-05,
+    "moment_remainder_l2_squared": 2.2556804603502855e-07,
+    "rho": 90418.56560387448,
+    "rho_boundary": 35579.371923818064,
     "rho_hyper": 54839.19367999462
   },
-  "total_shard_elapsed_seconds": 35419.010391268996,
+  "total_shard_elapsed_seconds": 35420.17098088353,
   "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/ima-initial-residual-table-wave256/experiments/Wave/2d_separable/num_layers3_width256/num_layers3_width256_weights.pt",
   "weights_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
   "weights_storage_dtype": "float64"
