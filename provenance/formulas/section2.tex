@@ -1,0 +1,384 @@
+\section{Residual verification framework for parabolic and hyperbolic problems}\label{sec:NN}
+
+This section fixes the common verification language used in the heat and wave applications.  The central point is a posteriori: a trained neural network is accepted only after computable residual norms certify that it is close to the true solution of the PDE.  The training procedure may be a PINN, an operator-learning method, a variational method, or any other black-box optimizer; the verification uses only the produced function and the prescribed PDE data.
+
+\subsection{Neural-network approximations and boundary ansatz}
+Fix an input dimension $n \in \mathbb{N}$ and let $\cF_{L,w}$ denote scalar neural networks with $L$ hidden layers, common width $w$, and smooth activation $\mu=\tanh$. For $x\in\R^n$,
+\begin{equation}\label{eqdef:NN}
+\begin{aligned}
+ z^1(x)&=W^1x+b^1,            & a^1(x)&=\mu(z^1(x)),\\
+ z^k(x)&=W^ka^{k-1}(x)+b^k,   & a^k(x)&=\mu(z^k(x)),\quad k=2,\dots,L,\\
+ f(x)&=W^{L+1}a^L(x)+b^{L+1}.
+\end{aligned}
+\end{equation}
+
+\begin{assumption}[Ansatz form]\label{assumption:NN-bounds}
+For a bounded spatial domain $\Omega\subset\R^d$ and time interval $[0,T]$, the approximation is given by
+\begin{equation}\label{eq:boundary-ansatz}
+    v(x,t)=B(x)f(x,t),
+\end{equation}
+where $f$ is a neural network as in \eqref{eqdef:NN} and $B$ is an explicit function that vanishes on $\partial\Omega$.
+\end{assumption}
+In the numerical sections $\Omega=(0,1)^d$ and $B(x)=\prod_{i=1}^d x_i(1-x_i)$ is the standard product factor enforcing homogeneous Dirichlet data.
+
+
+\subsection{The residual verification principle}\label{subsec:residual-principle}
+Let $u$ be the unique, unknown solution to a given PDE and let $v$ be the proposed approximation. A residual estimate has the schematic form
+\begin{equation}\label{eq:posteriori-residuals}
+    \norm{u-v}_{X} \leq C\,\mathcal R(v;\text{data}),
+\end{equation}
+where $\cR$ is a continuous functional that depends only on $v$, and the known data given by the PDE. For linear parabolic and hyperbolic problems, $\cR$ is a sum of $L^2$ norms. If the constant $C$ is known and $\mathcal R$ can be rigorously upper bounded by quadrature estimates, then the unknown error has a computable upper bound.
+
+We will consider the source-free Dirichlet heat and wave equations as model problems:
+\begin{equation}\label{eq:heat-wave-model-framework}
+\begin{array}{@{}c@{\qquad}c@{}}
+\text{Heat} & \text{Wave} \\[0.3em]
+\begin{cases}
+\partial_t u-\kappa\Delta u=0 & \text{in }\Omega\times(0,T],\\
+u=0 & \text{on }\partial\Omega\times[0,T],\\
+u=g & \text{on }\Omega\times\set{t=0},
+\end{cases}
+&
+\begin{cases}
+\partial_t^2 u-c^2\Delta u=0 & \text{in }\Omega\times(0,T],\\
+u=0 & \text{on }\partial\Omega\times[0,T],\\
+u=g,\quad \partial_tu=h & \text{on }\Omega\times\set{t=0}.
+\end{cases}
+\end{array}
+\end{equation}
+For the heat and wave equations, we have the respective estimates establishing the framework \eqref{eq:posteriori-residuals}:
+\begin{align}
+    %\sup_{0\le t\le T}
+    \norm{u-v}
+    &\leq
+    C\left(
+    \norm{g-v(\cdot,0)}
+    +\norm{(\partial_t-\kappa\Delta)v}_{L^2(\Omega\times(0,T))}
+    \right),
+    \label{eq:heat-h1-framework}\\
+    %\sup_{0\le t\le T}
+    \norm{u-v}
+    &\leq
+    C\left(
+    \norm{g-v(\cdot,0)}
+    +\norm{h-\partial_t v(\cdot,0)}
+    +\norm{(\partial_t^2-c^2\Delta)v}_{L^2(\Omega\times(0,T))}
+    \right).
+    \label{eq:wave-h1-framework}
+\end{align}
+We refer to the norms involving $g, h$ as \emph{data residuals} and the norms involving the equation operator as \emph{PDE residuals}. The value of $C$ depends on the domain, and the precise norms used for the left-hand side and for the data residuals, depend on the regularity of the initial data. E.g., for the heat equation, if we only assume $g\in L^2(\Omega)$, and use that norm on the RHS of \eqref{eq:heat-h1-framework}, we get an $L^\infty(0,T;L^2(\Omega))$ norm on the LHS. If, however, we assume $g\in H^1_0(\Omega)$ and use the $H^1$ norm on $g - v(\cdot,0)$, we get a much stronger (semi-)norm on the LHS and hence a stronger error bound. Similar principles apply to the wave equation. We will give precise statements and proofs with explicit constants in \cref{sec:applications}.
+
+
+
+
+\begin{remark}[Removing the hard boundary ansatz]
+The product form $v=Bf$ is a convenient way to enforce the homogeneous Dirichlet
+condition exactly, and it is the ansatz used in the numerical experiments below.
+It is not intrinsic to the residual-verification framework.  Let $A$ denote the PDE operator.  One can verify
+a pure NN approximation $v=f$ by introducing a boundary lift $b$ with $b=f$ on
+$\partial\Omega\times[0,T]$ and applying the corresponding homogeneous
+Dirichlet estimate to $f-b$.  The resulting estimate then contains the norm
+$\norm{b}_{L^\infty(0,T;L^2(\Omega))}$, the modified initial residuals, and the
+corrected PDE residual $A(f-b)$.
+
+Alternatively, $b$ can be chosen to solve the
+auxiliary homogeneous problem $Ab=0$, with boundary data
+$f|_{\partial\Omega\times[0,T]}$ and compatible auxiliary initial data when
+required.  For the heat equation, this means choosing $b(\cdot,0)=b_0$ with
+$b_0|_{\partial\Omega}=f(\cdot,0)|_{\partial\Omega}$.  For the
+wave equation, the auxiliary velocity data must additionally
+match the boundary trace of $\partial_t f(\cdot,0)$.  Choosing
+$Ab=0$ removes the lift contribution from the PDE residual, but $b$ is then
+defined as the solution of an auxiliary PDE, so its values and norms cannot
+usually be evaluated by the same direct grid-point formulas used for explicit
+neural-network residuals, and must instead be separately bounded and verified.
+\end{remark}
+
+\subsection{Quadrature set up and assumptions}\label{subsec:quadrature}
+Given the energy estimates \eqref{eq:heat-h1-framework} and \eqref{eq:wave-h1-framework}, it is clear that to bound the approximation error of $v$ without knowing $u$, we must compute rigorous upper bounds on norms involving the initial data and the approximant $v$ along with its derivatives.
+
+We now detail which assumptions are made on the domain and data, and what we will require of the neural network-based approximants, in order to construct the desired norm bounds.
+
+\subsubsection{Domain geometry and partitioning}
+
+\begin{assumption}[Rectangular domain geometry]\label{assumption:rectangular-domain}
+  Let $\Omega \subset \R^d$ be a bounded domain, $T>0$, a spatial radius
+  vector $\boldsymbol{\eps}_x\in(0,\infty)^d$, and a time radius
+  $\eps_t>0$ be given. Set
+  $\boldsymbol{\eps}\coloneqq(\boldsymbol{\eps}_x,\eps_t)\in(0,\infty)^{d+1}$.
+  For a radius vector
+  $\boldsymbol r=(\boldsymbol r_x,r_t)\in[0,\infty)^{d+1}$,
+  $y\in\R^d$, and $t\in\R$, define
+  \begin{equation}\label{quad-spacetime-box}
+    \begin{aligned}
+      \mathcal B_{\boldsymbol r_x}(y)
+      &\coloneqq
+      \set{x\in\R^d: |x_j-y_j|\leq r_{x,j},\ j=1,\dots,d},\\
+      I_{r_t}(t)&\coloneqq[t-r_t,t+r_t],\\
+      \mathcal B_{\boldsymbol r}(y,t)
+      &\coloneqq
+      \mathcal B_{\boldsymbol r_x}(y)\times I_{r_t}(t).
+    \end{aligned}
+  \end{equation}
+  We assume that $\Omega$ is rectangular, in that we have knowledge of $y_k\in\Omega$ for $k=1,\dots,N_{\mathrm{space}}$, and
+  $t_m\in(0, T)$ for $m=1,\dots,N_{\mathrm{time}}$ so that the spatial boxes $\mathcal B_{\boldsymbol{\eps}_x}(y_k)$ and the time intervals $I_{\eps_t}(t_m)$ are pairwise internally disjoint and satisfy
+  \[
+    \overline{\Omega}
+    =
+    \bigcup_{k=1}^{N_{\mathrm{space}}}\mathcal B_{\boldsymbol{\eps}_x}(y_k),
+    \qquad
+    [0,T]
+    =
+    \bigcup_{m=1}^{N_{\mathrm{time}}} I_{\eps_t}(t_m).
+  \]
+  Consequently, the rectangles $\mathcal B_{\boldsymbol{\eps}}(y_k,t_m)$ are pairwise internally disjoint and
+  \[
+    \overline{\Omega_T}
+    =
+    \overline{\Omega}\times[0,T]
+    =
+    %\bigcup_{k=1}^{N_{\mathrm{space}}}
+    %\bigcup_{m=1}^{N_{\mathrm{time}}}
+    \bigcup_{k, m}
+    \mathcal B_{\boldsymbol{\eps}}(y_k,t_m).
+  \]
+  We write
+  \(
+    \mathcal P_\Omega
+    \coloneqq
+    \set*{\mathcal B_{\boldsymbol{\eps}_x}(y_k)}_k,
+  \) and
+  \(  \mathcal P
+    \coloneqq
+    \set*{\mathcal B_{\boldsymbol{\eps}}(y_k,t_m)}_{k,m}.
+  \)
+\end{assumption}
+
+This assumption is not really restrictive since we are interested in \emph{upper bounds} for $L^2$ norms, and any finite domain can be covered by rectangles (if the domain is a strict subset the upper bound still holds). The radii may differ between spatial coordinates and time; nonuniform and adaptive partitions are obtained by assigning a radius vector to each cell.
+
+
+
+\subsubsection{Quadrature rules and error bounds}
+\label{subsubsec:cellwise-quadrature-bounds}
+We now introduce the notation and conventions we will use for quadrature methods when bounding the residual norms in \eqref{eq:heat-h1-framework} and \eqref{eq:wave-h1-framework} later on. Given \cref{assumption:rectangular-domain}, let
+\[
+  C=\zeta_C+\prod_{q=1}^s[-\eps_{C,q},\eps_{C,q}]
+\]
+be a cell with radius vector $\boldsymbol{\eps}_C\in(0,\infty)^s$, where $s=d$ for spatial cells and $s=d+1$ for spacetime cells. For a scalar integrand $\phi \colon \R^s \to \R$, we consider the local
+approximations
+\begin{equation}\label{eq:cell-polynomial-models}
+  P_C^0(\zeta)\coloneqq \phi(\zeta_C),
+  \qquad
+  P_C^1(\zeta)\coloneqq
+  \phi(\zeta_C)+\nabla\phi(\zeta_C)\cdot(\zeta-\zeta_C),
+  \qquad \zeta\in C.
+\end{equation}
+Define the local quadrature estimates
+\begin{equation}\label{eq:cell-quadrature-rule}
+  Q_C^r(\phi)
+  \coloneqq
+  \int_C P_C^r(\zeta)^2\,d\zeta, \quad r\in \{0,1\}.
+\end{equation}
+These can be computed explicitly from the cell center and radius vector,
+\begin{equation}\label{eq:cell-quadrature-values}
+  Q_C^0(\phi)=|C|\,\phi(\zeta_C)^2,
+  \qquad
+  Q_C^1(\phi)
+  =
+  |C|\left(\phi(\zeta_C)^2
+  +\frac{1}{3}\sum_{q=1}^s\eps_{C,q}^2\partial_q\phi(\zeta_C)^2\right).
+\end{equation}
+For sufficiently smooth integrands, both these rules can be seen to have quadratic convergence rates with respect to the cell diameter. However, we will see that for the actual error bounds computed \emph{in practice}, the classical midpoint rule $Q^0$ under $C^1$ regularity assumptions gives linear convergence, while the affine rule remains quadratic, at the cost of requiring $C^2$ regularity.  
+
+For any rectangular spatial or spacetime partition $\mathcal T$, define the
+global quadrature estimate
+\begin{equation}\label{eq:partition-quadrature-rule}
+  Q_{\mathcal T}^r(\phi)\coloneqq \sum_{C\in\mathcal T}Q_C^r(\phi),
+  \qquad r\in\{0,1\}.
+\end{equation}
+To compute verified error bounds while retaining the location dependence of
+the Taylor remainder, let
+\begin{equation}\label{eq:cell-derivative-coefficients}
+  b_{q,C}(\phi)\geq\sup_{\zeta\in C}|\partial_q\phi(\zeta)|,
+  \qquad
+  h_{q\ell,C}(\phi)\geq
+  \sup_{\zeta\in C}|\partial_{q\ell}\phi(\zeta)|.
+\end{equation}
+For Lipschitz derivatives the suprema may be understood in the essential
+sense.  Writing $u_q=|\zeta_q-\zeta_{C,q}|$, define
+\begin{equation}\label{eq:cell-remainder-envelopes}
+  D_C^0(\phi)(\zeta)
+  \coloneqq\sum_{q=1}^s b_{q,C}(\phi)u_q,
+  \qquad
+  D_C^1(\phi)(\zeta)
+  \coloneqq\frac12\sum_{q,\ell=1}^s
+  h_{q\ell,C}(\phi)u_qu_\ell.
+\end{equation}
+The fundamental theorem of calculus and Taylor's theorem, respectively, give
+\begin{equation}\label{eq:cell-model-errors}
+  |\phi(\zeta)-P_C^r(\zeta)|\leq D_C^r(\phi)(\zeta),
+  \qquad \zeta\in C,\quad r\in\{0,1\}.
+\end{equation}
+We also set
+\begin{equation}\label{eq:cell-polynomial-envelopes}
+  A_C^0(\phi)(\zeta)\coloneqq|\phi(\zeta_C)|,
+  \qquad
+  A_C^1(\phi)(\zeta)\coloneqq
+  |\phi(\zeta_C)|+\sum_{q=1}^s
+  |\partial_q\phi(\zeta_C)|u_q,
+\end{equation}
+so that $|P_C^r|\leq A_C^r(\phi)$.  All integrals of the products in
+\cref{eq:cell-remainder-envelopes,eq:cell-polynomial-envelopes} are evaluated
+analytically using the centered rectangular moments
+\begin{equation}\label{eq:centered-cell-moments}
+  \mathfrak M_\alpha(C)
+  \coloneqq\int_C\prod_{q=1}^s
+  |\zeta_q-\zeta_{C,q}|^{\alpha_q}\,d\zeta
+  =\prod_{q=1}^s\frac{2\eps_{C,q}^{\alpha_q+1}}{\alpha_q+1},
+  \qquad \alpha\in\N_0^s.
+\end{equation}
+In particular, writing
+$a_C=|\phi(\zeta_C)|$ and
+$c_{q,C}=|\partial_q\phi(\zeta_C)|$, the two local corrections are
+\begin{align}
+ E_C^0(\phi)
+ &=2a_C\sum_{q=1}^s b_{q,C}(\phi)\mathfrak M_{e_q}(C)
+ +\sum_{q,\ell=1}^s b_{q,C}(\phi)b_{\ell,C}(\phi)
+ \mathfrak M_{e_q+e_\ell}(C),
+ \label{eq:q0-cell-moment-correction}\\
+ E_C^1(\phi)
+ &=\sum_{q,\ell=1}^s h_{q\ell,C}(\phi)
+ \left(a_C\mathfrak M_{e_q+e_\ell}(C)
+ +\sum_{i=1}^s c_{i,C}\mathfrak M_{e_q+e_\ell+e_i}(C)\right)
+ \notag\\
+ &\quad+\frac14\sum_{q,\ell,m,n=1}^s
+ h_{q\ell,C}(\phi)h_{mn,C}(\phi)
+ \mathfrak M_{e_q+e_\ell+e_m+e_n}(C).
+ \label{eq:q1-cell-moment-correction}
+\end{align}
+Indeed, expanding
+$\phi^2-(P_C^r)^2=2P_C^r(\phi-P_C^r)+(\phi-P_C^r)^2$ gives the local bound
+\begin{equation}\label{eq:cell-verified-quadrature-error}
+  \left|
+  \int_C \phi(\zeta)^2\,d\zeta-Q_C^r(\phi)
+  \right|
+  \leq
+  2\int_C A_C^r(\phi)D_C^r(\phi)\,d\zeta
+  +\norm{D_C^r(\phi)}_{L^2(C)}^2
+  =E_C^r(\phi).
+\end{equation}
+Thus the right-hand side is the finite sum of explicitly known moments in
+\cref{eq:q0-cell-moment-correction,eq:q1-cell-moment-correction}.  On such a
+partition $\mathcal T$, the global error is bounded by
+\begin{equation}\label{eq:partition-verified-quadrature-error}
+  \left|
+  \int_{\bigcup_{C\in\mathcal T}C}\phi(\zeta)^2\,d\zeta
+  - Q_{\mathcal T}^r(\phi)
+  \right|
+  \leq
+  \sum_{C\in\mathcal T}E_C^r(\phi)
+  \eqqcolon   E_{\mathcal T}^r(\phi)
+  \quad r\in\{0,1\}.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:global-norm-bound}
+  \norm{\phi}_{L^2(\bigcup_{C\in\mathcal T}C)}
+  \leq
+  \left(Q_{\mathcal T}^r(\phi)+E_{\mathcal T}^r(\phi)\right)^{1/2}
+  \eqqcolon\mathcal U_{\mathcal T}^r(\phi).
+\end{equation}
+
+\begin{remark}[Vector-valued residuals]\label{rem:vector-residual-bounds}
+For a vector-valued residual $\phi=(\phi_1,\dots,\phi_p)$, the squared
+$L^2$ norm is
+\[
+  \norm{\phi}_{L^2}^2=\sum_{\ell=1}^p\norm{\phi_\ell}_{L^2}^2.
+\]
+Thus vector-valued residuals are verified by applying the scalar construction
+above to each component and summing the resulting contributions.
+\end{remark}
+
+\subsubsection{Regularity assumptions for quadrature}
+
+We now give the assumptions needed to compute the coefficients in
+\eqref{eq:cell-derivative-coefficients}.  The rule $Q^0$ uses first-derivative
+bounds for $\phi$, whereas $Q^1$ uses second-derivative bounds.
+Since the PDE term residuals involve second derivatives of the
+approximant, the $Q^1$ quadrature requires derivative bounds
+up to order four.  This is encoded in the following assumption for the NN.
+\begin{assumption}[Network derivative bounds]\label{ass:network-derivative-bounds}
+  Given a neural network $f \in \cF_{L, w}$, for each multi-index $\alpha \in \N_0^{d+1}$ with
+  $\abs{\alpha} \leq 4$, we have computable functions
+  $\mathcal{E}^{\alpha}_f \colon \R^{d+1} \times [0, \infty)^{d+1} \to \R_+$ such that
+  \[
+    \abs{\partial^\alpha f(x, s)}
+    \leq
+    \mathcal{E}^\alpha_f((y, t),\boldsymbol{\eps})
+    \quad
+    \text{for all }
+    \quad (x, s) \in \mathcal B_{\boldsymbol{\eps}}(y,t).
+  \]
+\end{assumption}
+
+The main technical challenge is replacing \cref{ass:network-derivative-bounds}
+with \emph{theorems} providing those bounds, which is what we will do in
+\cref{sec:activation} using our novel algorithms.  For the explicit boundary
+factor $B$ we make analogous assumptions.
+
+\begin{assumption}[Boundary-factor regularity for quadrature]\label{ass:B-moduli}
+For every multi-index $\beta$ with $|\beta|\leq 4$, the point values of
+$\partial^\beta B$ are available.  We are also given non-decreasing moduli
+$\omega_B^\beta\colon[0,\infty)\to[0,\infty)$, continuous and vanishing at
+$0$, such that, for every $x,y\in\overline{\Omega}$,
+\begin{equation}\label{eq:B-moduli}
+  |\partial^\beta B(x)-\partial^\beta B(y)|
+  \leq
+  \omega_B^\beta\p*{\norm{x-y}_\infty}.
+\end{equation}
+\end{assumption}
+
+%In a rectangular domain the boundary function $B$ and its moduli through order four are analytically available.
+The regularity available for the prescribed
+data determines which residual norm and quadrature rules are admissible.
+
+\begin{assumption}[Initial data regularity for quadrature]\label{ass:data-moduli}
+Write
+\begin{equation}\label{eq:initial-data}
+  v_0(x)\coloneqq v(x,0),
+  \qquad
+  \dot v_0(x)\coloneqq \partial_t v(x,0).
+\end{equation}
+The data residuals are built from $g-v_0$ and, for the wave equation,
+$h-\dot v_0$.  For each initial datum $a\in\{g,h\}$ that appears, let $k_a$ be
+the largest order of spatial derivative of $a$ occurring in the chosen data
+residual.  If that residual is to be computed with a quadrature rule of order
+$r\in\{0,1\}$, then for every multi-index $\gamma$ with $|\gamma|\leq k_a+r$,
+the point values of $\partial^\gamma a$ and a Lipschitz constant
+$L_a^\gamma\geq0$ are available such that, for every
+$x,y\in\overline{\Omega}$,
+\begin{equation}\label{eq:data-moduli}
+  |\partial^\gamma a(x)-\partial^\gamma a(y)|
+  \leq
+  L_a^\gamma\norm{x-y}_\infty.
+\end{equation}
+In the quadrature formulas we use the canonical modulus
+$\omega_a^\gamma(s)\coloneqq L_a^\gamma s$.  If another verified modulus
+$\widetilde\omega_a^\gamma$ is available, it may be sharpened without
+changing the assumption by taking
+\[
+    \omega_a^\gamma(s)
+    \coloneqq
+    \min\{L_a^\gamma s,\widetilde\omega_a^\gamma(s)\}.
+\]
+\end{assumption}
+
+\begin{remark}[Hölder initial data]
+More generally, one may replace \eqref{eq:data-moduli} by e.g., 
+\[
+    |\partial^\gamma a(x)-\partial^\gamma a(y)|
+    \leq
+    K_a^\gamma\norm{x-y}_\infty^\alpha,
+    \qquad 0<\alpha\leq1,
+\]
+but we stick with the Lipszch assumption for simplicity.  
+\end{remark}

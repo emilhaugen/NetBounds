@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "purpose": "Producer revisions and reached entry points for the 36 selected numerical artifacts.",
+  "producer_revisions": [
+    {
+      "commit": "2add56070e88dc16def9accbed953fa854f22d39",
+      "artifacts": "all 15 initial Q0 artifacts",
+      "entry_points": [
+        "run_initial_residual_bounds.py",
+        "run_initial_gradient_residual_bounds.py",
+        "scripts/run_wave_residual_bounds.py"
+      ],
+      "core_modules": [
+        "residual_bounds/initial.py",
+        "residual_bounds/initial_grad.py",
+        "residual_bounds/initial_modulus.py",
+        "residual_bounds/moment.py",
+        "derivative_bounds/"
+      ]
+    },
+    {
+      "commit": "1003b5448260462e888dede918904d8391fd2a78",
+      "artifacts": "all 15 initial Q1 artifacts",
+      "entry_points": [
+        "run_initial_residual_bounds.py",
+        "run_initial_gradient_residual_bounds.py",
+        "scripts/run_wave_residual_bounds.py"
+      ],
+      "core_modules": [
+        "residual_bounds/initial.py",
+        "residual_bounds/initial_grad.py",
+        "residual_bounds/initial_modulus.py",
+        "residual_bounds/moment.py",
+        "derivative_bounds/"
+      ]
+    },
+    {
+      "commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+      "artifacts": ["Heat-1D PDE Q1", "Wave-1D PDE Q1"],
+      "entry_points": ["scripts/run_ima_pde_q1_d1_moment_full.py"],
+      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
+    },
+    {
+      "commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+      "artifacts": ["Heat-2D PDE Q1", "Wave-2D PDE Q1"],
+      "entry_points": [
+        "scripts/run_ima_pde_q1_d2_moment_full.py",
+        "scripts/merge_ima_pde_q1_d2_moment_shards.py"
+      ],
+      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
+    },
+    {
+      "commit": "ae87aa0825e5ae73f18c1980c95aaedc8ff8485e",
+      "artifacts": ["Heat-3D adaptive PDE Q1 same-policy result"],
+      "entry_points": [
+        "scripts/run_ima_pde_q1_d3_heat_adaptive_moment_full.py",
+        "scripts/merge_ima_pde_q1_d3_heat_adaptive_moment_shards.py"
+      ],
+      "qualification": "The selected accepted wrapper is a documented same-policy acceptance record, not an exact historical partition replay.",
+      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
+    },
+    {
+      "commit": "9ae849bcdbb665479d52021657f50e936acab88a",
+      "artifacts": ["Wave-3D PDE Q1"],
+      "entry_points": [
+        "scripts/run_ima_pde_q1_d3_wave_moment_full.py",
+        "scripts/merge_ima_pde_q1_d3_wave_moment_shards.py"
+      ],
+      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
+    }
+  ],
+  "preservation": {
+    "bundle_manifest": "producer-bundles.json",
+    "bundles_are_self_contained": true,
+    "bundles_are_repository_payload": false,
+    "reason": "The 139 MiB history bundles preserve source authority during extraction but are larger than the eventual reached-source closure."
+  }
+}

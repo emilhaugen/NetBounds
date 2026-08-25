@@ -1,0 +1,271 @@
+{
+  "accumulation_dtype": "float64",
+  "affine_l2": 0.006685597359471016,
+  "affine_l2_squared": 4.469721205296582e-05,
+  "all_cells_enumerated": true,
+  "architecture": {
+    "layers": 3,
+    "width": 256
+  },
+  "bound_to_affine_ratio": 1.0450687867738147,
+  "bound_to_midpoint_ratio": 1.0453669016325655,
+  "certification_caveat": "Analytically rigorous conditional on the existing derivative-bound machinery; ordinary float32 arithmetic is not an outward-rounded interval computation.",
+  "certified": true,
+  "coverage": {
+    "start_flat_index": 0,
+    "stop_flat_index": 67500000
+  },
+  "datum_family": "separable",
+  "diagnostics": {
+    "max_rho": 0.003067991230636835,
+    "mean_rho": 0.0013395253262931963,
+    "mean_rho_boundary": 0.0005270928273245083,
+    "mean_rho_hyper": 0.0008124324989628832,
+    "rho_boundary_sum": 35578.76584440431,
+    "rho_hyper_sum": 54839.19367999462,
+    "rho_sum": 90417.95952479076
+  },
+  "dimension": 2,
+  "equation": "Wave",
+  "git_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+  "global_configuration": {
+    "accumulation_dtype": "float64",
+    "architecture": {
+      "layers": 3,
+      "width": 256
+    },
+    "certificate": "hyper_taylor_centered_quadratic_moment_cross_min",
+    "checkpoint_format": "plain_state_dict",
+    "datum_family": "separable",
+    "dimension": 2,
+    "dtype": "float32",
+    "equation": "Wave",
+    "git_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+    "grid": [
+      300,
+      300,
+      750
+    ],
+    "input_dimension": 3,
+    "local_residual_model": "affine_spacetime",
+    "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+    "n_taylor": null,
+    "pde_constants": {
+      "wave_speed": 1.0
+    },
+    "quadrature_rule": "Q1",
+    "rigorous_remainder": "componentwise_centered_BA_plus_boundary_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
+    "spatial_cells_per_dimension": 300,
+    "time_cells": 750,
+    "total_boxes": 67500000,
+    "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/ima-initial-residual-table-wave256/experiments/Wave/2d_separable/num_layers3_width256/num_layers3_width256_weights.pt",
+    "weights_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+    "weights_storage_dtype": "float64"
+  },
+  "global_configuration_sha256": "045ec378d18d0fbb61826b479d3a892496a1b3099083db65dcf439739b791ffc",
+  "grid": [
+    300,
+    300,
+    750
+  ],
+  "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
+  "l2_bound": 0.006986909121320594,
+  "l2_squared_bound": 4.881689906959291e-05,
+  "local_residual_model": "affine_spacetime",
+  "merged_utc": "2026-08-02T14:47:00.210729+00:00",
+  "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+  "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
+  "midpoint_l2": 0.006683690779198223,
+  "midpoint_l2_squared": 4.467172243193935e-05,
+  "moment_cross_integral": 1.9649566711731618e-06,
+  "moment_cross_l2": 0.006987550884894637,
+  "moment_cross_l2_squared": 4.882586736899183e-05,
+  "moment_minkowski_l2": 0.007027730788986201,
+  "moment_minkowski_l2_squared": 4.938900004246462e-05,
+  "moment_remainder_l2": 0.00044580486059190406,
+  "moment_remainder_l2_squared": 1.98741973727367e-07,
+  "num_boxes": 67500000,
+  "num_shards": 7,
+  "old_operator_aware_q1_preserved": true,
+  "ordinary_float32_not_outward_rounded": true,
+  "processed_boxes": 67500000,
+  "quadrature_rule": "Q1",
+  "replaces_existing_q1_artifact": false,
+  "schema_version": 1,
+  "shard_execution": [
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:43:24.043716+00:00",
+      "elapsed_seconds": 5468.349010418002,
+      "execution": {
+        "cuda_visible_devices": "0",
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 2080 Ti",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 0,
+      "interval": [
+        0,
+        9642857
+      ],
+      "started_utc": "2026-08-02T13:12:15.115633+00:00"
+    },
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:43:19.436187+00:00",
+      "elapsed_seconds": 5463.751444467001,
+      "execution": {
+        "cuda_visible_devices": "1",
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 2080 Ti",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 1,
+      "interval": [
+        9642857,
+        19285714
+      ],
+      "started_utc": "2026-08-02T13:12:15.105739+00:00"
+    },
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:43:20.247590+00:00",
+      "elapsed_seconds": 5464.5719811450035,
+      "execution": {
+        "cuda_visible_devices": "2",
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 2080 Ti",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 2,
+      "interval": [
+        19285714,
+        28928571
+      ],
+      "started_utc": "2026-08-02T13:12:15.105808+00:00"
+    },
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:43:14.552291+00:00",
+      "elapsed_seconds": 5458.866489520995,
+      "execution": {
+        "cuda_visible_devices": "3",
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 2080 Ti",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 3,
+      "interval": [
+        28928571,
+        38571428
+      ],
+      "started_utc": "2026-08-02T13:12:15.222190+00:00"
+    },
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:22:33.476220+00:00",
+      "elapsed_seconds": 4521.043865036998,
+      "execution": {
+        "cuda_visible_devices": "1",
+        "device": "cuda:0",
+        "device_name": "NVIDIA A10",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 4,
+      "interval": [
+        38571428,
+        48214285
+      ],
+      "started_utc": "2026-08-02T13:07:12.116597+00:00"
+    },
+    {
+      "box_count": 9642857,
+      "completed_utc": "2026-08-02T14:22:37.428377+00:00",
+      "elapsed_seconds": 4525.005889471002,
+      "execution": {
+        "cuda_visible_devices": "2",
+        "device": "cuda:0",
+        "device_name": "NVIDIA A10",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 5,
+      "interval": [
+        48214285,
+        57857142
+      ],
+      "started_utc": "2026-08-02T13:07:12.116597+00:00"
+    },
+    {
+      "box_count": 9642858,
+      "completed_utc": "2026-08-02T14:22:29.850154+00:00",
+      "elapsed_seconds": 4517.421711209994,
+      "execution": {
+        "cuda_visible_devices": "3",
+        "device": "cuda:0",
+        "device_name": "NVIDIA A10",
+        "durable_checkpoint_interval_seconds": 30.0,
+        "effective_final_batch_size": 8192,
+        "oom_reductions": 0,
+        "peak_cuda_memory_bytes": 5329680384,
+        "requested_batch_size": 8192
+      },
+      "index": 6,
+      "interval": [
+        57857142,
+        67500000
+      ],
+      "started_utc": "2026-08-02T13:07:12.116582+00:00"
+    }
+  ],
+  "shards_merged": [
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0000_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0001_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0002_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0003_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0004_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0005_of_0007.json",
+    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/ima_pde_q1_d2_moment_full/Wave/2d_separable/num_layers3_width256/grid_300x300x750/shards/shard_0006_of_0007.json"
+  ],
+  "source_tracked_dirty": false,
+  "sums": {
+    "affine_l2_squared": 4.469721205296582e-05,
+    "bound_l2_squared": 4.881689906959291e-05,
+    "midpoint_l2_squared": 4.467172243193935e-05,
+    "moment_cross_integral": 1.9649566711731618e-06,
+    "moment_cross_l2_squared": 4.882586736899183e-05,
+    "moment_minkowski_l2_squared": 4.938900004246462e-05,
+    "moment_remainder_l2_squared": 1.98741973727367e-07,
+    "rho": 90417.95952479076,
+    "rho_boundary": 35578.76584440431,
+    "rho_hyper": 54839.19367999462
+  },
+  "total_shard_elapsed_seconds": 35419.010391268996,
+  "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/ima-initial-residual-table-wave256/experiments/Wave/2d_separable/num_layers3_width256/num_layers3_width256_weights.pt",
+  "weights_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+  "weights_storage_dtype": "float64"
+}

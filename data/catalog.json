@@ -1,0 +1,888 @@
+{
+  "authority": {
+    "source_commit": "a678f45ed63960f1fddf9f282f3b07a260e22e1f",
+    "source_repository": "65industries/NetBounds-dev",
+    "tables": [
+      {
+        "path": "paper/tables/initial_displacement_residuals_q0_q1_master.tex",
+        "sha256": "6e5956eb4a81cc6734d61aa12356bab7d1ce599de026aa91a69f4c6c6c216341",
+        "size": 1036
+      },
+      {
+        "path": "paper/tables/initial_displacement_gradient_residuals_q0_q1_master.tex",
+        "sha256": "56015a1da5c16655f627d3fed983bba0823d7cdfc4ca9c40f209676c2e0e3c0e",
+        "size": 1104
+      },
+      {
+        "path": "paper/tables/initial_velocity_residuals_q0_q1_master.tex",
+        "sha256": "368aaf3e38b1ca6956a3f9954d089d80701091b965dba7aca226e81c6ed038fa",
+        "size": 842
+      },
+      {
+        "path": "paper/tables/pde_residuals_q1_master.tex",
+        "sha256": "a32ca71eaca8e64f2d1c486488535a56cd7f61508afda3904373ac2b63e16efa",
+        "size": 1069
+      },
+      {
+        "path": "paper/tables/energy_estimate_q1_master.tex",
+        "sha256": "1a527973784832eefb7448f06b76e5f54e7de1c74cfeca8f4ca760015a7f2b39",
+        "size": 2219
+      }
+    ]
+  },
+  "campaigns": {
+    "q0": {
+      "metadata": [
+        {
+          "path": "provenance/campaigns/q0/manifest.json",
+          "sha256": "b33a5cf2003824bc83be055ec2ed4868d9f6074bd5725eec4b75528bfce6df47",
+          "size": 30470
+        },
+        {
+          "path": "provenance/campaigns/q0/manifest.sha256",
+          "sha256": "533730186080a4f7fd74bb8b306bfe519463b06b0299708d1c3a57b459acc94f",
+          "size": 65
+        },
+        {
+          "path": "provenance/campaigns/q0/final_validation.json",
+          "sha256": "37656e37462a29587918ca62117bd936e5b296c2e7a5c6d5414b49f7c6e2acc0",
+          "size": 9771
+        },
+        {
+          "path": "provenance/campaigns/q0/COMPLETED",
+          "sha256": "ff49b53e6941b4f17cf11548eaf513faad5cd26cfeddc563dcfa5a065486b5e1",
+          "size": 130
+        }
+      ],
+      "section2_sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
+      "section4_sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
+      "source_commit": "2add56070e88dc16def9accbed953fa854f22d39",
+      "task_count": 15
+    },
+    "q1": {
+      "metadata": [
+        {
+          "path": "provenance/campaigns/q1/manifest.json",
+          "sha256": "408143d9112cb25bb7e2a89dfad96b56bae2d1624a136c451f45e2b17d0ec155",
+          "size": 30205
+        },
+        {
+          "path": "provenance/campaigns/q1/manifest.sha256",
+          "sha256": "f96dfa8ffecaa58e1b16d4a94fdc849a9075d15e421eae48f4e56fce8ebed3a5",
+          "size": 80
+        },
+        {
+          "path": "provenance/campaigns/q1/final_validation.json",
+          "sha256": "a491cf676d251e8c7189b89de1fd3e689abe894fef9737d47d5cab3d70fbf62f",
+          "size": 9788
+        },
+        {
+          "path": "provenance/campaigns/q1/COMPLETED",
+          "sha256": "0e1025125b8963480fe666e090b46fa35dd2d141290096e1c37096b4eb0000af",
+          "size": 130
+        }
+      ],
+      "section2_sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
+      "section4_sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
+      "source_commit": "1003b5448260462e888dede918904d8391fd2a78",
+      "task_count": 15
+    }
+  },
+  "capabilities": {
+    "gpu_numerical_recomputation": false,
+    "offline_artifact_verification": true,
+    "offline_table_rendering": true
+  },
+  "checkpoints": [
+    {
+      "bundled": false,
+      "path": "data/checkpoints/heat1-L2-W128.pt",
+      "sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "size": 139034
+    },
+    {
+      "bundled": false,
+      "path": "data/checkpoints/heat2-L3-W128.pt",
+      "sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "size": 272700
+    },
+    {
+      "bundled": false,
+      "path": "data/checkpoints/heat3-L4-W128.pt",
+      "sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "size": 406430
+    },
+    {
+      "bundled": false,
+      "path": "data/checkpoints/wave1-L2-W256.pt",
+      "sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "size": 537370
+    },
+    {
+      "bundled": false,
+      "path": "data/checkpoints/wave2-L3-W256.pt",
+      "sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "size": 1066364
+    },
+    {
+      "bundled": false,
+      "path": "data/checkpoints/wave3-L3-W256.pt",
+      "sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "size": 35946245
+    }
+  ],
+  "formula_snapshots": [
+    {
+      "path": "provenance/formulas/section2.tex",
+      "sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
+      "size": 17683
+    },
+    {
+      "path": "provenance/formulas/section4.tex",
+      "sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
+      "size": 30829
+    }
+  ],
+  "initial_rows": [
+    {
+      "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "dimension": 1,
+      "equation": "Heat",
+      "family": "displacement",
+      "layers": 2,
+      "num_boxes": 500,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat1_displacement.json",
+        "sha256": "95e7d334d7d15796321ec8fc681c17e126e0fe6512e1b25306aab0eb03e72b65",
+        "size": 1706,
+        "task_id": "heat1_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat1_displacement.json",
+        "sha256": "c9a1ca3df98d014dac112e5a610fb6c5f1e325edfce9a2618ca6487f81e30dab",
+        "size": 1646,
+        "task_id": "heat1_displacement"
+      },
+      "task_id": "heat1_displacement",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "dimension": 2,
+      "equation": "Heat",
+      "family": "displacement",
+      "layers": 3,
+      "num_boxes": 250000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat2_displacement.json",
+        "sha256": "665cffdfdf7d10c17805ef511941c23f4c759d0c7afd4b7a23fe3b93e6e1a623",
+        "size": 1709,
+        "task_id": "heat2_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat2_displacement.json",
+        "sha256": "03935ed55fbeb50114cc9855f8c608d5dad35e7be2c1b08285832e3b9a937d57",
+        "size": 1649,
+        "task_id": "heat2_displacement"
+      },
+      "task_id": "heat2_displacement",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "dimension": 3,
+      "equation": "Heat",
+      "family": "displacement",
+      "layers": 4,
+      "num_boxes": 125000000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat3_displacement.json",
+        "sha256": "8c36f0f0f3da91082fd7f702b26081735d64f6ea7f7141393ae8fe6d1853222c",
+        "size": 1715,
+        "task_id": "heat3_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat3_displacement.json",
+        "sha256": "e4d7572d9bccda5970a96686b5d7e71e9f287eddc94506bcedde1bc24d8b4529",
+        "size": 1653,
+        "task_id": "heat3_displacement"
+      },
+      "task_id": "heat3_displacement",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "dimension": 1,
+      "equation": "Wave",
+      "family": "displacement",
+      "layers": 2,
+      "num_boxes": 500,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave1_displacement.json",
+        "sha256": "08267a3addac7b96f6bbf166a15e478d6b197009ea4738cabf982e80813b2256",
+        "size": 1696,
+        "task_id": "wave1_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave1_displacement.json",
+        "sha256": "34926177389b1199cf574ca7eda872d5c65d16a634f6d6f98c68a2538b25e632",
+        "size": 1636,
+        "task_id": "wave1_displacement"
+      },
+      "task_id": "wave1_displacement",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "dimension": 2,
+      "equation": "Wave",
+      "family": "displacement",
+      "layers": 3,
+      "num_boxes": 250000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave2_displacement.json",
+        "sha256": "fcc5642f80b1eba27e002edff7a0cc9857525837afd505c90cad7dc5b755b898",
+        "size": 1700,
+        "task_id": "wave2_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave2_displacement.json",
+        "sha256": "54f5725b3f987a22091e3788b545bf52f949cc9855594d75f60e32f57cdfa884",
+        "size": 1640,
+        "task_id": "wave2_displacement"
+      },
+      "task_id": "wave2_displacement",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "dimension": 3,
+      "equation": "Wave",
+      "family": "displacement",
+      "layers": 3,
+      "num_boxes": 125000000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave3_displacement.json",
+        "sha256": "67dc3dcad456181e740b840dfd5a76b79c2a734f4e380f35e266c096df511230",
+        "size": 1704,
+        "task_id": "wave3_displacement"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave3_displacement.json",
+        "sha256": "598b0453a6bb7e96ea3d930f79d9d35e0527401a74ebb8306013d602cb1ee0dd",
+        "size": 1646,
+        "task_id": "wave3_displacement"
+      },
+      "task_id": "wave3_displacement",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "dimension": 1,
+      "equation": "Heat",
+      "family": "gradient",
+      "layers": 2,
+      "num_boxes": 500,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat1_gradient.json",
+        "sha256": "a38f5f28ea2e2247ddbe5fef21465c0ebd40aeb0782e6150c19604be0a260f3b",
+        "size": 1824,
+        "task_id": "heat1_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat1_gradient.json",
+        "sha256": "14b029662e40332984025585f1c641d4ade6a2b910cc4752901db5a080e681f9",
+        "size": 1845,
+        "task_id": "heat1_gradient"
+      },
+      "task_id": "heat1_gradient",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "dimension": 2,
+      "equation": "Heat",
+      "family": "gradient",
+      "layers": 3,
+      "num_boxes": 250000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat2_gradient.json",
+        "sha256": "d66c78527c1aa7553369a33885df1539e9a5d0f5d9e8701b808a7c2ceacd93a3",
+        "size": 1826,
+        "task_id": "heat2_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat2_gradient.json",
+        "sha256": "48b371e8f2143a6b542e52cce43c4960f08a3bcd983001fbced7f61969af6737",
+        "size": 1848,
+        "task_id": "heat2_gradient"
+      },
+      "task_id": "heat2_gradient",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "dimension": 3,
+      "equation": "Heat",
+      "family": "gradient",
+      "layers": 4,
+      "num_boxes": 125000000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/heat3_gradient.json",
+        "sha256": "bf8216d5c09b61528d356dfc566b582438ce03eb9ebce23cf2ff946d2eef8452",
+        "size": 1827,
+        "task_id": "heat3_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/heat3_gradient.json",
+        "sha256": "c8252a696a8223907b743092c25497c07681212f0cddfecb644579dbe181b554",
+        "size": 1853,
+        "task_id": "heat3_gradient"
+      },
+      "task_id": "heat3_gradient",
+      "width": 128
+    },
+    {
+      "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "dimension": 1,
+      "equation": "Wave",
+      "family": "gradient",
+      "layers": 2,
+      "num_boxes": 500,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave1_gradient.json",
+        "sha256": "a1bbf4cb8e8e7df29f2df5fc898768dc125144e9769ad487896e3a8d2ad20d15",
+        "size": 1814,
+        "task_id": "wave1_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave1_gradient.json",
+        "sha256": "42d0f36af47bb8c4f2eb800440002bc2ff63eafbe81ac066fb86a120eacbf485",
+        "size": 1837,
+        "task_id": "wave1_gradient"
+      },
+      "task_id": "wave1_gradient",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "dimension": 2,
+      "equation": "Wave",
+      "family": "gradient",
+      "layers": 3,
+      "num_boxes": 250000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave2_gradient.json",
+        "sha256": "2cca79e7a0b2ac9eb7fccd500fabaea98d0af8883463ccfb1228aa4a2c37f62f",
+        "size": 1816,
+        "task_id": "wave2_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave2_gradient.json",
+        "sha256": "c6ea6b6108d46379fb30484b0529404244b6bb54856bf2c53bf59f0b95889402",
+        "size": 1840,
+        "task_id": "wave2_gradient"
+      },
+      "task_id": "wave2_gradient",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "dimension": 3,
+      "equation": "Wave",
+      "family": "gradient",
+      "layers": 3,
+      "num_boxes": 125000000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave3_gradient.json",
+        "sha256": "4b21f01eaf35afe3fca616902d134c701ef5048e5896e859562b4b5a6f416926",
+        "size": 1817,
+        "task_id": "wave3_gradient"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave3_gradient.json",
+        "sha256": "978c4cdbbbc72af0f43553dbedb56c32d502ce43da2888670c145a1ab642e672",
+        "size": 1842,
+        "task_id": "wave3_gradient"
+      },
+      "task_id": "wave3_gradient",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "dimension": 1,
+      "equation": "Wave",
+      "family": "velocity",
+      "layers": 2,
+      "num_boxes": 500,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave1_velocity.json",
+        "sha256": "41b04e774857e5f761ac89574531058d8ba8755b47a80597d29cba152b76e1fc",
+        "size": 1700,
+        "task_id": "wave1_velocity"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave1_velocity.json",
+        "sha256": "bdb75617e4cb69f42e8b3b21f458ff74a89cd6f7e35a4dcde0a5a767506e0e09",
+        "size": 1635,
+        "task_id": "wave1_velocity"
+      },
+      "task_id": "wave1_velocity",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "dimension": 2,
+      "equation": "Wave",
+      "family": "velocity",
+      "layers": 3,
+      "num_boxes": 250000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave2_velocity.json",
+        "sha256": "5d968fa3ebae8a8d9158e3b8d8f22a82e3cdeab64acc5e14d87fcb2b19ac9a2a",
+        "size": 1699,
+        "task_id": "wave2_velocity"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave2_velocity.json",
+        "sha256": "1cb9c2ee91f4db6c6fabe2081926b400468834a3f6cb2f9322ba6c0c4b5feabd",
+        "size": 1637,
+        "task_id": "wave2_velocity"
+      },
+      "task_id": "wave2_velocity",
+      "width": 256
+    },
+    {
+      "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "dimension": 3,
+      "equation": "Wave",
+      "family": "velocity",
+      "layers": 3,
+      "num_boxes": 125000000,
+      "q0": {
+        "path": "data/artifacts/initial/q0/wave3_velocity.json",
+        "sha256": "ad461819dacc49fcb2174a566fb45726118a247b5e37804171fbf48c8de3ec44",
+        "size": 1703,
+        "task_id": "wave3_velocity"
+      },
+      "q1": {
+        "path": "data/artifacts/initial/q1/wave3_velocity.json",
+        "sha256": "0106d4b15bb9d6783774d89c98d2eb9bfe3335b4c506eb4df35475f0fc19202a",
+        "size": 1639,
+        "task_id": "wave3_velocity"
+      },
+      "task_id": "wave3_velocity",
+      "width": 256
+    }
+  ],
+  "payload_files": [
+    {
+      "path": "data/artifacts/initial/q0/heat1_displacement.json",
+      "sha256": "95e7d334d7d15796321ec8fc681c17e126e0fe6512e1b25306aab0eb03e72b65",
+      "size": 1706
+    },
+    {
+      "path": "data/artifacts/initial/q0/heat1_gradient.json",
+      "sha256": "a38f5f28ea2e2247ddbe5fef21465c0ebd40aeb0782e6150c19604be0a260f3b",
+      "size": 1824
+    },
+    {
+      "path": "data/artifacts/initial/q0/heat2_displacement.json",
+      "sha256": "665cffdfdf7d10c17805ef511941c23f4c759d0c7afd4b7a23fe3b93e6e1a623",
+      "size": 1709
+    },
+    {
+      "path": "data/artifacts/initial/q0/heat2_gradient.json",
+      "sha256": "d66c78527c1aa7553369a33885df1539e9a5d0f5d9e8701b808a7c2ceacd93a3",
+      "size": 1826
+    },
+    {
+      "path": "data/artifacts/initial/q0/heat3_displacement.json",
+      "sha256": "8c36f0f0f3da91082fd7f702b26081735d64f6ea7f7141393ae8fe6d1853222c",
+      "size": 1715
+    },
+    {
+      "path": "data/artifacts/initial/q0/heat3_gradient.json",
+      "sha256": "bf8216d5c09b61528d356dfc566b582438ce03eb9ebce23cf2ff946d2eef8452",
+      "size": 1827
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave1_displacement.json",
+      "sha256": "08267a3addac7b96f6bbf166a15e478d6b197009ea4738cabf982e80813b2256",
+      "size": 1696
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave1_gradient.json",
+      "sha256": "a1bbf4cb8e8e7df29f2df5fc898768dc125144e9769ad487896e3a8d2ad20d15",
+      "size": 1814
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave1_velocity.json",
+      "sha256": "41b04e774857e5f761ac89574531058d8ba8755b47a80597d29cba152b76e1fc",
+      "size": 1700
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave2_displacement.json",
+      "sha256": "fcc5642f80b1eba27e002edff7a0cc9857525837afd505c90cad7dc5b755b898",
+      "size": 1700
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave2_gradient.json",
+      "sha256": "2cca79e7a0b2ac9eb7fccd500fabaea98d0af8883463ccfb1228aa4a2c37f62f",
+      "size": 1816
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave2_velocity.json",
+      "sha256": "5d968fa3ebae8a8d9158e3b8d8f22a82e3cdeab64acc5e14d87fcb2b19ac9a2a",
+      "size": 1699
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave3_displacement.json",
+      "sha256": "67dc3dcad456181e740b840dfd5a76b79c2a734f4e380f35e266c096df511230",
+      "size": 1704
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave3_gradient.json",
+      "sha256": "4b21f01eaf35afe3fca616902d134c701ef5048e5896e859562b4b5a6f416926",
+      "size": 1817
+    },
+    {
+      "path": "data/artifacts/initial/q0/wave3_velocity.json",
+      "sha256": "ad461819dacc49fcb2174a566fb45726118a247b5e37804171fbf48c8de3ec44",
+      "size": 1703
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat1_displacement.json",
+      "sha256": "c9a1ca3df98d014dac112e5a610fb6c5f1e325edfce9a2618ca6487f81e30dab",
+      "size": 1646
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat1_gradient.json",
+      "sha256": "14b029662e40332984025585f1c641d4ade6a2b910cc4752901db5a080e681f9",
+      "size": 1845
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat2_displacement.json",
+      "sha256": "03935ed55fbeb50114cc9855f8c608d5dad35e7be2c1b08285832e3b9a937d57",
+      "size": 1649
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat2_gradient.json",
+      "sha256": "48b371e8f2143a6b542e52cce43c4960f08a3bcd983001fbced7f61969af6737",
+      "size": 1848
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat3_displacement.json",
+      "sha256": "e4d7572d9bccda5970a96686b5d7e71e9f287eddc94506bcedde1bc24d8b4529",
+      "size": 1653
+    },
+    {
+      "path": "data/artifacts/initial/q1/heat3_gradient.json",
+      "sha256": "c8252a696a8223907b743092c25497c07681212f0cddfecb644579dbe181b554",
+      "size": 1853
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave1_displacement.json",
+      "sha256": "34926177389b1199cf574ca7eda872d5c65d16a634f6d6f98c68a2538b25e632",
+      "size": 1636
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave1_gradient.json",
+      "sha256": "42d0f36af47bb8c4f2eb800440002bc2ff63eafbe81ac066fb86a120eacbf485",
+      "size": 1837
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave1_velocity.json",
+      "sha256": "bdb75617e4cb69f42e8b3b21f458ff74a89cd6f7e35a4dcde0a5a767506e0e09",
+      "size": 1635
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave2_displacement.json",
+      "sha256": "54f5725b3f987a22091e3788b545bf52f949cc9855594d75f60e32f57cdfa884",
+      "size": 1640
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave2_gradient.json",
+      "sha256": "c6ea6b6108d46379fb30484b0529404244b6bb54856bf2c53bf59f0b95889402",
+      "size": 1840
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave2_velocity.json",
+      "sha256": "1cb9c2ee91f4db6c6fabe2081926b400468834a3f6cb2f9322ba6c0c4b5feabd",
+      "size": 1637
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave3_displacement.json",
+      "sha256": "598b0453a6bb7e96ea3d930f79d9d35e0527401a74ebb8306013d602cb1ee0dd",
+      "size": 1646
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave3_gradient.json",
+      "sha256": "978c4cdbbbc72af0f43553dbedb56c32d502ce43da2888670c145a1ab642e672",
+      "size": 1842
+    },
+    {
+      "path": "data/artifacts/initial/q1/wave3_velocity.json",
+      "sha256": "0106d4b15bb9d6783774d89c98d2eb9bfe3335b4c506eb4df35475f0fc19202a",
+      "size": 1639
+    },
+    {
+      "path": "data/artifacts/pde/q1/heat1.json",
+      "sha256": "6487169202141267d09a213c593efec8ec5bf7617f2599dd18f117337f0da494",
+      "size": 5009
+    },
+    {
+      "path": "data/artifacts/pde/q1/heat2.json",
+      "sha256": "9165e1a383a090b7d7989f7d3655d72d823ae2e41c649eaf3e4a5f6cd9a7faea",
+      "size": 10553
+    },
+    {
+      "path": "data/artifacts/pde/q1/heat3.json",
+      "sha256": "19646f98c705633ded8be6d08d479d7c952f592813677dfad1330880daa329a1",
+      "size": 9866
+    },
+    {
+      "path": "data/artifacts/pde/q1/wave1.json",
+      "sha256": "4ecfb89e5335e33e236dc3e1212dcf2386a6726ca4766d1df810ab54cfae431b",
+      "size": 5019
+    },
+    {
+      "path": "data/artifacts/pde/q1/wave2.json",
+      "sha256": "803b35f3bbcf1e70e0193206040319c81a4a16ac0b30ec1958588e1a63f0364e",
+      "size": 10540
+    },
+    {
+      "path": "data/artifacts/pde/q1/wave3.json",
+      "sha256": "cf7e7139ea65e15254092e0932a03251a981e7db4be962d289901fd1b0b21d66",
+      "size": 5823
+    },
+    {
+      "path": "paper/tables/energy_estimate_q1_master.tex",
+      "sha256": "1a527973784832eefb7448f06b76e5f54e7de1c74cfeca8f4ca760015a7f2b39",
+      "size": 2219
+    },
+    {
+      "path": "paper/tables/initial_displacement_gradient_residuals_q0_q1_master.tex",
+      "sha256": "56015a1da5c16655f627d3fed983bba0823d7cdfc4ca9c40f209676c2e0e3c0e",
+      "size": 1104
+    },
+    {
+      "path": "paper/tables/initial_displacement_residuals_q0_q1_master.tex",
+      "sha256": "6e5956eb4a81cc6734d61aa12356bab7d1ce599de026aa91a69f4c6c6c216341",
+      "size": 1036
+    },
+    {
+      "path": "paper/tables/initial_velocity_residuals_q0_q1_master.tex",
+      "sha256": "368aaf3e38b1ca6956a3f9954d089d80701091b965dba7aca226e81c6ed038fa",
+      "size": 842
+    },
+    {
+      "path": "paper/tables/pde_residuals_q1_master.tex",
+      "sha256": "a32ca71eaca8e64f2d1c486488535a56cd7f61508afda3904373ac2b63e16efa",
+      "size": 1069
+    },
+    {
+      "path": "provenance/campaigns/q0/COMPLETED",
+      "sha256": "ff49b53e6941b4f17cf11548eaf513faad5cd26cfeddc563dcfa5a065486b5e1",
+      "size": 130
+    },
+    {
+      "path": "provenance/campaigns/q0/final_validation.json",
+      "sha256": "37656e37462a29587918ca62117bd936e5b296c2e7a5c6d5414b49f7c6e2acc0",
+      "size": 9771
+    },
+    {
+      "path": "provenance/campaigns/q0/manifest.json",
+      "sha256": "b33a5cf2003824bc83be055ec2ed4868d9f6074bd5725eec4b75528bfce6df47",
+      "size": 30470
+    },
+    {
+      "path": "provenance/campaigns/q0/manifest.sha256",
+      "sha256": "533730186080a4f7fd74bb8b306bfe519463b06b0299708d1c3a57b459acc94f",
+      "size": 65
+    },
+    {
+      "path": "provenance/campaigns/q1/COMPLETED",
+      "sha256": "0e1025125b8963480fe666e090b46fa35dd2d141290096e1c37096b4eb0000af",
+      "size": 130
+    },
+    {
+      "path": "provenance/campaigns/q1/final_validation.json",
+      "sha256": "a491cf676d251e8c7189b89de1fd3e689abe894fef9737d47d5cab3d70fbf62f",
+      "size": 9788
+    },
+    {
+      "path": "provenance/campaigns/q1/manifest.json",
+      "sha256": "408143d9112cb25bb7e2a89dfad96b56bae2d1624a136c451f45e2b17d0ec155",
+      "size": 30205
+    },
+    {
+      "path": "provenance/campaigns/q1/manifest.sha256",
+      "sha256": "f96dfa8ffecaa58e1b16d4a94fdc849a9075d15e421eae48f4e56fce8ebed3a5",
+      "size": 80
+    },
+    {
+      "path": "provenance/formulas/section2.tex",
+      "sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
+      "size": 17683
+    },
+    {
+      "path": "provenance/formulas/section4.tex",
+      "sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
+      "size": 30829
+    },
+    {
+      "path": "provenance/numerical-trust-boundary.md",
+      "sha256": "15ef264dcebba160124b4eb4bb821a7c91ec23d617189f6a856f24677f59ca7a",
+      "size": 4401
+    },
+    {
+      "path": "provenance/producer-inventory.json",
+      "sha256": "78c785e97210ab3ad54049a13f05b2da6b9ed1f3af4e98604ac23766ecbca6e4",
+      "size": 3083
+    }
+  ],
+  "pde_rows": [
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/heat1.json",
+        "sha256": "6487169202141267d09a213c593efec8ec5bf7617f2599dd18f117337f0da494",
+        "size": 5009
+      },
+      "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "dimension": 1,
+      "equation": "Heat",
+      "family": "uniform",
+      "grid": [
+        500,
+        500
+      ],
+      "grid_tex": "$500\\times 500$",
+      "kind": "ima_pde_q1_d1_integrated_moment_certificate",
+      "layers": 2,
+      "method": "operator-aware affine spacetime Q1 Heat certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "producer_commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+      "width": 128
+    },
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/heat2.json",
+        "sha256": "9165e1a383a090b7d7989f7d3655d72d823ae2e41c649eaf3e4a5f6cd9a7faea",
+        "size": 10553
+      },
+      "checkpoint_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "dimension": 2,
+      "equation": "Heat",
+      "family": "uniform",
+      "grid": [
+        300,
+        300,
+        750
+      ],
+      "grid_tex": "$300^2\\times 750$",
+      "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
+      "layers": 3,
+      "method": "operator-aware affine spacetime Q1 Heat certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "producer_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+      "width": 128
+    },
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/heat3.json",
+        "sha256": "19646f98c705633ded8be6d08d479d7c952f592813677dfad1330880daa329a1",
+        "size": 9866
+      },
+      "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "dimension": 3,
+      "equation": "Heat",
+      "family": "heat3_adaptive_same_policy",
+      "grid": [
+        100,
+        100,
+        100,
+        500
+      ],
+      "grid_tex": "$100^3\\times 500\\,\\mathrm{(adaptive)}^{*}$",
+      "kind": "ima_pde_q1_d3_heat_adaptive_moment_same_policy_accepted",
+      "layers": 4,
+      "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
+      "producer_commit": "ae87aa0825e5ae73f18c1980c95aaedc8ff8485e",
+      "width": 128
+    },
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/wave1.json",
+        "sha256": "4ecfb89e5335e33e236dc3e1212dcf2386a6726ca4766d1df810ab54cfae431b",
+        "size": 5019
+      },
+      "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "dimension": 1,
+      "equation": "Wave",
+      "family": "uniform",
+      "grid": [
+        500,
+        500
+      ],
+      "grid_tex": "$500\\times 500$",
+      "kind": "ima_pde_q1_d1_integrated_moment_certificate",
+      "layers": 2,
+      "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "producer_commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+      "width": 256
+    },
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/wave2.json",
+        "sha256": "803b35f3bbcf1e70e0193206040319c81a4a16ac0b30ec1958588e1a63f0364e",
+        "size": 10540
+      },
+      "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "dimension": 2,
+      "equation": "Wave",
+      "family": "uniform",
+      "grid": [
+        300,
+        300,
+        750
+      ],
+      "grid_tex": "$300^2\\times 750$",
+      "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
+      "layers": 3,
+      "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "producer_commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
+      "width": 256
+    },
+    {
+      "artifact": {
+        "path": "data/artifacts/pde/q1/wave3.json",
+        "sha256": "cf7e7139ea65e15254092e0932a03251a981e7db4be962d289901fd1b0b21d66",
+        "size": 5823
+      },
+      "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "dimension": 3,
+      "equation": "Wave",
+      "family": "wave3_x_refined",
+      "grid": [
+        200,
+        100,
+        100,
+        500
+      ],
+      "grid_tex": "$200\\times 100^2\\times 500\\,\\mathrm{(x-refined)}$",
+      "kind": "ima_pde_q1_d3_wave_moment_merged_certificate",
+      "layers": 3,
+      "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "producer_commit": null,
+      "width": 256
+    }
+  ],
+  "release_complete": false,
+  "schema_version": 1,
+  "scope": "artifact_table_replay",
+  "trust_boundary": {
+    "accumulation_dtype": "float64",
+    "details": "provenance/numerical-trust-boundary.md",
+    "kernel_dtype": "float32",
+    "outward_rounded_interval_arithmetic": false
+  }
+}
