@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from typing import Any, cast
 
-import torch
+import pytest
+
+torch = pytest.importorskip("torch", reason="current-paper PDE geometry needs PyTorch")
+pytestmark = pytest.mark.torch
 
 from netbounds.numerics._pde_helpers import _boundary_center_and_variations
 from netbounds.numerics.pde import _boundary_grouped_coeffs, _boundary_p_first_coeffs

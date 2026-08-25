@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import torch
+import pytest
 
 from netbounds.cli import main
 from netbounds.numerics.cases import CASES, case_names
-from netbounds.numerics.reproduce import _decode_centers
 from netbounds.tables import INITIAL_CAPTIONS, PDE_CAPTION
 
 
@@ -18,7 +17,11 @@ def test_public_scope_is_all_initial_plus_d1_d2_pde() -> None:
     assert all(CASES[name].quantity != "pde" or CASES[name].d <= 2 for name in names)
 
 
+@pytest.mark.torch
 def test_d2_flat_grid_decoding_keeps_time_fastest() -> None:
+    torch = pytest.importorskip("torch")
+    from netbounds.numerics.reproduce import _decode_centers
+
     grid = (3, 3, 5)
     centers = _decode_centers(0, 45, grid=grid, device=torch.device("cpu"))
     torch.testing.assert_close(
