@@ -73,3 +73,9 @@ tests/                      fail-closed integrity and rendering tests
 ```
 
 The retained raw artifacts and original campaign manifests are provenance evidence and therefore contain historical absolute paths. Runtime code never reads those paths; all operational paths come from the portable catalog.
+
+## Citation and license
+
+Please cite the accompanying paper, *Trustworthy AI in numerics: On verification algorithms for neural network-based PDE solvers*, by Emil Haugen, Alexei Stepanenko, and Anders C. Hansen. Machine-readable citation metadata is provided in `CITATION.cff`.
+
+The software is released under the MIT License; see `LICENSE`.
