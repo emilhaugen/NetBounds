@@ -72,7 +72,10 @@ def load_catalog(root: Path) -> dict[str, Any]:
         raise VerificationError(f"cannot read {path}: {error}") from error
     if not isinstance(catalog, dict) or catalog.get("schema_version") != 1:
         raise VerificationError(f"{path}: unsupported catalog schema")
-    if catalog.get("scope") != "artifact_table_replay":
+    if catalog.get("scope") not in {
+        "artifact_table_replay",
+        "current_paper_initial_and_pde_d1_d2_with_frozen_pde_d3",
+    }:
         raise VerificationError(f"{path}: unexpected reproduction scope")
     return catalog
 
@@ -119,7 +122,7 @@ def read_hashed_json(
 
 
 def verify_numerical_source_closure(root: Path, catalog: Mapping[str, Any]) -> int:
-    """Verify the fixed 1D source closure declared by bundled provenance.
+    """Verify the current-paper source closure declared by bundled provenance.
 
     A checkout uses the recorded ``src/netbounds`` paths.  An installed wheel
     instead checks its installed ``netbounds`` module files against the same
@@ -130,14 +133,14 @@ def verify_numerical_source_closure(root: Path, catalog: Mapping[str, Any]) -> i
         entry
         for entry in catalog.get("payload_files", [])
         if isinstance(entry, Mapping)
-        and entry.get("path") == "provenance/checkpoint-reproduction-1d.json"
+        and entry.get("path") == "provenance/current-paper-reproduction.json"
     ]
     if len(provenance_entries) != 1:
-        raise VerificationError("expected exactly one 1D checkpoint provenance payload")
+        raise VerificationError("expected exactly one current-paper provenance payload")
     _, provenance = read_hashed_json(root, provenance_entries[0])
     closure = provenance.get("extracted_source_closure")
     if not isinstance(closure, Mapping):
-        raise VerificationError("1D provenance has no extracted source closure")
+        raise VerificationError("current-paper provenance has no extracted source closure")
     expected_manifest = closure.get("source_manifest_sha256")
     declared_sources = closure.get("sources")
     if (
@@ -146,7 +149,7 @@ def verify_numerical_source_closure(root: Path, catalog: Mapping[str, Any]) -> i
         or not isinstance(declared_sources, list)
         or not declared_sources
     ):
-        raise VerificationError("malformed 1D numerical source closure")
+        raise VerificationError("malformed current-paper numerical source closure")
 
     prefix = "src/netbounds/"
     package_root = Path(__file__).resolve().parent
@@ -184,5 +187,5 @@ def verify_numerical_source_closure(root: Path, catalog: Mapping[str, Any]) -> i
         json.dumps(actual_sources, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
     if actual_manifest != expected_manifest:
-        raise VerificationError("1D numerical source closure manifest SHA-256 mismatch")
+        raise VerificationError("current-paper source closure manifest SHA-256 mismatch")
     return len(actual_sources)

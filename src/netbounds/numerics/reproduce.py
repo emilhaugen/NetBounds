@@ -141,22 +141,32 @@ def _decode_centers(
     start: int,
     stop: int,
     *,
-    spatial_cells: int,
-    time_cells: int,
+    grid: tuple[int, ...],
     device: torch.device,
 ) -> torch.Tensor:
-    """Decode the historical grid ordering, with time as the fastest axis."""
+    """Decode the fixed paper grid with time as the fastest axis."""
 
+    if len(grid) < 2 or not 0 <= start <= stop <= math.prod(grid):
+        raise ValueError("flat interval is outside the fixed grid")
+    spatial_cells = grid[:-1]
+    time_cells = grid[-1]
     flat = torch.arange(start, stop, dtype=torch.int64, device=device)
     time_index = flat.remainder(time_cells)
-    space_index = torch.div(flat, time_cells, rounding_mode="floor")
-    return torch.stack(
-        (
-            (space_index.to(torch.float32) + 0.5) / float(spatial_cells),
-            (time_index.to(torch.float32) + 0.5) / float(time_cells),
-        ),
-        dim=-1,
+    remaining = torch.div(flat, time_cells, rounding_mode="floor")
+    spatial_indices = [torch.empty_like(remaining) for _ in spatial_cells]
+    for axis in range(len(spatial_cells) - 1, -1, -1):
+        spatial_indices[axis] = remaining.remainder(spatial_cells[axis])
+        remaining = torch.div(
+            remaining, spatial_cells[axis], rounding_mode="floor"
+        )
+    coordinates = [
+        (index.to(torch.float32) + 0.5) / float(cells)
+        for index, cells in zip(spatial_indices, spatial_cells)
+    ]
+    coordinates.append(
+        (time_index.to(torch.float32) + 0.5) / float(time_cells)
     )
+    return torch.stack(coordinates, dim=-1)
 
 
 _PDE_SUM_KEYS = (
@@ -180,10 +190,10 @@ def _pde_result(
     progress: Callable[[int, int], None] | None,
 ) -> dict[str, object]:
     device = model.input_layer.weight.device
-    spatial_cells = time_cells = 500
-    total = spatial_cells * time_cells
+    grid = tuple(case.grid)
+    total = math.prod(grid)
     eps = torch.tensor(
-        [1.0 / (2.0 * spatial_cells), 1.0 / (2.0 * time_cells)],
+        [1.0 / (2.0 * cells) for cells in grid],
         dtype=torch.float32,
         device=device,
     )
@@ -197,8 +207,7 @@ def _pde_result(
             centers = _decode_centers(
                 start,
                 stop,
-                spatial_cells=spatial_cells,
-                time_cells=time_cells,
+                grid=grid,
                 device=device,
             )
             if case.equation == "Heat":
@@ -219,19 +228,19 @@ def _pde_result(
                 )
             tensors = {
                 "bound_l2_squared": diagnostics[
-                    "hyper_taylor_centered_moment_best_bound_l2sq"
+                    "hyper_taylor_moment_best_bound_l2sq"
                 ],
                 "moment_minkowski_l2_squared": diagnostics[
-                    "hyper_taylor_centered_moment_bound_l2sq"
+                    "hyper_taylor_moment_bound_l2sq"
                 ],
                 "moment_cross_l2_squared": diagnostics[
-                    "hyper_taylor_centered_moment_cross_bound_l2sq"
+                    "hyper_taylor_moment_cross_bound_l2sq"
                 ],
                 "moment_remainder_l2_squared": diagnostics[
-                    "hyper_taylor_centered_moment_remainder_l2sq"
+                    "hyper_taylor_moment_remainder_l2sq"
                 ],
                 "moment_cross_integral": diagnostics[
-                    "hyper_taylor_centered_moment_cross_integral"
+                    "hyper_taylor_moment_cross_integral"
                 ],
                 "affine_l2_squared": diagnostics["hyper_taylor_affine_l2sq"],
                 "midpoint_l2_squared": residual.square() * kernel_volume,
@@ -325,11 +334,10 @@ def reproduce(
 ) -> dict[str, object]:
     """Recompute one fixed paper case from its hash-pinned checkpoint.
 
-    Initial-condition cases prefer CUDA when available because their retained
-    authority was generated on CUDA. The frozen 1D PDE portability policy is
-    CPU-only with batch size 4096. The returned JSON-shaped object deliberately
-    contains only identity, execution, and semantically compared numerical
-    fields.
+    Initial-condition and PDE cases prefer CUDA when available because the
+    current-paper authority was generated on CUDA. Each fixed PDE case pins its
+    production batch size. The returned JSON-shaped object deliberately contains
+    only identity, execution, and semantically compared numerical fields.
     """
 
     try:
@@ -342,16 +350,19 @@ def reproduce(
         )
     checkout = repository_root(root)
     if case.quantity == "pde":
-        if device not in (None, "cpu"):
-            raise ValueError("frozen 1D PDE paper cases require device=cpu")
-        selected = torch.device("cpu")
-        if batch_size is not None and batch_size != 4096:
-            raise ValueError("PDE paper cases require the recorded batch_size=4096")
-        selected_batch = 4096
+        default = "cuda" if torch.cuda.is_available() else "cpu"
+        selected = _select_device(device, default=default)
+        if batch_size is not None and batch_size != case.batch_size:
+            raise ValueError(
+                f"PDE paper case {case.name} requires batch_size={case.batch_size}"
+            )
+        selected_batch = case.batch_size
     else:
         default = "cuda" if torch.cuda.is_available() else "cpu"
         selected = _select_device(device, default=default)
-        selected_batch = 65536 if batch_size is None else batch_size
+        if case.d == 3 and selected.type != "cuda":
+            raise ValueError("3D initial-data paper cases require a CUDA device")
+        selected_batch = case.batch_size if batch_size is None else batch_size
     if (
         not isinstance(selected_batch, int)
         or isinstance(selected_batch, bool)
@@ -359,20 +370,13 @@ def reproduce(
     ):
         raise ValueError("batch_size must be positive")
     model = _checked_model(case, checkout, selected)
-    if case.quantity == "pde" and case.d > 1:
-        try:
-            from .pde_multidim import reproduce_pde_multidim
-        except ImportError as error:  # fail closed, never a silent fallback
-            raise RuntimeError(
-                "multi-dimensional PDE closure is not integrated in this checkout"
-            ) from error
-        numerical = reproduce_pde_multidim(case.name, model, selected_batch, progress)
-    else:
-        numerical = (
-            _pde_result(case, model, selected_batch, progress)
-            if case.quantity == "pde"
-            else _initial_result(case, model, selected_batch)
-        )
+    if case.quantity == "pde" and case.d > 2:
+        raise RuntimeError("3D PDE closure is intentionally deferred")
+    numerical = (
+        _pde_result(case, model, selected_batch, progress)
+        if case.quantity == "pde"
+        else _initial_result(case, model, selected_batch)
+    )
     return {
         "schema_version": 1,
         "kind": "netbounds_paper_checkpoint_reproduction",

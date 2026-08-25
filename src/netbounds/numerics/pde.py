@@ -8,9 +8,37 @@ from ._bounds import compute_fourth_order_bounds, compute_second_order_bounds, c
 
 from ._initial_support.quadrature import as_cell_vector, require_nonnegative
 
-from ._pde_helpers import _add_counts, _boundary_center_and_variations, _boundary_derivative_center, _boundary_derivative_sup, _column, _product_variation
+from ._pde_helpers import (
+    _add_counts,
+    _boundary_center_and_variations,
+    _boundary_derivative_center,
+    _boundary_derivative_sup,
+    _column,
+    _interval_variation,
+    _product_interval,
+    _product_variation,
+)
 
-def _boundary_grouped_coeffs(y: torch.Tensor, eps_x: float, d: int) -> dict[str, object]:
+def _spatial_eps_vector(
+    y: torch.Tensor,
+    eps_x: float | torch.Tensor,
+    d: int,
+) -> torch.Tensor:
+    """Normalize scalar/isotropic or coordinatewise spatial cell radii."""
+
+    eps = torch.as_tensor(eps_x, dtype=y.dtype, device=y.device)
+    if eps.ndim == 0:
+        eps = eps.repeat(d)
+    if eps.shape != (d,):
+        raise ValueError("spatial radius must be scalar or have shape (d,)")
+    return eps
+
+
+def _boundary_grouped_coeffs(
+    y: torch.Tensor,
+    eps_x: float | torch.Tensor,
+    d: int,
+) -> dict[str, object]:
     """Analytic coefficient centers/variations with grouped Delta B.
 
     The old Wave bound treats ``B F_tt`` and each ``B F_ii`` as separate
@@ -19,7 +47,8 @@ def _boundary_grouped_coeffs(y: torch.Tensor, eps_x: float, d: int) -> dict[str,
     shared coefficient ``B`` is only varied once for the time-minus-Laplacian
     network factor.
     """
-    terms = _boundary_center_and_variations(y, eps_x, d)
+    eps_spatial = _spatial_eps_vector(y, eps_x, d)
+    terms = _boundary_center_and_variations(y, eps_spatial, d)
     delta_b = torch.zeros_like(terms["B"])
     eta_delta_b = torch.zeros_like(terms["B"])
     for b_ii, eta_b_ii in zip(terms["B_ii"], terms["eta_B_ii"]):
@@ -38,15 +67,27 @@ def _wave_operator_third_center_and_error(third, *, input_dim: int, d: int, t: i
         error = error + c2 * _column(third.third_derivative_bounds, third.triples, (i, i, q))
     return center, require_nonnegative("wave_operator_third_error", error)
 
-def _boundary_p_first_coeffs(y: torch.Tensor, eps_x: float, d: int) -> dict[str, object]:
-    """Centers/variations for P_i and first derivatives P_{i,q}."""
+def _boundary_p_first_coeffs(
+    y: torch.Tensor,
+    eps_x: float | torch.Tensor,
+    d: int,
+) -> dict[str, object]:
+    """Centers and valid center-variation radii for ``P_i`` and ``P_{i,q}``."""
+
     x = y[:, :d]
-    lower = (x - eps_x).clamp_min(0.0)
-    upper = (x + eps_x).clamp_max(1.0)
+    eps_spatial = _spatial_eps_vector(y, eps_x, d)
+    lower = (x - eps_spatial).clamp_min(0.0)
+    upper = (x + eps_spatial).clamp_max(1.0)
     s = x * (1.0 - x)
     d1 = 1.0 - 2.0 * x
-    s_sup = torch.where((lower <= 0.5) & (0.5 <= upper), torch.full_like(lower, 0.25), torch.maximum((lower * (1.0 - lower)).abs(), (upper * (1.0 - upper)).abs()))
-    d_sup = torch.maximum((1.0 - 2.0 * lower).abs(), (1.0 - 2.0 * upper).abs())
+    s_lower = torch.minimum(lower * (1.0 - lower), upper * (1.0 - upper))
+    s_upper = torch.where(
+        (lower <= 0.5) & (0.5 <= upper),
+        torch.full_like(lower, 0.25),
+        torch.maximum(lower * (1.0 - lower), upper * (1.0 - upper)),
+    )
+    d_lower = 1.0 - 2.0 * upper
+    d_upper = 1.0 - 2.0 * lower
     P: list[torch.Tensor] = []
     eta_P: list[torch.Tensor] = []
     P_q: list[list[torch.Tensor]] = []
@@ -54,14 +95,12 @@ def _boundary_p_first_coeffs(y: torch.Tensor, eps_x: float, d: int) -> dict[str,
     one = torch.ones(x.shape[0], dtype=x.dtype, device=x.device)
     zero = torch.zeros_like(one)
     for i in range(d):
-        center = one.clone(); sup = one.clone()
-        for j in range(d):
-            if j == i:
-                continue
-            center = center * s[:, j]
-            sup = sup * s_sup[:, j]
+        others = [j for j in range(d) if j != i]
+        center = s[:, others].prod(dim=-1) if others else one.clone()
+        interval_lower = s_lower[:, others].prod(dim=-1) if others else one.clone()
+        interval_upper = s_upper[:, others].prod(dim=-1) if others else one.clone()
         P.append(center)
-        eta_P.append(require_nonnegative(f"eta_P1_{i}", sup - center.abs()))
+        eta_P.append(_interval_variation(center, interval_lower, interval_upper))
         row = []
         eta_row = []
         for q in range(d + 1):
@@ -69,15 +108,23 @@ def _boundary_p_first_coeffs(y: torch.Tensor, eps_x: float, d: int) -> dict[str,
                 row.append(zero)
                 eta_row.append(zero)
                 continue
-            c = d1[:, q]
-            sp = d_sup[:, q]
-            for j in range(d):
-                if j == i or j == q:
-                    continue
-                c = c * s[:, j]
-                sp = sp * s_sup[:, j]
-            row.append(c)
-            eta_row.append(require_nonnegative(f"eta_P1_{i}_{q}", sp - c.abs()))
+            other_factors = [j for j in range(d) if j != i and j != q]
+            center_q = d1[:, q]
+            for j in other_factors:
+                center_q = center_q * s[:, j]
+            factor_lower = torch.cat(
+                [d_lower[:, q : q + 1], s_lower[:, other_factors]], dim=1
+            )
+            factor_upper = torch.cat(
+                [d_upper[:, q : q + 1], s_upper[:, other_factors]], dim=1
+            )
+            interval_q_lower, interval_q_upper = _product_interval(
+                factor_lower, factor_upper
+            )
+            row.append(center_q)
+            eta_row.append(
+                _interval_variation(center_q, interval_q_lower, interval_q_upper)
+            )
         P_q.append(row)
         eta_P_q.append(eta_row)
     return {"P": P, "eta_P": eta_P, "P_q": P_q, "eta_P_q": eta_P_q}
@@ -233,7 +280,7 @@ def wave_hyper_taylor_rect_batch(
         A_q_center.append(aq_center)
         A_q_error.append(aq_error)
 
-    eps_x = float(eps_vec[0].item())
+    eps_x = eps_vec[:d]
     coeffs = _boundary_grouped_coeffs(y, eps_x, d)
     B = coeffs["B"]
     eta_B = coeffs["eta_B"]
@@ -242,7 +289,7 @@ def wave_hyper_taylor_rect_batch(
     p = _boundary_p_first_coeffs(y, eps_x, d)
     x = y[:, :d]
     rcoef = 1.0 - 2.0 * x
-    eta_r = torch.full((m,), 2.0 * eps_x, dtype=dtype, device=device)
+    eta_r = 2.0 * eps_x
     H: list[torch.Tensor] = []
     eta_H: list[torch.Tensor] = []
     H_q: list[list[torch.Tensor]] = []
@@ -268,7 +315,7 @@ def wave_hyper_taylor_rect_batch(
                 if q == i:
                     center = center - 2.0 * _column(second.base_hessian, second.pairs, (i, sidx))
                 err = rcoef[:, i].abs() * _column(third.third_derivative_bounds, third.triples, (i, q, sidx))
-                err = err + eta_r * _column(third_sup, third.triples, (i, q, sidx))
+                err = err + eta_r[i] * _column(third_sup, third.triples, (i, q, sidx))
                 err = err + _column(second_err, second.pairs, (q, sidx))
                 if sidx == i:
                     err = err + 2.0 * _column(second_err, second.pairs, (i, q))
@@ -277,7 +324,7 @@ def wave_hyper_taylor_rect_batch(
                 err_hiq = err_hiq + eps_vec[sidx] * (center.abs() + err)
             etahq_row.append(require_nonnegative(f"eta_H_hyptay_{i}_{q}", err_hiq))
             err_hi = rcoef[:, i].abs() * _column(second_err, second.pairs, (i, q))
-            err_hi = err_hi + eta_r * _column(second_sup, second.pairs, (i, q)) + first_err[:, q]
+            err_hi = err_hi + eta_r[i] * _column(second_sup, second.pairs, (i, q)) + first_err[:, q]
             if q == i:
                 err_hi = err_hi + 2.0 * first_err[:, i]
             eta_h_i = eta_h_i + eps_vec[q] * (h_iq.abs() + err_hi)
@@ -455,7 +502,7 @@ def wave_hyper_taylor_rect_batch(
                 F_iqr_center = _column(third.base_third_derivatives, third.triples, (i, q, rj))
                 F_iqr_sup = _column(third_sup, third.triples, (i, q, rj))
                 H_qr_center = rcoef[:, i] * F_iqr_center - _column(second.base_hessian, second.pairs, (q, rj))
-                H_qr_sup = (rcoef[:, i].abs() + eta_r) * F_iqr_sup + _column(second_sup, second.pairs, (q, rj))
+                H_qr_sup = (rcoef[:, i].abs() + eta_r[i]) * F_iqr_sup + _column(second_sup, second.pairs, (q, rj))
                 if q == i:
                     H_qr_center = H_qr_center - 2.0 * _column(second.base_hessian, second.pairs, (i, rj))
                     H_qr_sup = H_qr_sup + 2.0 * _column(second_sup, second.pairs, (i, rj))

@@ -19,7 +19,11 @@ from ._bounds import (
 
 from .model import TanhNetwork as RigPINN_tanh
 
-from ._initial_support.boundary import require_spatial_product_boundary
+from ._initial_support.boundary import (
+    product_boundary_derivative_modulus,
+    product_boundary_derivative_value,
+    require_spatial_product_boundary,
+)
 
 from ._initial_support.modulus_data import (
     ModulusFunctionCertificate,
@@ -256,6 +260,35 @@ def _bf_derivative_sup(
         )
     return require_nonnegative("bf_derivative_sup", total)
 
+
+def _bf_derivative_paper_sup(
+    *,
+    spatial: torch.Tensor,
+    counts: tuple[int, ...],
+    spatial_eps: float,
+    first,
+    second,
+) -> torch.Tensor:
+    total = torch.zeros(
+        spatial.shape[0], dtype=spatial.dtype, device=spatial.device
+    )
+    for beta in _sub_counts(counts):
+        gamma = tuple(a - b for a, b in zip(counts, beta))
+        boundary_sup = (
+            product_boundary_derivative_value(spatial, beta).abs()
+            + product_boundary_derivative_modulus(spatial, spatial_eps, beta)
+        )
+        total = total + float(_multi_choose(counts, beta)) * boundary_sup * (
+            _network_derivative_sup(
+                counts=gamma,
+                spatial_eps=spatial_eps,
+                first=first,
+                second=second,
+            )
+        )
+    return require_nonnegative("paper_bf_derivative_sup", total)
+
+
 def _initial_displacement_moment_cell_integrals(
     *,
     model: RigPINN_tanh,
@@ -285,14 +318,12 @@ def _initial_displacement_moment_cell_integrals(
     approx_first_abs = torch.empty(M, d, dtype=dtype, device=device)
     for q in range(d):
         counts_q = tuple(int(axis == q) for axis in range(d))
-        approx_first_abs[:, q] = _bf_derivative_sup(
-            lower=lower,
-            upper=upper,
+        approx_first_abs[:, q] = _bf_derivative_paper_sup(
+            spatial=centers,
             counts=counts_q,
             spatial_eps=spatial_eps,
             first=first,
             second=None,
-            input_dim=model.input_dim,
         )
 
     g_center = as_cell_vector(
@@ -435,6 +466,38 @@ def _bft_derivative_sup(
         )
     return require_nonnegative("bft_derivative_sup", total)
 
+
+def _bft_derivative_paper_sup(
+    *,
+    spatial: torch.Tensor,
+    counts: tuple[int, ...],
+    spatial_eps: float,
+    time_idx: int,
+    first,
+    second,
+    third,
+) -> torch.Tensor:
+    total = torch.zeros(
+        spatial.shape[0], dtype=spatial.dtype, device=spatial.device
+    )
+    for beta in _sub_counts(counts):
+        gamma = tuple(a - b for a, b in zip(counts, beta))
+        boundary_sup = (
+            product_boundary_derivative_value(spatial, beta).abs()
+            + product_boundary_derivative_modulus(spatial, spatial_eps, beta)
+        )
+        total = total + float(_multi_choose(counts, beta)) * boundary_sup * (
+            _network_time_derivative_sup(
+                counts=gamma,
+                time_idx=time_idx,
+                first=first,
+                second=second,
+                third=third,
+            )
+        )
+    return require_nonnegative("paper_bft_derivative_sup", total)
+
+
 def _initial_velocity_moment_cell_integrals(
     *,
     model: RigPINN_tanh,
@@ -476,15 +539,14 @@ def _initial_velocity_moment_cell_integrals(
     approx_first_abs = torch.empty(M, d, dtype=dtype, device=device)
     for q in range(d):
         counts_q = tuple(int(axis == q) for axis in range(d))
-        approx_first_abs[:, q] = _bft_derivative_sup(
-            lower=lower,
-            upper=upper,
+        approx_first_abs[:, q] = _bft_derivative_paper_sup(
+            spatial=centers,
             counts=counts_q,
+            spatial_eps=spatial_eps,
             time_idx=time_idx,
             first=first,
             second=second,
             third=None,
-            input_dim=model.input_dim,
         )
 
     velocity_center = as_cell_vector(

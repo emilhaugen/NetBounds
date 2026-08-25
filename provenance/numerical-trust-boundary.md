@@ -26,17 +26,18 @@ The PDE table and PDE part of the energy table publish `moment_cross_l2`. They d
 
 ## Two recomputation modes
 
-### Fixed 1D checkpoint sanity slice
+### Fixed current-paper scope
 
-The public `netbounds-paper reproduce` command is a closed twelve-case interface, not a generic training or campaign interface. Its comparator accepts exactly the declared output schema, validates the selected authority through the same table-policy validators, and compares every declared numerical field. Missing, empty, unknown, non-finite, or structurally changed fields fail closed.
+The public `netbounds-paper reproduce` command is a closed 34-case interface, not a generic training or campaign API. It exposes all 30 initial-data cases and the four d=1/2 appendix-direct PDE cases; d=3 PDE remains gated. The comparator accepts exactly the declared output schema, validates the selected authority through the same table-policy validators, and compares every declared numerical field. Missing, empty, unknown, non-finite, or structurally changed fields fail closed.
 
-The frozen numerical gates are:
+The numerical gates are:
 
-- historical CUDA initial-condition replay: `rtol=5e-5`, `atol=5e-12`;
-- CPU 1D PDE replay with float32 kernels, float64 accumulation, and the historical batch size of 4096: `rtol=5e-7`, `atol=5e-14`;
-- CPU initial-condition portability check: `rtol=1.5e-4`, `atol=5e-12`.
+- CUDA initial-data replay: `rtol=5e-5`, `atol=5e-12`;
+- CPU initial-data portability: d=1 `rtol=1.5e-4`, d=2 `rtol=3e-4`, both with `atol=5e-12`;
+- CUDA PDE replay with float32 kernels and float64 accumulation: `rtol=5e-7`, `atol=5e-14`;
+- CPU PDE portability: `rtol=5e-5`, `atol=5e-12`.
 
-Initial-condition comparisons include the complete fixed-time grid geometry, cell volume, midpoint and bound diagnostics, squared quantities, ratio, and cell count. PDE comparisons include every retained additive sum, derived norm and ratio, two cell radii, coverage counts, and all retained `rho` diagnostics. Identity, checkpoint hash, architecture, rule, execution device, execution dtype, accumulation dtype, and the PDE batch size of 4096 are exact fields.
+Initial-data comparisons include the complete fixed-time grid geometry, cell volume, midpoint and bound diagnostics, squared quantities, ratio, and cell count. PDE comparisons include every retained additive sum, derived norm and ratio, all cell radii, coverage counts, and retained `rho` diagnostics. Identity, checkpoint hash, architecture, rule, execution dtype, accumulation dtype, grid, and fixed case-specific PDE batch size are exact fields.
 
 These gates assess ordinary floating-point computations only. They are not interval-enclosure or outward-rounding guarantees.
 

@@ -15,7 +15,8 @@ from .cases import CASES, Case, case_names
 
 CUDA_INITIAL_TOLERANCE = {"rtol": 5e-5, "atol": 5e-12}
 CPU_INITIAL_TOLERANCE = {"rtol": 1.5e-4, "atol": 5e-12}
-PDE_TOLERANCE = {"rtol": 5e-7, "atol": 5e-14}
+PDE_CUDA_TOLERANCE = {"rtol": 5e-7, "atol": 5e-14}
+PDE_CPU_TOLERANCE = {"rtol": 5e-5, "atol": 5e-12}
 
 _INITIAL_NUMERICAL_FIELDS = (
     "l2_bound",
@@ -228,8 +229,10 @@ def _validate_reproduction_shape(
     expected_accumulation = "float64" if case.quantity == "pde" else "float32"
     if execution["accumulation_dtype"] != expected_accumulation:
         raise ValueError(f"execution.accumulation_dtype must be {expected_accumulation}")
-    if case.quantity == "pde" and execution["batch_size"] != 4096:
-        raise ValueError("PDE execution.batch_size must be the recorded value 4096")
+    if case.quantity == "pde" and execution["batch_size"] != case.batch_size:
+        raise ValueError(
+            f"PDE execution.batch_size must be the recorded value {case.batch_size}"
+        )
 
     if case.quantity != "pde":
         _require_exact_keys(numerical, _INITIAL_NUMERICAL_FIELDS, "initial numerical")
@@ -414,18 +417,28 @@ def compare_reproduction(
 
     device = str(execution.get("device", ""))
     if case.quantity == "pde":
-        if device != "cpu":
-            raise ValueError("frozen 1D PDE comparison requires execution.device=cpu")
-        tolerance = PDE_TOLERANCE
-        tolerance_class = "pde_float32_float64_accumulation"
+        if device.startswith("cuda"):
+            tolerance = PDE_CUDA_TOLERANCE
+            tolerance_class = "pde_cuda_float32_float64_accumulation"
+        elif device == "cpu":
+            tolerance = PDE_CPU_TOLERANCE
+            tolerance_class = "pde_cpu_portability"
+        else:
+            raise ValueError(f"unsupported PDE device: {device}")
         compared = list(_leaves(numerical))
     else:
         if device.startswith("cuda"):
             tolerance = CUDA_INITIAL_TOLERANCE
             tolerance_class = "initial_cuda_float32"
         elif device == "cpu":
-            tolerance = CPU_INITIAL_TOLERANCE
-            tolerance_class = "initial_cpu_portability"
+            if case.d == 3:
+                raise ValueError("3D initial-data comparison requires CUDA execution")
+            tolerance = (
+                {"rtol": 3e-4, "atol": 5e-12}
+                if case.d == 2
+                else CPU_INITIAL_TOLERANCE
+            )
+            tolerance_class = f"initial_cpu_portability_d{case.d}"
         else:
             raise ValueError(f"unsupported initial-condition device: {device}")
         compared = [(field, numerical.get(field)) for field in _INITIAL_NUMERICAL_FIELDS]

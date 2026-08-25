@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use NetBounds, please cite the accompanying paper."
+title: "NetBounds: Reproduction code and artifacts for verification of neural network-based PDE solvers"
+type: software
+authors:
+  - family-names: Haugen
+    given-names: Emil
+    email: emilhau@math.uio.no
+  - family-names: Stepanenko
+    given-names: Alexei
+  - family-names: Hansen
+    given-names: Anders C.
+repository-code: "https://github.com/65industries/NetBounds"
+version: 0.1.0
+preferred-citation:
+  type: article
+  title: "Trustworthy AI in numerics: On verification algorithms for neural network-based PDE solvers"
+  authors:
+    - family-names: Haugen
+      given-names: Emil
+    - family-names: Stepanenko
+      given-names: Alexei
+    - family-names: Hansen
+      given-names: Anders C.

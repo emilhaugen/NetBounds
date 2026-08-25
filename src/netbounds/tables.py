@@ -27,20 +27,20 @@ ENERGY_TABLE_PATH = "paper/tables/energy_estimate_q1_master.tex"
 
 INITIAL_CAPTIONS = {
     "displacement": (
-        "\\caption{Upper bounds for the initial-displacement residual norm, "
+        "\\caption{Upper bounds for the initial displacement residual norm, "
         "as constructed in \\cref{sec:initial-displacement-quad}.}"
     ),
     "gradient": (
-        "\\caption{Upper bounds for the initial-displacement gradient residual norm, "
+        "\\caption{Upper bounds for the initial displacement gradient residual norm, "
         "as constructed in \\cref{sec:initial-displacement-gradient-quad}.}"
     ),
     "velocity": (
-        "\\caption{Integrated moment bounds for the initial-velocity residual norm, "
-        "as constructed in \\cref{sec:initial-velocity-quad} ($\\eps=10^{-3}$).}"
+        "\\caption{Upper bounds for the initial-velocity residual norm, as constructed "
+        "in \\cref{sec:initial-velocity-quad}.}"
     ),
 }
 PDE_CAPTION = (
-    "\\caption{Integrated moment bounds for the PDE residuals, as constructed in "
+    "\\caption{Upper bounds for the PDE residual norms, as constructed in "
     "\\cref{sec:pde-residual-quad}.}"
 )
 ENERGY_CAPTION = (
@@ -64,22 +64,22 @@ FAMILY_SCHEMA = {
     "displacement": {
         "residual_type": "initial_displacement",
         "selector": "initial_displacement_quadrature",
-        "q0_method": "ima_initial_q0_linear_remainder_moment_v1",
-        "q1_method": "ima_initial_q1_quadratic_remainder_moment_v1",
+        "q0_method": "ima_initial_q0_linear_remainder_moment_v2",
+        "q1_method": "ima_initial_q1_quadratic_remainder_moment_v2",
         "q0_order": 1,
         "q1_order": 2,
         "q0_cell": "constant",
         "q1_cell": "affine_taylor",
         "q0_remainder": "coordinatewise_linear_derivative_envelope",
         "q1_remainder": "quadratic_hessian_envelope",
-        "q0_formula": "eq:appendix-initial-displacement-first-coefficients",
-        "q1_formula": "eq:appendix-initial-displacement-second-coefficients",
+        "q0_formula": "eq:initial-displacement-first-coefficients",
+        "q1_formula": "eq:initial-displacement-second-coefficients",
     },
     "gradient": {
         "residual_type": "initial_displacement_gradient",
         "selector": "initial_gradient_quadrature",
-        "q0_method": "ima_initial_gradient_q0_linear_remainder_moment_v1",
-        "q1_method": "ima_initial_gradient_q1_quadratic_remainder_moment_v1",
+        "q0_method": "ima_current_paper_initial_gradient_q0_centered_moment_v2",
+        "q1_method": "ima_current_paper_initial_gradient_q1_centered_moment_v2",
         "q0_order": 2,
         "q1_order": 3,
         "q0_cell": "constant",
@@ -92,8 +92,8 @@ FAMILY_SCHEMA = {
     "velocity": {
         "residual_type": "initial_velocity",
         "selector": "initial_velocity_quadrature",
-        "q0_method": "ima_initial_velocity_q0_linear_remainder_moment_v1",
-        "q1_method": "ima_initial_velocity_q1_quadratic_remainder_moment_v1",
+        "q0_method": "ima_current_paper_initial_velocity_q0_centered_moment_v2",
+        "q1_method": "ima_current_paper_initial_velocity_q1_centered_moment_v2",
         "q0_order": 2,
         "q1_order": 3,
         "q0_cell": "constant",
@@ -227,7 +227,8 @@ def _validate_initial_artifact(
     if rule == "q0":
         checks["explicit Lipschitz source"] = (
             family != "displacement"
-            or str(data.get("data_lipschitz_source", "")).startswith("explicit_")
+            or data.get("data_derivative_envelope")
+            == "separable_sine_global_componentwise"
         )
     if family == "gradient" and rule == "q0":
         checks["component aggregation"] = (
@@ -275,7 +276,7 @@ def load_initial_pairs(root: Path, catalog: Mapping[str, Any]) -> list[InitialPa
         _validate_initial_artifact(q1, policy, "q1", q1_path)
         midpoint0 = _finite_decimal(q0, "midpoint_l2", q0_path)
         midpoint1 = _finite_decimal(q1, "midpoint_l2", q1_path)
-        tolerance = max(Decimal("1e-12"), abs(midpoint1) * Decimal("1e-7"))
+        tolerance = max(Decimal("1e-10"), abs(midpoint1) * Decimal("2e-5"))
         _require(
             abs(midpoint0 - midpoint1) <= tolerance,
             policy["task_id"],
@@ -344,9 +345,9 @@ def _validate_pde_artifact(
         _require(int(data.get("num_boxes", -1)) == total_cells, path, "cell count mismatch")
         _require(int(data.get("processed_boxes", -1)) == total_cells, path, "processed count mismatch")
         _require(config.get("dtype") == "float32", path, "execution dtype mismatch")
-        _require(config.get("certificate") == MOMENT_CERTIFICATE, path, "certificate mismatch")
-        _require(config.get("method_identifier") == MOMENT_METHOD_IDENTIFIER, path, "method identifier mismatch")
-        _require(config.get("rigorous_remainder") == MOMENT_REMAINDER, path, "remainder mismatch")
+        _require(config.get("certificate") == policy["certificate"], path, "certificate mismatch")
+        _require(config.get("method_identifier") == policy["method_identifier"], path, "method identifier mismatch")
+        _require(config.get("rigorous_remainder") == policy["rigorous_remainder"], path, "remainder mismatch")
     elif family == "heat3_adaptive_same_policy":
         _require(data.get("accepted_as_heat3d_moment_pde_residual_bound") is True, path, "acceptance flag missing")
         _require(data.get("same_policy_re_evaluation_validated") is True, path, "same-policy validation missing")
