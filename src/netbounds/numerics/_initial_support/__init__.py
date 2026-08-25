@@ -1,0 +1,1 @@
+"""Private shared primitives for the two initial-data quadrature rules."""

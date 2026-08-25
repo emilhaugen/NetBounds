@@ -3,11 +3,18 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import sys
 from typing import Any
 
-from .data import VerificationError, load_catalog, repository_root, verify_files
+from .data import (
+    VerificationError,
+    load_catalog,
+    repository_root,
+    verify_files,
+    verify_numerical_source_closure,
+)
 from .tables import check_tables, write_tables
 
 
@@ -40,20 +47,47 @@ def parser() -> argparse.ArgumentParser:
         action="store_true",
         help="fail if any tracked table differs; do not write files",
     )
+    from .numerics.cases import case_names
+
+    reproduce = subcommands.add_parser(
+        "reproduce",
+        help="recompute one fixed checkpoint-backed 1D paper case",
+    )
+    _root_argument(reproduce)
+    reproduce.add_argument("--case", choices=case_names(), required=True)
+    reproduce.add_argument("--device", help="execution device (cpu or cuda); defaults to cuda if available")
+    reproduce.add_argument(
+        "--batch-size",
+        type=int,
+        help="positive initial-condition batch size; PDE replay is fixed at 4096",
+    )
+    reproduce.add_argument(
+        "--check",
+        action="store_true",
+        help="fail closed unless every fixed numerical field matches authority",
+    )
+    reproduce.add_argument(
+        "--allow-full-pde",
+        action="store_true",
+        help="acknowledge the 250,000-cell CPU PDE computation",
+    )
     return command
 
 
 def _verify(root: Path, catalog: dict[str, Any]) -> None:
     payload = verify_files(root, catalog["payload_files"])
+    numerical_sources = verify_numerical_source_closure(root, catalog)
     rendered = check_tables(root, catalog)
     checkpoints = catalog["checkpoints"]
     bundled = sum(bool(entry["bundled"]) for entry in checkpoints)
     print(f"PASS retained payload: {len(payload)} files")
-    print("PASS selected artifacts: 30 initial + 6 PDE")
+    print(f"PASS numerical source closure: {numerical_sources} files")
+    print(f"PASS selected artifacts: 30 initial + 6 PDE")
     print(f"PASS rendered authority: {len(rendered)} tables (byte-exact)")
     print(
-        "NOTE GPU recomputation: "
-        f"{bundled}/{len(checkpoints)} checkpoints bundled; not part of this bootstrap slice"
+        "NOTE checkpoint reproduction: "
+        f"{bundled}/{len(checkpoints)} checkpoints bundled; "
+        "2D/3D checkpoint-backed recomputation is a later extension"
     )
 
 
@@ -69,6 +103,39 @@ def _tables(root: Path, catalog: dict[str, Any], *, check: bool) -> None:
         print(f"  {relative}")
 
 
+def _reproduce(args: argparse.Namespace, root: Path) -> None:
+    """Run a closed paper case without importing PyTorch for other commands."""
+
+    if "-pde-" in args.case and not args.allow_full_pde:
+        raise ValueError("PDE replay needs --allow-full-pde (250,000 CPU cells)")
+    from .numerics.compare import compare_reproduction
+    from .numerics.reproduce import reproduce
+
+    progress_milestone = 0
+
+    def progress(done: int, total: int) -> None:
+        nonlocal progress_milestone
+        milestone = 10 if done == total else (10 * done) // total
+        if milestone > progress_milestone:
+            progress_milestone = milestone
+            print(f"PDE progress: {done}/{total} ({10 * milestone}%)", file=sys.stderr)
+
+    result = reproduce(
+        args.case,
+        root=root,
+        device=args.device,
+        batch_size=args.batch_size,
+        progress=progress if "-pde-" in args.case else None,
+    )
+    payload: dict[str, Any] = result
+    if args.check:
+        comparison = compare_reproduction(result, root=root)
+        payload = {"reproduction": result, "comparison": comparison}
+    print(json.dumps(payload, indent=2, sort_keys=True, allow_nan=False))
+    if args.check and not payload["comparison"]["passed"]:
+        raise VerificationError("reproduction comparison failed")
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
@@ -78,9 +145,11 @@ def main(argv: list[str] | None = None) -> int:
             _verify(root, catalog)
         elif args.command == "tables":
             _tables(root, catalog, check=args.check)
+        elif args.command == "reproduce":
+            _reproduce(args, root)
         else:  # pragma: no cover - argparse enforces the command set.
             raise AssertionError(args.command)
-    except (OSError, KeyError, TypeError, VerificationError, ValueError) as error:
+    except (ArithmeticError, OSError, KeyError, RuntimeError, TypeError, VerificationError, ValueError) as error:
         print(f"FAIL {error}", file=sys.stderr)
         return 1
     return 0

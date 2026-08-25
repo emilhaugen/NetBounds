@@ -1,0 +1,284 @@
+{
+  "checkpoint_files": [
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/heat1-l2-w128.pt",
+      "reproduction_scope": "validated_1d",
+      "sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "stored_dtype": "float64"
+    },
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/heat2-l3-w128.pt",
+      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "stored_dtype": "float64"
+    },
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/heat3-l4-w128.pt",
+      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "stored_dtype": "float64"
+    },
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/wave1-l2-w256.pt",
+      "reproduction_scope": "validated_1d",
+      "sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "stored_dtype": "float64"
+    },
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/wave2-l3-w256.pt",
+      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "stored_dtype": "float64"
+    },
+    {
+      "execution_dtype": "float32",
+      "path": "data/checkpoints/wave3-l3-w256.pt",
+      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "stored_dtype": "float32"
+    }
+  ],
+  "comparison_policy": {
+    "field_policy": {
+      "identity_and_execution": "exact schema, selected case, authority path, equation, quantity, rule, architecture, checkpoint path and hash, execution device, kernel dtype, accumulation dtype, fixed grid, and the PDE batch size of 4096",
+      "initial": [
+        "l2_bound",
+        "l2_squared_bound",
+        "midpoint_l2",
+        "midpoint_l2_squared",
+        "bound_to_midpoint_ratio",
+        "cell_volume",
+        "eps",
+        "num_boxes"
+      ],
+      "pde": "all declared sums, derived norms and ratios, cell radii, coverage counts, and rho diagnostics"
+    },
+    "initial_cpu_portability": {
+      "atol": 5e-12,
+      "rtol": 0.00015
+    },
+    "initial_cuda_float32": {
+      "atol": 5e-12,
+      "rtol": 5e-05
+    },
+    "ordinary_float32_not_outward_rounded": true,
+    "pde_cpu_float32_float64_accumulation": {
+      "atol": 5e-14,
+      "rtol": 5e-07
+    },
+    "unknown_or_missing_fields": "fail_closed"
+  },
+  "extracted_source_closure": {
+    "hash_algorithm": "sha256 of each UTF-8 source byte stream; manifest digest is sha256 of canonical JSON sorted by path with compact separators",
+    "source_manifest_sha256": "ab31df113e001eed6df9db1babd08c6cde03f98efd1a1921c98a06d00234cb57",
+    "sources": [
+      {
+        "path": "src/netbounds/numerics/__init__.py",
+        "sha256": "8ecef5426740ef241e6cf43f00b764c2af254fb177592e3b787651d4aa709dde"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/__init__.py",
+        "sha256": "09ce2242ee30c79b3949b2a233e078047d302429d5e1dd2805d4a39ad3da3847"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/activation_bounds.py",
+        "sha256": "f274a6372baa6c4a39c014cd327114e2af85f1e134668fc9f167c80c50b24519"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/common.py",
+        "sha256": "5aa1828e32f2e4338e8dc0e91781f50eebcb867ea8d662069f30e0516cf27798"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/first_order.py",
+        "sha256": "894495f0a7e2ffb121408225198a0eefd198b02891438eba095e7fecce44dc44"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/fourth_order.py",
+        "sha256": "70b386a8efbb8dc4256853cb666318f8d1922c0983fc3f888ceb2c0984eee607"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/second_order.py",
+        "sha256": "3cc4f658cb5f7896836924f854aeda3cd6117a0a7db7bff589d2bebba30de302"
+      },
+      {
+        "path": "src/netbounds/numerics/_bounds/third_order.py",
+        "sha256": "4ed4c8289a0b97f8fd970d4a32927f9c885aea5781d86ccce1a46a95561f7d6b"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/__init__.py",
+        "sha256": "328b30ec0bd226d7faa90d7b991caf3deba2ec69198559bd7aaad34da138ab16"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/boundary.py",
+        "sha256": "c0966c592308d8a72113d64494a39cd2e9dc4e392833bd363b45d6598505079d"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/grids.py",
+        "sha256": "efae6e03341da70c2a28d078b90e2d7e0b587e6319a5c2b327fda5b5cf74b50f"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/modulus_data.py",
+        "sha256": "d11e3fc4a54725761eeef52badfa8d7aa63ccf4736ecd623c6beb6eedcdb0fda"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/moment.py",
+        "sha256": "572c129d6dea77c34ae72a09e095c167904534a0d367cb29624d39581261527f"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/pde_helpers.py",
+        "sha256": "0b88014759435ecd62685ee18e531c896c9329dc2b04107f3de16dca1328e532"
+      },
+      {
+        "path": "src/netbounds/numerics/_initial_support/quadrature.py",
+        "sha256": "941c613466855e3adfe7acf3e7b947754eafce789e72b967e9fcee170379de80"
+      },
+      {
+        "path": "src/netbounds/numerics/_pde_helpers.py",
+        "sha256": "1ab3b1ede1d89c53495e20a10fc0a97c3b0fe6e865241382c3f8196a50ff4e09"
+      },
+      {
+        "path": "src/netbounds/numerics/cases.py",
+        "sha256": "12301a12c63a745376110c4f136992e1491037bfb02c15979716aab4045f25a9"
+      },
+      {
+        "path": "src/netbounds/numerics/compare.py",
+        "sha256": "d3d6aadeaed5ff8b0d3c00259120aa8babf13e39971540952fe0820e34ddec47"
+      },
+      {
+        "path": "src/netbounds/numerics/initial_data.py",
+        "sha256": "f24a93df0a36a7262bf7cfa84d52fac79931d26e74a4dac7388d6f79cf8dd5ad"
+      },
+      {
+        "path": "src/netbounds/numerics/initial_gradient_q0.py",
+        "sha256": "65fc303ef88ea5f98eb095627a35e79d3142adef778d43bf91c568463dd67de2"
+      },
+      {
+        "path": "src/netbounds/numerics/initial_gradient_q1.py",
+        "sha256": "0673df3a9d41d6f4ebee8a49c8d75205cf4e89284b83717da167659d070d6b31"
+      },
+      {
+        "path": "src/netbounds/numerics/initial_q0.py",
+        "sha256": "1bd9cf90fa11e1f47f24f850f042db755e45932d0baf049c791659b711dfb121"
+      },
+      {
+        "path": "src/netbounds/numerics/initial_q1.py",
+        "sha256": "1e4de6865f47d7475758aec6be0093b1da284744981f6e5a9ead74b198072715"
+      },
+      {
+        "path": "src/netbounds/numerics/model.py",
+        "sha256": "970e934cd1a55bf6f98755da6cc37c8cec2afdec5b5634eccf9f563835a1f51e"
+      },
+      {
+        "path": "src/netbounds/numerics/pde.py",
+        "sha256": "d2091cfe78757c85ff251363e9f8cb0c926864e8cb9e6a11bc85fd2b61558847"
+      },
+      {
+        "path": "src/netbounds/numerics/reproduce.py",
+        "sha256": "8a087ca20fa3d8b87c013aea3da06713916580c409a660c28ce4e9c5a58751b6"
+      }
+    ]
+  },
+  "producer_revisions": [
+    {
+      "cases": [
+        "heat1-displacement-q0",
+        "heat1-gradient-q0",
+        "wave1-displacement-q0",
+        "wave1-gradient-q0",
+        "wave1-velocity-q0"
+      ],
+      "commit": "2add56070e88dc16def9accbed953fa854f22d39",
+      "entry_points": [
+        "run_initial_residual_bounds.py",
+        "run_initial_gradient_residual_bounds.py",
+        "scripts/run_wave_residual_bounds.py"
+      ]
+    },
+    {
+      "cases": [
+        "heat1-displacement-q1",
+        "heat1-gradient-q1",
+        "wave1-displacement-q1",
+        "wave1-gradient-q1",
+        "wave1-velocity-q1"
+      ],
+      "commit": "1003b5448260462e888dede918904d8391fd2a78",
+      "entry_points": [
+        "run_initial_residual_bounds.py",
+        "run_initial_gradient_residual_bounds.py",
+        "scripts/run_wave_residual_bounds.py"
+      ]
+    },
+    {
+      "cases": [
+        "heat1-pde-q1",
+        "wave1-pde-q1"
+      ],
+      "commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+      "entry_points": [
+        "scripts/run_ima_pde_q1_d1_moment_full.py"
+      ]
+    }
+  ],
+  "purpose": "Auditable provenance for the six bundled selected checkpoints and the currently validated fixed 1D paper sanity reproducer.",
+  "reached_function_trace_basis": {
+    "collection": "netbounds-1d-reached-traces-20260817-v2",
+    "description": "Function-call traces collected from the fixed historical commands. Trace bytes were used to select the compact local closure; they are evidence, not a runtime dependency.",
+    "files": [
+      {
+        "file": "pde-heat.json",
+        "producer_commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+        "sha256": "14a58404a6466916be9effaaf3aaafdc53ada0ca4fa0f8a4a5cbe211f8777e35"
+      },
+      {
+        "file": "pde-wave.json",
+        "producer_commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
+        "sha256": "d80c3dca2a287e9825fa2037fcd684b318a5ee675ef3be856ed4b2b2aa3bd416"
+      },
+      {
+        "file": "q0-displacement.json",
+        "producer_commit": "2add56070e88dc16def9accbed953fa854f22d39",
+        "sha256": "cabe26184873e9938bb667d740fb6e4d3a2e635e8fbecdcc999a4568a2d1092e"
+      },
+      {
+        "file": "q0-gradient.json",
+        "producer_commit": "2add56070e88dc16def9accbed953fa854f22d39",
+        "sha256": "fef4efaa3e9b1abcfb5e0a25e4d79f18c41f0c1cf75ed61434c7dbeb3f655177"
+      },
+      {
+        "file": "q0-velocity.json",
+        "producer_commit": "2add56070e88dc16def9accbed953fa854f22d39",
+        "sha256": "640a7a330df0cd4142955d26ef1900aa2e86a85df592111d3522e74abd6e76eb"
+      },
+      {
+        "file": "q1-displacement.json",
+        "producer_commit": "1003b5448260462e888dede918904d8391fd2a78",
+        "sha256": "c72434da99da2c52cbfd1a9a49bab7dd4016f113f3cc9e9d87f8238986aece1a"
+      },
+      {
+        "file": "q1-gradient.json",
+        "producer_commit": "1003b5448260462e888dede918904d8391fd2a78",
+        "sha256": "76da942edf042f5f9c02ae46be8eb283fb0df2d5c37e0db286050eb58f63f9ca"
+      },
+      {
+        "file": "q1-velocity.json",
+        "producer_commit": "1003b5448260462e888dede918904d8391fd2a78",
+        "sha256": "837936d1f07a069e273e0715de352f6a6eb38163b4101a6a0b5d4b2a9142a455"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope": {
+    "bundled_selected_checkpoints": 6,
+    "covered_artifact_computations": 12,
+    "full_checkpoint_reproduction": false,
+    "release_complete": false,
+    "supported_dimension": 1,
+    "total_retained_artifact_computations": 36
+  }
+}
