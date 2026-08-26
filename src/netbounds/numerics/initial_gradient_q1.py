@@ -167,8 +167,8 @@ class VectorTaylorInitialDatum:
         """Return ``omega_g^(e_j+e_l)(radius)`` for every ``j,l``.
 
         If no entrywise modulus is supplied, the component Hessian l1 bound
-        gives a conservative compatibility fallback. Production campaigns
-        should provide the manuscript's analytic entrywise data modulus.
+        gives a conservative fallback. The current calculations provide the
+        analytic entrywise data modulus.
         """
         values = self.value(centers)
         if values.ndim != 2:
@@ -213,10 +213,6 @@ class VectorTaylorInitialDatum:
                 "component_hessian_abs_bound_value must broadcast to shape [M,d,d,d]"
             )
         return require_nonnegative("component_hessian_abs_bound", bound)
-
-    def variation_bound(self, centers: torch.Tensor, radius: float) -> torch.Tensor:
-        # Compatibility with the older envelope quadrature path.
-        return float(radius) * self.hessian_l1_bound(centers, radius)
 
 @dataclass
 class InitialGradientResidualL2BoundResult:

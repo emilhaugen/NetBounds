@@ -1,13 +1,5 @@
 {
   "authority": {
-    "source_commit": null,
-    "source_commits": {
-      "initial_displacement": "0dc10fcd69738511e29b004711cea094a127fdc7",
-      "initial_gradient_velocity": "f84289b14c61e13bcfd3f781d49252c529976401",
-      "pde_d1_d2": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-      "pde_d3": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53"
-    },
-    "source_repository": "65industries/NetBounds-dev",
     "tables": [
       {
         "path": "paper/tables/initial_displacement_residuals_q0_q1_master.tex",
@@ -35,64 +27,6 @@
         "size": 2219
       }
     ]
-  },
-  "campaigns": {
-    "q0": {
-      "metadata": [
-        {
-          "path": "provenance/campaigns/q0/manifest.json",
-          "sha256": "b33a5cf2003824bc83be055ec2ed4868d9f6074bd5725eec4b75528bfce6df47",
-          "size": 30470
-        },
-        {
-          "path": "provenance/campaigns/q0/manifest.sha256",
-          "sha256": "533730186080a4f7fd74bb8b306bfe519463b06b0299708d1c3a57b459acc94f",
-          "size": 65
-        },
-        {
-          "path": "provenance/campaigns/q0/final_validation.json",
-          "sha256": "37656e37462a29587918ca62117bd936e5b296c2e7a5c6d5414b49f7c6e2acc0",
-          "size": 9771
-        },
-        {
-          "path": "provenance/campaigns/q0/COMPLETED",
-          "sha256": "ff49b53e6941b4f17cf11548eaf513faad5cd26cfeddc563dcfa5a065486b5e1",
-          "size": 130
-        }
-      ],
-      "section2_sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
-      "section4_sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
-      "source_commit": "2add56070e88dc16def9accbed953fa854f22d39",
-      "task_count": 15
-    },
-    "q1": {
-      "metadata": [
-        {
-          "path": "provenance/campaigns/q1/manifest.json",
-          "sha256": "408143d9112cb25bb7e2a89dfad96b56bae2d1624a136c451f45e2b17d0ec155",
-          "size": 30205
-        },
-        {
-          "path": "provenance/campaigns/q1/manifest.sha256",
-          "sha256": "f96dfa8ffecaa58e1b16d4a94fdc849a9075d15e421eae48f4e56fce8ebed3a5",
-          "size": 80
-        },
-        {
-          "path": "provenance/campaigns/q1/final_validation.json",
-          "sha256": "a491cf676d251e8c7189b89de1fd3e689abe894fef9737d47d5cab3d70fbf62f",
-          "size": 9788
-        },
-        {
-          "path": "provenance/campaigns/q1/COMPLETED",
-          "sha256": "0e1025125b8963480fe666e090b46fa35dd2d141290096e1c37096b4eb0000af",
-          "size": 130
-        }
-      ],
-      "section2_sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
-      "section4_sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
-      "source_commit": "1003b5448260462e888dede918904d8391fd2a78",
-      "task_count": 15
-    }
   },
   "capabilities": {
     "checkpoint_backed_all_pde_reproduction": true,
@@ -155,18 +89,6 @@
       "size": 35946245
     }
   ],
-  "formula_snapshots": [
-    {
-      "path": "provenance/formulas/section2.tex",
-      "sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
-      "size": 17683
-    },
-    {
-      "path": "provenance/formulas/section4.tex",
-      "sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
-      "size": 30829
-    }
-  ],
   "initial_rows": [
     {
       "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
@@ -177,14 +99,14 @@
       "num_boxes": 500,
       "q0": {
         "path": "data/artifacts/initial/q0/heat1_displacement.json",
-        "sha256": "3bf9fa12c440346fbcc506d5b2da7998b89c4b46bc991eaccafcab4d28a51413",
-        "size": 1775,
+        "sha256": "076c2a6a14ff10b669741819c0c22a81d9a6efcab5fe0ceeb46f2125d4640701",
+        "size": 1113,
         "task_id": "heat1_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat1_displacement.json",
-        "sha256": "e0c88529c2b6b9474eaede6f7e9f6004283dfbac2fbe9b429abca5e89d127f5c",
-        "size": 1874,
+        "sha256": "4c141e0e0ce6f1a09722c38bb294b656c51b21c2454f8619b1047934c7a1c318",
+        "size": 1103,
         "task_id": "heat1_displacement"
       },
       "task_id": "heat1_displacement",
@@ -199,14 +121,14 @@
       "num_boxes": 250000,
       "q0": {
         "path": "data/artifacts/initial/q0/heat2_displacement.json",
-        "sha256": "6c328197f93d9de8ab68acb0392a003a15fbbf3741ffd7cf47f5fec103036131",
-        "size": 1779,
+        "sha256": "85ea9d8a77ff5ea063569525263bf5fea9fcff343ef8c78d44095e652ad794fb",
+        "size": 1119,
         "task_id": "heat2_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat2_displacement.json",
-        "sha256": "b71f37c21af2c441eaf5d3ffa4ee6a8c62529da1db65c5166a2f50892c92136a",
-        "size": 1878,
+        "sha256": "4cc5d85155307c3be1bc9c4656250d790597af8406ef3ae1b31f48106646e172",
+        "size": 1110,
         "task_id": "heat2_displacement"
       },
       "task_id": "heat2_displacement",
@@ -221,14 +143,14 @@
       "num_boxes": 125000000,
       "q0": {
         "path": "data/artifacts/initial/q0/heat3_displacement.json",
-        "sha256": "e51b76c42b47f92104ad2dd15db763c3f0ac6f1c16f26ddc9aef0020bf1c9dee",
-        "size": 1779,
+        "sha256": "f69366394e116bc5f51934ab11cdc48f74a8144cdbd2360b44875afdccabd91d",
+        "size": 1117,
         "task_id": "heat3_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat3_displacement.json",
-        "sha256": "56af6cb47f603068e9dc55a569268ff262731ad38687f8def6d9dbfebb262273",
-        "size": 1881,
+        "sha256": "2c6607c8ebcf474f7d41c116bcd6d0c8603428d0c52f27c16887d327fa0fdd0c",
+        "size": 1110,
         "task_id": "heat3_displacement"
       },
       "task_id": "heat3_displacement",
@@ -243,14 +165,14 @@
       "num_boxes": 500,
       "q0": {
         "path": "data/artifacts/initial/q0/wave1_displacement.json",
-        "sha256": "92f7b8b5495dab1eeafd02190895e3ddf0ba0c4d2f43ac24c66a44b0b3925e2f",
-        "size": 1764,
+        "sha256": "90ec32e5a74d560e09931cd6337c12e847c1ffe1a72f3b7f8070923fa7025b5a",
+        "size": 1109,
         "task_id": "wave1_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave1_displacement.json",
-        "sha256": "98f1d8b1082d83e888ae4377b4ac86227d35e1eede7f2d3b711e8e5920d37377",
-        "size": 1864,
+        "sha256": "243aeaa2389cef7ebc0497a02e3034e7f9ceb907f94dc38ceda4c8253d18a657",
+        "size": 1101,
         "task_id": "wave1_displacement"
       },
       "task_id": "wave1_displacement",
@@ -265,14 +187,14 @@
       "num_boxes": 250000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave2_displacement.json",
-        "sha256": "0ace784c43fde844bde59eb796f829869321fdb4de56b9bec25910aeef2dbc4e",
-        "size": 1769,
+        "sha256": "0461f56c87955e0bd183b28b027c5f21e4b6c3db13d73983b11a9cc1e4052485",
+        "size": 1118,
         "task_id": "wave2_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave2_displacement.json",
-        "sha256": "7c32deca8ff7e23c54172860d9d247fd7d42b20dc3d72bc8eb7ad620fe6d42a2",
-        "size": 1866,
+        "sha256": "1d4eb916348c86291def9f378efd832ce21aff8371f71afcfe3d0ff895381db5",
+        "size": 1108,
         "task_id": "wave2_displacement"
       },
       "task_id": "wave2_displacement",
@@ -287,14 +209,14 @@
       "num_boxes": 125000000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave3_displacement.json",
-        "sha256": "7cc08245c20d1ff45e453a33d0d380c457567ac32135b59dc58242f2ad7ec238",
-        "size": 1772,
+        "sha256": "57802cb1fce7fca5d29f3300529176f831e938ac094bb3f2e4373728ff6ecd78",
+        "size": 1117,
         "task_id": "wave3_displacement"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave3_displacement.json",
-        "sha256": "030df434186ee508056af979ddc0f9d353e1684d2581b0d545c7708add5b8672",
-        "size": 1872,
+        "sha256": "b5b8a21662f53b090b5977e31ef33c401ed72ef8dd8036e6111803f4a3263831",
+        "size": 1109,
         "task_id": "wave3_displacement"
       },
       "task_id": "wave3_displacement",
@@ -309,14 +231,14 @@
       "num_boxes": 500,
       "q0": {
         "path": "data/artifacts/initial/q0/heat1_gradient.json",
-        "sha256": "40e1438bd5b65e70a9c74fe907ef4b9ae8ee87f870090df74ee9cff3d906db45",
-        "size": 2051,
+        "sha256": "c5e0938f2bbbe3137da34fddd137f4d48e541de1d73603e4318155b8be99df95",
+        "size": 1145,
         "task_id": "heat1_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat1_gradient.json",
-        "sha256": "348bc51b1cf32559717d90ba6e624a0f8e7fa1564963b782fb17e8c50e080e44",
-        "size": 2132,
+        "sha256": "e7a6f67519a8841c87484a12796548ee2b9757c9bcbe5408965113ac239ab668",
+        "size": 1164,
         "task_id": "heat1_gradient"
       },
       "task_id": "heat1_gradient",
@@ -331,14 +253,14 @@
       "num_boxes": 250000,
       "q0": {
         "path": "data/artifacts/initial/q0/heat2_gradient.json",
-        "sha256": "a19c7e6c4a788e89f0fd22a856e009883153c13fa3c04e049859dfc1b85ba11b",
-        "size": 2052,
+        "sha256": "b61a81d90956dde8a6f590f833fb252cb498e5673f67ec27fe7bc1a35969ba5c",
+        "size": 1149,
         "task_id": "heat2_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat2_gradient.json",
-        "sha256": "86d92ba3aa7e5661a564950b1c14a7f21dbcdb1a6615c980fabfad9a5366e243",
-        "size": 2133,
+        "sha256": "26b14745e3dc9c9db6f45362f2b1e863ebb48cc20889e160be39b6c3e53308fe",
+        "size": 1167,
         "task_id": "heat2_gradient"
       },
       "task_id": "heat2_gradient",
@@ -353,14 +275,14 @@
       "num_boxes": 125000000,
       "q0": {
         "path": "data/artifacts/initial/q0/heat3_gradient.json",
-        "sha256": "6628bef4feb54c4256d752164a5ee393c7155f74816fd12ee9fe92dbc869fa82",
-        "size": 2055,
+        "sha256": "f247a4543320b48a580424e67d47e750f23c61211e567fa25bbd4ef6fcd1e820",
+        "size": 1151,
         "task_id": "heat3_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/heat3_gradient.json",
-        "sha256": "e79b89d720c825b2f13081efcf22b2a2b35a86cae75b40b9403a7d3236266597",
-        "size": 2137,
+        "sha256": "4256854d4eaf4b5bc13e9110a36b32352d31b9badd5607166cebfd7e6182aa3f",
+        "size": 1176,
         "task_id": "heat3_gradient"
       },
       "task_id": "heat3_gradient",
@@ -375,14 +297,14 @@
       "num_boxes": 500,
       "q0": {
         "path": "data/artifacts/initial/q0/wave1_gradient.json",
-        "sha256": "86eb1c86053fa9b752007e2def52d82e956d05ce8380ade5e36d36fd4a2c7023",
-        "size": 2040,
+        "sha256": "8cf82f9f2d454758db735420a6589f8bfb16fb31985ee3dde08cfd32b61ac2fe",
+        "size": 1146,
         "task_id": "wave1_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave1_gradient.json",
-        "sha256": "2873dcbb61be5e98e1d9a7f6f569e1fbbd91d8f1898181c2ec61cc6b6d2bcd1c",
-        "size": 2124,
+        "sha256": "6002b7b01704e0d9bf0815d5ed1aa8e7376c8108ffec038dfd2177770e06c578",
+        "size": 1170,
         "task_id": "wave1_gradient"
       },
       "task_id": "wave1_gradient",
@@ -397,14 +319,14 @@
       "num_boxes": 250000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave2_gradient.json",
-        "sha256": "8783d08c96b50fe982a9358924c1e9d452580019231c4907881d3417777e65a0",
-        "size": 2042,
+        "sha256": "4754f2fbef148e04b569c888cc9746f4190f76716795afbb1919b4b0c41644d7",
+        "size": 1148,
         "task_id": "wave2_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave2_gradient.json",
-        "sha256": "9d5f4b04d8fe6026dbb6b6a7609ad2c91e4f9738454c4e7a42d38d5b8d966d08",
-        "size": 2125,
+        "sha256": "69e8e3b1e560369627c5e3ba9b29a146e56ea75285ee84cc0712e06eb6edb987",
+        "size": 1169,
         "task_id": "wave2_gradient"
       },
       "task_id": "wave2_gradient",
@@ -419,14 +341,14 @@
       "num_boxes": 125000000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave3_gradient.json",
-        "sha256": "dfac20078befeb0e34ebefd04e285cec06769e0cfd671d9c8b83977697a60b39",
-        "size": 2047,
+        "sha256": "9d654db9ec197c2bc3e2180fb0e3857b39737a8ea3cc046315184a656df1cca1",
+        "size": 1152,
         "task_id": "wave3_gradient"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave3_gradient.json",
-        "sha256": "56ad76fa7cbc48ea3d7eb6f22e034d694478ff4dca5878a6b03df89639c984b5",
-        "size": 2128,
+        "sha256": "ecfcef4faa1fcc706760a14ab822bcb9d432ccbe086314f9239f60b05e38722d",
+        "size": 1175,
         "task_id": "wave3_gradient"
       },
       "task_id": "wave3_gradient",
@@ -441,14 +363,14 @@
       "num_boxes": 500,
       "q0": {
         "path": "data/artifacts/initial/q0/wave1_velocity.json",
-        "sha256": "9fe3b617e4da82f48d717e0cb38d3cfe5aea3e99ef7c5e2ab43faa44e0916156",
-        "size": 1954,
+        "sha256": "0f74405fbfcb4aa8fe657ea0335e63604d0cb42c3a28b4fa4fc2b18f1cc54d0a",
+        "size": 1100,
         "task_id": "wave1_velocity"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave1_velocity.json",
-        "sha256": "6fd7ea6341c47f897c79dc32a03513068fc6c931af05590d8ace31687da5d4a3",
-        "size": 1888,
+        "sha256": "a554eca829d683231539a46e02314818b9d8809a090e240a6429a544e2df046e",
+        "size": 1092,
         "task_id": "wave1_velocity"
       },
       "task_id": "wave1_velocity",
@@ -463,14 +385,14 @@
       "num_boxes": 250000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave2_velocity.json",
-        "sha256": "676d42160bf8a1efd83aa584aad7c364f6cfcc356c9676f5ca4f46478c783f41",
-        "size": 1956,
+        "sha256": "99259030f2842c56ba82fce388d9daf2d6d3071eaa138ee308358c3ef19d61f9",
+        "size": 1104,
         "task_id": "wave2_velocity"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave2_velocity.json",
-        "sha256": "73f6c5159399bb917f3203d05f64bb5193c88de4c64e118e9cf6f5b0d7069aff",
-        "size": 1887,
+        "sha256": "f6722300721daa56ebcfdee1052ac83ba0452f208b1f66cf77fdf6e2be5f856d",
+        "size": 1094,
         "task_id": "wave2_velocity"
       },
       "task_id": "wave2_velocity",
@@ -485,14 +407,14 @@
       "num_boxes": 125000000,
       "q0": {
         "path": "data/artifacts/initial/q0/wave3_velocity.json",
-        "sha256": "1c9d9752ffe59c0bfc0d7a66412fdf88fa179685e2ab9320f4d70732e09ff8f7",
-        "size": 1955,
+        "sha256": "fe790d326c7e84803f58ad75bd462632af7aee1bd1b0bfd613204cbdc675a42c",
+        "size": 1101,
         "task_id": "wave3_velocity"
       },
       "q1": {
         "path": "data/artifacts/initial/q1/wave3_velocity.json",
-        "sha256": "7ae73932607085ad2e1f95cd61845d646efc526e2554fc5e3da1e5d592c18249",
-        "size": 1889,
+        "sha256": "4072326416d9b09decb70d9e4d2ff34a274d87f4e71032afdf8aacfae6374b49",
+        "size": 1094,
         "task_id": "wave3_velocity"
       },
       "task_id": "wave3_velocity",
@@ -502,183 +424,183 @@
   "payload_files": [
     {
       "path": "data/artifacts/initial/q0/heat1_displacement.json",
-      "sha256": "3bf9fa12c440346fbcc506d5b2da7998b89c4b46bc991eaccafcab4d28a51413",
-      "size": 1775
+      "sha256": "076c2a6a14ff10b669741819c0c22a81d9a6efcab5fe0ceeb46f2125d4640701",
+      "size": 1113
     },
     {
       "path": "data/artifacts/initial/q0/heat1_gradient.json",
-      "sha256": "40e1438bd5b65e70a9c74fe907ef4b9ae8ee87f870090df74ee9cff3d906db45",
-      "size": 2051
+      "sha256": "c5e0938f2bbbe3137da34fddd137f4d48e541de1d73603e4318155b8be99df95",
+      "size": 1145
     },
     {
       "path": "data/artifacts/initial/q0/heat2_displacement.json",
-      "sha256": "6c328197f93d9de8ab68acb0392a003a15fbbf3741ffd7cf47f5fec103036131",
-      "size": 1779
+      "sha256": "85ea9d8a77ff5ea063569525263bf5fea9fcff343ef8c78d44095e652ad794fb",
+      "size": 1119
     },
     {
       "path": "data/artifacts/initial/q0/heat2_gradient.json",
-      "sha256": "a19c7e6c4a788e89f0fd22a856e009883153c13fa3c04e049859dfc1b85ba11b",
-      "size": 2052
+      "sha256": "b61a81d90956dde8a6f590f833fb252cb498e5673f67ec27fe7bc1a35969ba5c",
+      "size": 1149
     },
     {
       "path": "data/artifacts/initial/q0/heat3_displacement.json",
-      "sha256": "e51b76c42b47f92104ad2dd15db763c3f0ac6f1c16f26ddc9aef0020bf1c9dee",
-      "size": 1779
+      "sha256": "f69366394e116bc5f51934ab11cdc48f74a8144cdbd2360b44875afdccabd91d",
+      "size": 1117
     },
     {
       "path": "data/artifacts/initial/q0/heat3_gradient.json",
-      "sha256": "6628bef4feb54c4256d752164a5ee393c7155f74816fd12ee9fe92dbc869fa82",
-      "size": 2055
+      "sha256": "f247a4543320b48a580424e67d47e750f23c61211e567fa25bbd4ef6fcd1e820",
+      "size": 1151
     },
     {
       "path": "data/artifacts/initial/q0/wave1_displacement.json",
-      "sha256": "92f7b8b5495dab1eeafd02190895e3ddf0ba0c4d2f43ac24c66a44b0b3925e2f",
-      "size": 1764
+      "sha256": "90ec32e5a74d560e09931cd6337c12e847c1ffe1a72f3b7f8070923fa7025b5a",
+      "size": 1109
     },
     {
       "path": "data/artifacts/initial/q0/wave1_gradient.json",
-      "sha256": "86eb1c86053fa9b752007e2def52d82e956d05ce8380ade5e36d36fd4a2c7023",
-      "size": 2040
+      "sha256": "8cf82f9f2d454758db735420a6589f8bfb16fb31985ee3dde08cfd32b61ac2fe",
+      "size": 1146
     },
     {
       "path": "data/artifacts/initial/q0/wave1_velocity.json",
-      "sha256": "9fe3b617e4da82f48d717e0cb38d3cfe5aea3e99ef7c5e2ab43faa44e0916156",
-      "size": 1954
+      "sha256": "0f74405fbfcb4aa8fe657ea0335e63604d0cb42c3a28b4fa4fc2b18f1cc54d0a",
+      "size": 1100
     },
     {
       "path": "data/artifacts/initial/q0/wave2_displacement.json",
-      "sha256": "0ace784c43fde844bde59eb796f829869321fdb4de56b9bec25910aeef2dbc4e",
-      "size": 1769
+      "sha256": "0461f56c87955e0bd183b28b027c5f21e4b6c3db13d73983b11a9cc1e4052485",
+      "size": 1118
     },
     {
       "path": "data/artifacts/initial/q0/wave2_gradient.json",
-      "sha256": "8783d08c96b50fe982a9358924c1e9d452580019231c4907881d3417777e65a0",
-      "size": 2042
+      "sha256": "4754f2fbef148e04b569c888cc9746f4190f76716795afbb1919b4b0c41644d7",
+      "size": 1148
     },
     {
       "path": "data/artifacts/initial/q0/wave2_velocity.json",
-      "sha256": "676d42160bf8a1efd83aa584aad7c364f6cfcc356c9676f5ca4f46478c783f41",
-      "size": 1956
+      "sha256": "99259030f2842c56ba82fce388d9daf2d6d3071eaa138ee308358c3ef19d61f9",
+      "size": 1104
     },
     {
       "path": "data/artifacts/initial/q0/wave3_displacement.json",
-      "sha256": "7cc08245c20d1ff45e453a33d0d380c457567ac32135b59dc58242f2ad7ec238",
-      "size": 1772
+      "sha256": "57802cb1fce7fca5d29f3300529176f831e938ac094bb3f2e4373728ff6ecd78",
+      "size": 1117
     },
     {
       "path": "data/artifacts/initial/q0/wave3_gradient.json",
-      "sha256": "dfac20078befeb0e34ebefd04e285cec06769e0cfd671d9c8b83977697a60b39",
-      "size": 2047
+      "sha256": "9d654db9ec197c2bc3e2180fb0e3857b39737a8ea3cc046315184a656df1cca1",
+      "size": 1152
     },
     {
       "path": "data/artifacts/initial/q0/wave3_velocity.json",
-      "sha256": "1c9d9752ffe59c0bfc0d7a66412fdf88fa179685e2ab9320f4d70732e09ff8f7",
-      "size": 1955
+      "sha256": "fe790d326c7e84803f58ad75bd462632af7aee1bd1b0bfd613204cbdc675a42c",
+      "size": 1101
     },
     {
       "path": "data/artifacts/initial/q1/heat1_displacement.json",
-      "sha256": "e0c88529c2b6b9474eaede6f7e9f6004283dfbac2fbe9b429abca5e89d127f5c",
-      "size": 1874
+      "sha256": "4c141e0e0ce6f1a09722c38bb294b656c51b21c2454f8619b1047934c7a1c318",
+      "size": 1103
     },
     {
       "path": "data/artifacts/initial/q1/heat1_gradient.json",
-      "sha256": "348bc51b1cf32559717d90ba6e624a0f8e7fa1564963b782fb17e8c50e080e44",
-      "size": 2132
+      "sha256": "e7a6f67519a8841c87484a12796548ee2b9757c9bcbe5408965113ac239ab668",
+      "size": 1164
     },
     {
       "path": "data/artifacts/initial/q1/heat2_displacement.json",
-      "sha256": "b71f37c21af2c441eaf5d3ffa4ee6a8c62529da1db65c5166a2f50892c92136a",
-      "size": 1878
+      "sha256": "4cc5d85155307c3be1bc9c4656250d790597af8406ef3ae1b31f48106646e172",
+      "size": 1110
     },
     {
       "path": "data/artifacts/initial/q1/heat2_gradient.json",
-      "sha256": "86d92ba3aa7e5661a564950b1c14a7f21dbcdb1a6615c980fabfad9a5366e243",
-      "size": 2133
+      "sha256": "26b14745e3dc9c9db6f45362f2b1e863ebb48cc20889e160be39b6c3e53308fe",
+      "size": 1167
     },
     {
       "path": "data/artifacts/initial/q1/heat3_displacement.json",
-      "sha256": "56af6cb47f603068e9dc55a569268ff262731ad38687f8def6d9dbfebb262273",
-      "size": 1881
+      "sha256": "2c6607c8ebcf474f7d41c116bcd6d0c8603428d0c52f27c16887d327fa0fdd0c",
+      "size": 1110
     },
     {
       "path": "data/artifacts/initial/q1/heat3_gradient.json",
-      "sha256": "e79b89d720c825b2f13081efcf22b2a2b35a86cae75b40b9403a7d3236266597",
-      "size": 2137
+      "sha256": "4256854d4eaf4b5bc13e9110a36b32352d31b9badd5607166cebfd7e6182aa3f",
+      "size": 1176
     },
     {
       "path": "data/artifacts/initial/q1/wave1_displacement.json",
-      "sha256": "98f1d8b1082d83e888ae4377b4ac86227d35e1eede7f2d3b711e8e5920d37377",
-      "size": 1864
+      "sha256": "243aeaa2389cef7ebc0497a02e3034e7f9ceb907f94dc38ceda4c8253d18a657",
+      "size": 1101
     },
     {
       "path": "data/artifacts/initial/q1/wave1_gradient.json",
-      "sha256": "2873dcbb61be5e98e1d9a7f6f569e1fbbd91d8f1898181c2ec61cc6b6d2bcd1c",
-      "size": 2124
+      "sha256": "6002b7b01704e0d9bf0815d5ed1aa8e7376c8108ffec038dfd2177770e06c578",
+      "size": 1170
     },
     {
       "path": "data/artifacts/initial/q1/wave1_velocity.json",
-      "sha256": "6fd7ea6341c47f897c79dc32a03513068fc6c931af05590d8ace31687da5d4a3",
-      "size": 1888
+      "sha256": "a554eca829d683231539a46e02314818b9d8809a090e240a6429a544e2df046e",
+      "size": 1092
     },
     {
       "path": "data/artifacts/initial/q1/wave2_displacement.json",
-      "sha256": "7c32deca8ff7e23c54172860d9d247fd7d42b20dc3d72bc8eb7ad620fe6d42a2",
-      "size": 1866
+      "sha256": "1d4eb916348c86291def9f378efd832ce21aff8371f71afcfe3d0ff895381db5",
+      "size": 1108
     },
     {
       "path": "data/artifacts/initial/q1/wave2_gradient.json",
-      "sha256": "9d5f4b04d8fe6026dbb6b6a7609ad2c91e4f9738454c4e7a42d38d5b8d966d08",
-      "size": 2125
+      "sha256": "69e8e3b1e560369627c5e3ba9b29a146e56ea75285ee84cc0712e06eb6edb987",
+      "size": 1169
     },
     {
       "path": "data/artifacts/initial/q1/wave2_velocity.json",
-      "sha256": "73f6c5159399bb917f3203d05f64bb5193c88de4c64e118e9cf6f5b0d7069aff",
-      "size": 1887
+      "sha256": "f6722300721daa56ebcfdee1052ac83ba0452f208b1f66cf77fdf6e2be5f856d",
+      "size": 1094
     },
     {
       "path": "data/artifacts/initial/q1/wave3_displacement.json",
-      "sha256": "030df434186ee508056af979ddc0f9d353e1684d2581b0d545c7708add5b8672",
-      "size": 1872
+      "sha256": "b5b8a21662f53b090b5977e31ef33c401ed72ef8dd8036e6111803f4a3263831",
+      "size": 1109
     },
     {
       "path": "data/artifacts/initial/q1/wave3_gradient.json",
-      "sha256": "56ad76fa7cbc48ea3d7eb6f22e034d694478ff4dca5878a6b03df89639c984b5",
-      "size": 2128
+      "sha256": "ecfcef4faa1fcc706760a14ab822bcb9d432ccbe086314f9239f60b05e38722d",
+      "size": 1175
     },
     {
       "path": "data/artifacts/initial/q1/wave3_velocity.json",
-      "sha256": "7ae73932607085ad2e1f95cd61845d646efc526e2554fc5e3da1e5d592c18249",
-      "size": 1889
+      "sha256": "4072326416d9b09decb70d9e4d2ff34a274d87f4e71032afdf8aacfae6374b49",
+      "size": 1094
     },
     {
       "path": "data/artifacts/pde/q1/heat1.json",
-      "sha256": "6b839737c2fb288e13811f6295e5e8f26f5f7eaab7da7aef58fd9e3d7201f637",
-      "size": 5012
+      "sha256": "601d6d6c1dac44eefc7b7a3bcfe81f85e8fcd3d268cd881cfe66d3c2d0c913ed",
+      "size": 2820
     },
     {
       "path": "data/artifacts/pde/q1/heat2.json",
-      "sha256": "fc50f20bad788b8cb0f1bab3f6d01462f427066b8623468a2c7b29edfaf0ddf2",
-      "size": 10794
+      "sha256": "9368b8b1c965975dc647bb77d0c8fe365a6d587aa6b9cc203a6966f7c95a3625",
+      "size": 2903
     },
     {
       "path": "data/artifacts/pde/q1/heat3.json",
-      "sha256": "1a8f8a87dc4ce0d908ca92f75491d758f069b84b45d903649b98b9fc8abd43bf",
-      "size": 9923
+      "sha256": "b4908e76a16662b69b11c023b187b534dcb55600397fbff0d5c1c096253a8572",
+      "size": 3219
     },
     {
       "path": "data/artifacts/pde/q1/wave1.json",
-      "sha256": "635a5fcbde47a08bea5c0993457f2bf3c9e071d0e8b5751dc9bd866be9ab7727",
-      "size": 5028
+      "sha256": "263265c565b623f43e065fdd718627360c19cb84b2b0ad421b4fe40449f8f8cf",
+      "size": 2835
     },
     {
       "path": "data/artifacts/pde/q1/wave2.json",
-      "sha256": "0945915c940f1865cfb78a2eca85794652fb4f4961b822bab8e9b82f97c45851",
-      "size": 10790
+      "sha256": "1d6dab317cb465bb7b9ebba8b4e54f2b2db668b285b50b85bba5ef58f2a5046f",
+      "size": 2882
     },
     {
       "path": "data/artifacts/pde/q1/wave3.json",
-      "sha256": "8f4fd4da45111dae067dbf371b1008b571aa03398b23d2b4466c9b9bbaefa455",
-      "size": 7897
+      "sha256": "4a5563686c68e5f13eb908747077bc08f9392ad9aafc6468974319a7f25dbc99",
+      "size": 3188
     },
     {
       "path": "data/checkpoints/heat1-l2-w128.pt",
@@ -734,84 +656,14 @@
       "path": "paper/tables/pde_residuals_q1_master.tex",
       "sha256": "f8bd91704e318f7944d1c5ff1e7bf5318a906a3f5b87840184b58a3f6f7d20e2",
       "size": 1062
-    },
-    {
-      "path": "provenance/campaigns/q0/COMPLETED",
-      "sha256": "ff49b53e6941b4f17cf11548eaf513faad5cd26cfeddc563dcfa5a065486b5e1",
-      "size": 130
-    },
-    {
-      "path": "provenance/campaigns/q0/final_validation.json",
-      "sha256": "37656e37462a29587918ca62117bd936e5b296c2e7a5c6d5414b49f7c6e2acc0",
-      "size": 9771
-    },
-    {
-      "path": "provenance/campaigns/q0/manifest.json",
-      "sha256": "b33a5cf2003824bc83be055ec2ed4868d9f6074bd5725eec4b75528bfce6df47",
-      "size": 30470
-    },
-    {
-      "path": "provenance/campaigns/q0/manifest.sha256",
-      "sha256": "533730186080a4f7fd74bb8b306bfe519463b06b0299708d1c3a57b459acc94f",
-      "size": 65
-    },
-    {
-      "path": "provenance/campaigns/q1/COMPLETED",
-      "sha256": "0e1025125b8963480fe666e090b46fa35dd2d141290096e1c37096b4eb0000af",
-      "size": 130
-    },
-    {
-      "path": "provenance/campaigns/q1/final_validation.json",
-      "sha256": "a491cf676d251e8c7189b89de1fd3e689abe894fef9737d47d5cab3d70fbf62f",
-      "size": 9788
-    },
-    {
-      "path": "provenance/campaigns/q1/manifest.json",
-      "sha256": "408143d9112cb25bb7e2a89dfad96b56bae2d1624a136c451f45e2b17d0ec155",
-      "size": 30205
-    },
-    {
-      "path": "provenance/campaigns/q1/manifest.sha256",
-      "sha256": "f96dfa8ffecaa58e1b16d4a94fdc849a9075d15e421eae48f4e56fce8ebed3a5",
-      "size": 80
-    },
-    {
-      "path": "provenance/current-paper-reproduction.json",
-      "sha256": "2cc4e729ce82942934490c7fe5ddd287ccf65adf38e0aeb1776678160e145cb5",
-      "size": 10015
-    },
-    {
-      "path": "provenance/final-3d-differential-validation.json",
-      "sha256": "be7b1eccca8bca99e36fa3a6a73613fead440d8d78f08eb8fc48768b9155fced",
-      "size": 1601
-    },
-    {
-      "path": "provenance/formulas/section2.tex",
-      "sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
-      "size": 17683
-    },
-    {
-      "path": "provenance/formulas/section4.tex",
-      "sha256": "9efff49678f2ddf4d57e4e9a94779dfe7916dba0577b642a591e210b75b09b66",
-      "size": 30829
-    },
-    {
-      "path": "provenance/numerical-trust-boundary.md",
-      "sha256": "5b74715334b5832725b3d2a77874f9a817795da3deb0899e4e33a4450d498eb5",
-      "size": 6211
-    },
-    {
-      "path": "provenance/producer-inventory.json",
-      "sha256": "f39fb4ff6c91b614f6443d8d581d4659cdec9936ad5c0688821a78a6bc39796a",
-      "size": 2419
     }
   ],
   "pde_rows": [
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat1.json",
-        "sha256": "6b839737c2fb288e13811f6295e5e8f26f5f7eaab7da7aef58fd9e3d7201f637",
-        "size": 5012
+        "sha256": "601d6d6c1dac44eefc7b7a3bcfe81f85e8fcd3d268cd881cfe66d3c2d0c913ed",
+        "size": 2820
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
@@ -827,15 +679,14 @@
       "layers": 2,
       "method": "operator-aware affine spacetime Q1 Heat certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 128
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat2.json",
-        "sha256": "fc50f20bad788b8cb0f1bab3f6d01462f427066b8623468a2c7b29edfaf0ddf2",
-        "size": 10794
+        "sha256": "9368b8b1c965975dc647bb77d0c8fe365a6d587aa6b9cc203a6966f7c95a3625",
+        "size": 2903
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
@@ -852,15 +703,14 @@
       "layers": 3,
       "method": "operator-aware affine spacetime Q1 Heat certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 128
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat3.json",
-        "sha256": "1a8f8a87dc4ce0d908ca92f75491d758f069b84b45d903649b98b9fc8abd43bf",
-        "size": 9923
+        "sha256": "b4908e76a16662b69b11c023b187b534dcb55600397fbff0d5c1c096253a8572",
+        "size": 3219
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
@@ -876,17 +726,16 @@
       "grid_tex": "$100^3\\times 500\\,\\mathrm{(adaptive)}^{*}$",
       "kind": "netbounds_current_paper_heat3_accepted_merged_certificate",
       "layers": 4,
-      "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
+      "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 128
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave1.json",
-        "sha256": "635a5fcbde47a08bea5c0993457f2bf3c9e071d0e8b5751dc9bd866be9ab7727",
-        "size": 5028
+        "sha256": "263265c565b623f43e065fdd718627360c19cb84b2b0ad421b4fe40449f8f8cf",
+        "size": 2835
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
@@ -902,15 +751,14 @@
       "layers": 2,
       "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 256
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave2.json",
-        "sha256": "0945915c940f1865cfb78a2eca85794652fb4f4961b822bab8e9b82f97c45851",
-        "size": 10790
+        "sha256": "1d6dab317cb465bb7b9ebba8b4e54f2b2db668b285b50b85bba5ef58f2a5046f",
+        "size": 2882
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
@@ -927,15 +775,14 @@
       "layers": 3,
       "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 256
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave3.json",
-        "sha256": "8f4fd4da45111dae067dbf371b1008b571aa03398b23d2b4466c9b9bbaefa455",
-        "size": 7897
+        "sha256": "4a5563686c68e5f13eb908747077bc08f9392ad9aafc6468974319a7f25dbc99",
+        "size": 3188
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
@@ -953,18 +800,11 @@
       "layers": 3,
       "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
       "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
       "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 256
     }
   ],
   "release_complete": true,
   "schema_version": 1,
-  "scope": "current_paper_all_initial_and_pde_d1_d2_d3",
-  "trust_boundary": {
-    "accumulation_dtype": "float64",
-    "details": "provenance/numerical-trust-boundary.md",
-    "kernel_dtype": "float32",
-    "outward_rounded_interval_arithmetic": false
-  }
+  "scope": "current_paper_all_initial_and_pde_d1_d2_d3"
 }

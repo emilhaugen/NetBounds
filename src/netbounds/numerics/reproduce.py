@@ -1,9 +1,4 @@
-"""Fixed current-paper reproductions for all retained initial and PDE rows.
-
-The trace and source-hash evidence is retained in
-``provenance/current-paper-reproduction.json``. This module intentionally
-contains only the 36 selected paper computations, never campaign or training APIs.
-"""
+"""Fixed reproductions for the 36 computations used in the current tables."""
 
 from __future__ import annotations
 

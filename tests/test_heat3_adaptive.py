@@ -17,10 +17,10 @@ def test_adaptive_block_preserves_partition_and_accepted_sums() -> None:
         calls += 1
         count = centers.shape[0]
         base = torch.ones(count, dtype=torch.float32)
-        legacy = base.clone()
+        partition = base.clone()
         if calls == 1:
             # Split exactly the first root. The second root is accepted at depth 0.
-            legacy[0] = 2.0
+            partition[0] = 2.0
         values = {
             "bound_l2_squared": base * 0.8,
             "moment_minkowski_l2_squared": base * 0.9,
@@ -32,7 +32,7 @@ def test_adaptive_block_preserves_partition_and_accepted_sums() -> None:
             "rho": base * 0.3,
             "rho_hyper": base * 0.2,
             "rho_boundary": base * 0.1,
-            "legacy_bound_l2_squared": legacy,
+            "partition_bound_l2_squared": partition,
         }
         return values
 
@@ -57,7 +57,7 @@ def test_adaptive_block_preserves_partition_and_accepted_sums() -> None:
     assert result["kernel_cells_evaluated"] == 18
     assert result["partition_units"] == 32
     assert result["sums"]["bound_l2_squared"] == pytest.approx(17 * 0.8)
-    assert "legacy_bound_l2_squared" not in result["sums"]
+    assert "partition_bound_l2_squared" not in result["sums"]
 
 
 def test_adaptive_block_rejects_bad_metric_ordering() -> None:
@@ -75,7 +75,7 @@ def test_adaptive_block_rejects_bad_metric_ordering() -> None:
             "rho": base * 0.3,
             "rho_hyper": base * 0.2,
             "rho_boundary": base * 0.1,
-            "legacy_bound_l2_squared": base * 0.6,
+            "partition_bound_l2_squared": base * 0.6,
         }
         return values
 

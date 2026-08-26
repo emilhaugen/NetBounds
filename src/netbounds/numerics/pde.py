@@ -1,4 +1,4 @@
-"""Reached 1D PDE Q1 moment kernel from producer revision 53bb374b79718bef7273ba56a1f0396fb610afcf."""
+"""PDE Q1 moment kernel used to compute the current tables."""
 
 from __future__ import annotations
 
@@ -41,8 +41,7 @@ def _boundary_grouped_coeffs(
 ) -> dict[str, object]:
     """Analytic coefficient centers/variations with grouped Delta B.
 
-    The old Wave bound treats ``B F_tt`` and each ``B F_ii`` as separate
-    products.  This helper enables the grouped coefficient form
+    This helper uses the grouped coefficient form
     ``B*(F_tt-c^2 Delta F) - 2c^2 sum_i B_i F_i - c^2 (Delta B) F`` so the
     shared coefficient ``B`` is only varied once for the time-minus-Laplacian
     network factor.
@@ -582,13 +581,10 @@ def wave_hyper_taylor_rect_batch(
         "hyper_taylor_rho": rho,
         "hyper_taylor_rho_centered_hyper": rho_centered_hyper,
         "hyper_taylor_rho_hyper_centered_variation": rho_hyper_centered_variation,
-        "hyper_taylor_rho_hyper_split_old": rho_hyper,
-        "hyper_taylor_rho_boundary_split_old": rho_boundary_second,
         "hyper_taylor_full_hessian_center_part": full_hessian_center_part,
         "hyper_taylor_full_hessian_error_part": full_hessian_error_part,
         "hyper_taylor_rho_hyper": rho_hyper,
         "hyper_taylor_rho_boundary": rho_boundary_second,
-        "hyper_taylor_rho_boundary_first_order_old": boundary_error_sum,
         "hyper_taylor_boundary_hessian_center_part": boundary_hessian_center_part,
         "hyper_taylor_A_qr_center_part": aq_r_center_abs_sum,
         "hyper_taylor_A_qr_error_part": aq_r_error_sum,

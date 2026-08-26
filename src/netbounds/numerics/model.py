@@ -7,10 +7,8 @@ six paper checkpoints:
 
     Heat (1,2,128), (2,3,128), (3,4,128);  Wave (1,2,256), (2,3,256), (3,3,256).
 
-It is the reached architecture for producer revisions 2add560, 1003b544, and
-53bb374; storage-state and execution-dtype provenance are checked explicitly.
-The historical loader also sets the activation-bound evaluator to the same
-float32 execution dtype after model conversion.
+The checkpoints have fixed storage dtypes and are converted to float32 for
+the numerical kernels.
 """
 
 from __future__ import annotations
@@ -127,11 +125,9 @@ def _validate_checkpoint_state(
 ) -> Mapping[str, torch.Tensor]:
     """Reject anything other than the declared paper state-dict schema.
 
-    The archived heat and wave-1/2 checkpoints are stored in float64; the
-    nested wave-3 training checkpoint stores its model state in float32.
-    Historical certificate kernels then explicitly cast the fixed
-    architecture to float32, so storage dtype and execution dtype are
-    intentionally different provenance fields.
+    The heat and wave-1/2 checkpoints are stored in float64; the nested
+    wave-3 checkpoint is stored in float32. The numerical kernels execute the
+    fixed architecture in float32.
     """
 
     if not isinstance(state, Mapping):

@@ -1,7 +1,7 @@
 """Fixed Heat-3D adaptive quadrature used by the current paper.
 
-This is the reached numerical closure only. It exposes no campaign, sharding,
-checkpoint-discovery, or arbitrary-grid interface.
+It exposes only the fixed adaptive calculation used by the current Heat-3D
+table entry.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ PUBLIC_SUM_KEYS = (
     "rho_hyper",
     "rho_boundary",
 )
-_EVALUATOR_KEYS = (*PUBLIC_SUM_KEYS, "legacy_bound_l2_squared")
+_EVALUATOR_KEYS = (*PUBLIC_SUM_KEYS, "partition_bound_l2_squared")
 
 HeatEvaluator = Callable[
     [torch.Tensor, torch.Tensor, int], dict[str, torch.Tensor]
@@ -92,9 +92,9 @@ def evaluate_heat3_cells(
                 "moment_cross_integral": diagnostics[
                     "hyper_taylor_moment_cross_integral"
                 ],
-                # This historical certificate is evaluated only to reproduce the
-                # accepted split policy; it is never retained as a public bound.
-                "legacy_bound_l2_squared": diagnostics["hyper_taylor_bound_l2sq"],
+                # This auxiliary certificate chooses adaptive cells. It is not
+                # included in the final table value.
+                "partition_bound_l2_squared": diagnostics["hyper_taylor_bound_l2sq"],
                 "affine_l2_squared": diagnostics["hyper_taylor_affine_l2sq"],
                 "midpoint_l2_squared": residual.square() * cell_volume,
                 "rho": rho,
@@ -158,7 +158,7 @@ def _validate_metrics(metrics: dict[str, torch.Tensor], count: int) -> None:
         if not bool((value >= 0).all().item()):
             raise FloatingPointError(f"negative {key} in adaptive cell batch")
     scale = torch.maximum(
-        metrics["legacy_bound_l2_squared"],
+        metrics["partition_bound_l2_squared"],
         torch.maximum(
             metrics["moment_minkowski_l2_squared"],
             torch.maximum(
@@ -177,9 +177,9 @@ def _validate_metrics(metrics: dict[str, torch.Tensor], count: int) -> None:
     for upper, lower in (
         ("moment_minkowski_l2_squared", "bound_l2_squared"),
         ("moment_cross_l2_squared", "bound_l2_squared"),
-        ("legacy_bound_l2_squared", "bound_l2_squared"),
+        ("partition_bound_l2_squared", "bound_l2_squared"),
         ("bound_l2_squared", "affine_l2_squared"),
-        ("legacy_bound_l2_squared", "affine_l2_squared"),
+        ("partition_bound_l2_squared", "affine_l2_squared"),
         ("affine_l2_squared", "midpoint_l2_squared"),
     ):
         if not bool((metrics[upper] + tolerance >= metrics[lower]).all().item()):
@@ -233,7 +233,7 @@ def certify_heat3_adaptive_block(
         kernel_cells_evaluated += count
         cell_volume = float(torch.prod(2.0 * current_eps).item())
         excess_density = (
-            metrics["legacy_bound_l2_squared"]
+            metrics["partition_bound_l2_squared"]
             - metrics["midpoint_l2_squared"]
         ).clamp_min(0.0) / cell_volume
         split = (

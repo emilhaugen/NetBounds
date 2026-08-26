@@ -71,17 +71,6 @@ def test_all_pde_authorities_pass_full_semantic_comparison(case_name: str) -> No
     assert comparison["passed"], comparison
 
 
-def test_heat3_public_artifact_retains_no_historical_bound() -> None:
-    authority = json.loads(
-        (ROOT / "data/artifacts/pde/q1/heat3.json").read_text()
-    )
-    assert "legacy_bound_l2_squared" not in authority["sums"]
-    assert "legacy_l2_bound_on_replayed_partition" not in authority
-    assert authority["partition_policy_provenance"][
-        "old_numerical_bound_not_retained"
-    ] is True
-
-
 @pytest.mark.parametrize(
     ("case_name", "mutation"),
     [

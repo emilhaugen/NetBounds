@@ -1,12 +1,35 @@
 {
-  "accumulation_dtype": "float64",
-  "affine_l2": 0.0010056773355097638,
-  "affine_l2_squared": 1.011386903158018e-06,
-  "all_cells_enumerated": true,
+  "schema_version": 1,
+  "certified": true,
+  "equation": "Heat",
+  "dimension": 2,
+  "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
+  "method": "operator-aware affine spacetime Q1 Heat certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+  "grid": [
+    300,
+    300,
+    750
+  ],
   "architecture": {
     "layers": 3,
     "width": 128
   },
+  "weights_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+  "ordinary_float32_not_outward_rounded": true,
+  "accumulation_dtype": "float64",
+  "l2_bound": 0.0010211713171842827,
+  "l2_squared_bound": 0.000001042790859039883,
+  "moment_minkowski_l2": 0.0010234792696075326,
+  "moment_minkowski_l2_squared": 0.0000010475098153163683,
+  "moment_cross_l2": 0.0010212087831048028,
+  "moment_cross_l2_squared": 0.0000010428673786903922,
+  "moment_remainder_l2": 0.000023535861290503782,
+  "moment_remainder_l2_squared": 5.539367666858344e-10,
+  "moment_cross_integral": 1.5463269376657255e-8,
+  "affine_l2": 0.0010056773355097638,
+  "affine_l2_squared": 0.000001011386903158018,
+  "midpoint_l2": 0.0010051693109525328,
+  "midpoint_l2_squared": 0.0000010103653436807895,
   "bound_to_affine_ratio": 1.0154065137270547,
   "bound_to_midpoint_ratio": 1.015919712288655,
   "cell_radii": [
@@ -14,262 +37,36 @@
     0.0016666667070239782,
     0.0006666666595265269
   ],
-  "certification_caveat": "Analytically rigorous conditional on the existing derivative-bound machinery; ordinary float32 arithmetic is not an outward-rounded interval computation.",
-  "certified": true,
-  "coverage": {
-    "start_flat_index": 0,
-    "stop_flat_index": 67500000
-  },
-  "datum_family": "separable",
-  "diagnostics": {
-    "max_rho": 0.0002860102104023099,
-    "mean_rho": 5.735028475253787e-05,
-    "mean_rho_boundary": 2.717562976016402e-05,
-    "mean_rho_hyper": 3.0174654992724357e-05,
-    "rho_boundary_sum": 1834.3550088110715,
-    "rho_hyper_sum": 2036.789212008894,
-    "rho_sum": 3871.1442207963064
-  },
-  "dimension": 2,
-  "equation": "Heat",
-  "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-  "global_configuration": {
-    "accumulation_dtype": "float64",
-    "architecture": {
-      "layers": 3,
-      "width": 128
-    },
-    "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
-    "checkpoint_format": "plain_state_dict",
-    "datum_family": "separable",
-    "dimension": 2,
-    "dtype": "float32",
-    "equation": "Heat",
-    "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-    "grid": [
-      300,
-      300,
-      750
-    ],
-    "input_dimension": 3,
-    "local_residual_model": "affine_spacetime",
-    "method": "operator-aware affine spacetime Q1 Heat certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
-    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-    "n_taylor": null,
-    "pde_constants": {
-      "thermal_diffusivity": 0.1
-    },
-    "quadrature_rule": "Q1",
-    "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
-    "spatial_cells_per_dimension": 300,
-    "spatial_radius_policy": "coordinatewise_eps_vec_spatial",
-    "time_cells": 750,
-    "total_boxes": 67500000,
-    "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/sine-series-ic-training/experiments/Heat/2d_separable/num_layers3_width128/num_layers3_width128_weights.pt",
-    "weights_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
-    "weights_storage_dtype": "float64"
-  },
-  "global_configuration_sha256": "a75e01e8e69769bb2b428eff4705ce9511571d221a8185f7be64168065e87a45",
-  "grid": [
-    300,
-    300,
-    750
-  ],
-  "kind": "ima_pde_q1_d2_integrated_moment_merged_certificate",
-  "l2_bound": 0.0010211713171842827,
-  "l2_squared_bound": 1.042790859039883e-06,
-  "local_residual_model": "affine_spacetime",
-  "merged_utc": "2026-08-21T09:59:39.276994+00:00",
-  "method": "operator-aware affine spacetime Q1 Heat certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
-  "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-  "midpoint_l2": 0.0010051693109525328,
-  "midpoint_l2_squared": 1.0103653436807895e-06,
-  "moment_cross_integral": 1.5463269376657255e-08,
-  "moment_cross_l2": 0.0010212087831048028,
-  "moment_cross_l2_squared": 1.0428673786903922e-06,
-  "moment_minkowski_l2": 0.0010234792696075326,
-  "moment_minkowski_l2_squared": 1.0475098153163683e-06,
-  "moment_remainder_l2": 2.3535861290503782e-05,
-  "moment_remainder_l2_squared": 5.539367666858344e-10,
   "num_boxes": 67500000,
-  "num_shards": 7,
-  "ordinary_float32_not_outward_rounded": true,
   "processed_boxes": 67500000,
-  "quadrature_rule": "Q1",
-  "schema_version": 1,
-  "shard_execution": [
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-20T16:35:30.631267+00:00",
-      "elapsed_seconds": 2012.706551706884,
-      "execution": {
-        "cuda_visible_devices": "0",
-        "device": "cuda:0",
-        "device_name": "NVIDIA GeForce RTX 2080 Ti",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 0,
-      "interval": [
-        0,
-        9642857
-      ],
-      "started_utc": "2026-08-20T16:01:57.132713+00:00"
-    },
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-20T16:34:49.290399+00:00",
-      "elapsed_seconds": 1971.3704194750171,
-      "execution": {
-        "cuda_visible_devices": "1",
-        "device": "cuda:0",
-        "device_name": "NVIDIA GeForce RTX 2080 Ti",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 1,
-      "interval": [
-        9642857,
-        19285714
-      ],
-      "started_utc": "2026-08-20T16:01:57.364791+00:00"
-    },
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-20T16:34:48.680195+00:00",
-      "elapsed_seconds": 1970.7542250950355,
-      "execution": {
-        "cuda_visible_devices": "2",
-        "device": "cuda:0",
-        "device_name": "NVIDIA GeForce RTX 2080 Ti",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 2,
-      "interval": [
-        19285714,
-        28928571
-      ],
-      "started_utc": "2026-08-20T16:01:57.256881+00:00"
-    },
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-20T16:34:47.796918+00:00",
-      "elapsed_seconds": 1969.8612333240453,
-      "execution": {
-        "cuda_visible_devices": "3",
-        "device": "cuda:0",
-        "device_name": "NVIDIA GeForce RTX 2080 Ti",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 3,
-      "interval": [
-        28928571,
-        38571428
-      ],
-      "started_utc": "2026-08-20T16:01:57.473840+00:00"
-    },
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-21T01:55:44.271627+00:00",
-      "elapsed_seconds": 1702.6877581221052,
-      "execution": {
-        "cuda_visible_devices": "0",
-        "device": "cuda:0",
-        "device_name": "NVIDIA A10",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 4,
-      "interval": [
-        38571428,
-        48214285
-      ],
-      "started_utc": "2026-08-21T01:27:21.288192+00:00"
-    },
-    {
-      "box_count": 9642857,
-      "completed_utc": "2026-08-21T01:55:41.964262+00:00",
-      "elapsed_seconds": 1700.3795026959851,
-      "execution": {
-        "cuda_visible_devices": "1",
-        "device": "cuda:0",
-        "device_name": "NVIDIA A10",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 5,
-      "interval": [
-        48214285,
-        57857142
-      ],
-      "started_utc": "2026-08-21T01:27:21.288210+00:00"
-    },
-    {
-      "box_count": 9642858,
-      "completed_utc": "2026-08-21T01:55:42.542981+00:00",
-      "elapsed_seconds": 1700.9581067040563,
-      "execution": {
-        "cuda_visible_devices": "3",
-        "device": "cuda:0",
-        "device_name": "NVIDIA A10",
-        "durable_checkpoint_interval_seconds": 30.0,
-        "effective_final_batch_size": 8192,
-        "oom_reductions": 0,
-        "peak_cuda_memory_bytes": 2116446720,
-        "requested_batch_size": 8192
-      },
-      "index": 6,
-      "interval": [
-        57857142,
-        67500000
-      ],
-      "started_utc": "2026-08-21T01:27:21.288168+00:00"
-    }
-  ],
-  "shards_merged": [
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0000_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0001_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0002_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0003_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0004_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0005_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/d2/Heat/2d_separable/num_layers3_width128/grid_300x300x750/shards/shard_0006_of_0007.json"
-  ],
-  "source_tracked_dirty": false,
+  "all_cells_enumerated": true,
   "sums": {
-    "affine_l2_squared": 1.011386903158018e-06,
-    "bound_l2_squared": 1.042790859039883e-06,
-    "midpoint_l2_squared": 1.0103653436807895e-06,
-    "moment_cross_integral": 1.5463269376657255e-08,
-    "moment_cross_l2_squared": 1.0428673786903922e-06,
-    "moment_minkowski_l2_squared": 1.0475098153163683e-06,
+    "affine_l2_squared": 0.000001011386903158018,
+    "bound_l2_squared": 0.000001042790859039883,
+    "midpoint_l2_squared": 0.0000010103653436807895,
+    "moment_cross_integral": 1.5463269376657255e-8,
+    "moment_cross_l2_squared": 0.0000010428673786903922,
+    "moment_minkowski_l2_squared": 0.0000010475098153163683,
     "moment_remainder_l2_squared": 5.539367666858344e-10,
     "rho": 3871.1442207963064,
     "rho_boundary": 1834.3550088110715,
     "rho_hyper": 2036.789212008894
   },
-  "total_shard_elapsed_seconds": 13028.717797123129,
-  "weights_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/sine-series-ic-training/experiments/Heat/2d_separable/num_layers3_width128/num_layers3_width128_weights.pt",
-  "weights_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
-  "weights_storage_dtype": "float64"
+  "diagnostics": {
+    "max_rho": 0.0002860102104023099,
+    "mean_rho": 0.00005735028475253787,
+    "mean_rho_boundary": 0.00002717562976016402,
+    "mean_rho_hyper": 0.000030174654992724357,
+    "rho_boundary_sum": 1834.3550088110715,
+    "rho_hyper_sum": 2036.789212008894,
+    "rho_sum": 3871.1442207963064
+  },
+  "configuration": {
+    "weights_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+    "dtype": "float32",
+    "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
+    "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
+    "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
+    "spatial_radius_policy": "coordinatewise_eps_vec_spatial"
+  }
 }

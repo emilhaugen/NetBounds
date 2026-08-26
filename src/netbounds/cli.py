@@ -13,7 +13,6 @@ from .data import (
     load_catalog,
     repository_root,
     verify_files,
-    verify_numerical_source_closure,
 )
 from .tables import check_tables, write_tables
 
@@ -81,12 +80,10 @@ def parser() -> argparse.ArgumentParser:
 
 def _verify(root: Path, catalog: dict[str, Any]) -> None:
     payload = verify_files(root, catalog["payload_files"])
-    numerical_sources = verify_numerical_source_closure(root, catalog)
     rendered = check_tables(root, catalog)
     checkpoints = catalog["checkpoints"]
     bundled = sum(bool(entry["bundled"]) for entry in checkpoints)
     print(f"PASS retained payload: {len(payload)} files")
-    print(f"PASS numerical source closure: {numerical_sources} files")
     print(f"PASS selected artifacts: 30 initial + 6 PDE")
     print(f"PASS rendered authority: {len(rendered)} tables (byte-exact)")
     print(

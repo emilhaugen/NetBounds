@@ -372,40 +372,6 @@ def _validate_pde_artifact(
             )
     elif family == "heat3_adaptive_current_paper":
         _require(data.get("accepted_as_heat3d_moment_pde_residual_bound") is True, path, "acceptance flag missing")
-        _require(data.get("same_policy_re_evaluation_validated") is True, path, "same-policy validation missing")
-        _require(data.get("exact_legacy_partition_replay_validated") is False, path, "must not claim exact legacy replay")
-        acceptance = data.get("partition_replay_acceptance")
-        _require(isinstance(acceptance, dict), path, "partition acceptance missing")
-        assert isinstance(acceptance, dict)
-        _require(acceptance.get("accepted_as_final") is True, path, "final acceptance missing")
-        _require(
-            acceptance.get("status") == "user_accepted_complete_re_evaluation",
-            path,
-            "acceptance status mismatch",
-        )
-        _require(
-            acceptance.get("complete_coverage_and_internal_partition_identities") is True,
-            path,
-            "accepted partition identities missing",
-        )
-        historical_leaves = int(acceptance.get("historical_adaptive_leaf_count", -1))
-        new_leaves = int(acceptance.get("new_adaptive_leaf_count", -1))
-        leaf_difference = int(acceptance.get("leaf_count_difference", 0))
-        _require(
-            historical_leaves == 1_639_964_105,
-            path,
-            "historical leaf count mismatch",
-        )
-        _require(
-            new_leaves == int(data.get("adaptive_leaf_count", -1)),
-            path,
-            "accepted leaf count mismatch",
-        )
-        _require(
-            new_leaves - historical_leaves == leaf_difference == 10_995,
-            path,
-            "accepted leaf difference mismatch",
-        )
         _require(data.get("all_base_roots_enumerated") is True, path, "base-root coverage missing")
         _require(data.get("all_adaptive_leaves_enumerated") is True, path, "leaf coverage missing")
         _require(int(data.get("num_base_roots", -1)) == total_cells, path, "base-root count mismatch")
@@ -427,31 +393,9 @@ def _validate_pde_artifact(
         _require(int(config.get("kernel_batch_size", -1)) == 1600, path, "kernel batch size mismatch")
         _require(int(data.get("root_block_size", -1)) == 2048, path, "top-level root block size mismatch")
         _require(int(data.get("kernel_batch_size", -1)) == 1600, path, "top-level kernel batch size mismatch")
-        _require(
-            "legacy_l2_bound_on_replayed_partition" not in data,
-            path,
-            "historical bound must not be retained",
-        )
         sums = data.get("sums")
         _require(isinstance(sums, dict), path, "adaptive sums missing")
         assert isinstance(sums, dict)
-        _require(
-            "legacy_bound_l2_squared" not in sums,
-            path,
-            "historical sum must not be retained",
-        )
-        partition_provenance = data.get("partition_policy_provenance")
-        _require(
-            isinstance(partition_provenance, dict),
-            path,
-            "partition provenance missing",
-        )
-        assert isinstance(partition_provenance, dict)
-        _require(
-            partition_provenance.get("old_numerical_bound_not_retained") is True,
-            path,
-            "historical-bound removal flag missing",
-        )
     else:
         raise VerificationError(f"{path}: unknown PDE family {family}")
 

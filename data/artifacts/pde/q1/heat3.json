@@ -1,24 +1,69 @@
 {
-  "accepted_as_heat3d_moment_pde_residual_bound": true,
-  "accumulation_dtype": "float64",
-  "adaptive_leaf_count": 1639975100,
-  "affine_l2": 0.0010021344702909874,
-  "affine_l2_squared": 1.0042734965453978e-06,
-  "all_adaptive_leaves_enumerated": true,
-  "all_base_roots_enumerated": true,
+  "schema_version": 1,
+  "certified": true,
+  "equation": "Heat",
+  "dimension": 3,
+  "kind": "netbounds_current_paper_heat3_accepted_merged_certificate",
+  "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic",
+  "grid": [
+    100,
+    100,
+    100,
+    500
+  ],
   "architecture": {
     "layers": 4,
     "width": 128
   },
+  "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+  "ordinary_float32_not_outward_rounded": true,
+  "accumulation_dtype": "float64",
+  "l2_bound": 0.0018909963946260886,
+  "l2_squared_bound": 0.0000035758673644888656,
+  "moment_minkowski_l2": 0.0019124579418581939,
+  "moment_minkowski_l2_squared": 0.000003657495379376479,
+  "moment_cross_l2": 0.0018986417077828128,
+  "moment_cross_l2_squared": 0.0000036048403345324358,
+  "moment_remainder_l2": 0.0011461967366239842,
+  "moment_remainder_l2_squared": 0.0000013137669590474708,
+  "moment_cross_integral": 6.433999394626896e-7,
+  "affine_l2": 0.0010021344702909874,
+  "affine_l2_squared": 0.0000010042734965453978,
+  "midpoint_l2": 0.0010001983526562942,
+  "midpoint_l2_squared": 0.0000010003967446563646,
   "bound_to_affine_ratio": 1.8869687159618453,
   "bound_to_midpoint_ratio": 1.8906213848523563,
-  "certification_caveat": "Analytically certified conditional on the derivative-bound formulas; cell kernels use ordinary float32 arithmetic and are not outward-rounded intervals.",
-  "certified": true,
-  "checkpoint_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/sine-series-ic-training/experiments/Heat/3d_separable/num_layers4_width128/num_layers4_width128_weights.pt",
-  "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
-  "coverage": {
-    "start_root_index": 0,
-    "stop_root_index": 500000000
+  "accepted_as_heat3d_moment_pde_residual_bound": true,
+  "all_base_roots_enumerated": true,
+  "all_adaptive_leaves_enumerated": true,
+  "num_base_roots": 500000000,
+  "processed_base_roots": 500000000,
+  "root_block_size": 2048,
+  "kernel_batch_size": 1600,
+  "max_depth": 2,
+  "adaptive_leaf_count": 1639975100,
+  "leaf_counts_by_depth": [
+    473979322,
+    366353186,
+    799642592
+  ],
+  "split_counts_by_depth": [
+    26020678,
+    49977662
+  ],
+  "kernel_cells_evaluated": 1715973440,
+  "partition_units_at_max_depth": 128000000000,
+  "sums": {
+    "affine_l2_squared": 0.0000010042734965453978,
+    "bound_l2_squared": 0.0000035758673644888656,
+    "midpoint_l2_squared": 0.0000010003967446563646,
+    "moment_cross_integral": 6.433999394626896e-7,
+    "moment_cross_l2_squared": 0.0000036048403345324358,
+    "moment_minkowski_l2_squared": 0.000003657495379376479,
+    "moment_remainder_l2_squared": 0.0000013137669590474708,
+    "rho": 5118041.94818462,
+    "rho_boundary": 586245.6930184265,
+    "rho_hyper": 4531796.255154684
   },
   "diagnostics": {
     "max_rho": 0.05574895441532135,
@@ -26,182 +71,17 @@
     "rho_hyper_sum": 4531796.255154684,
     "rho_sum": 5118041.94818462
   },
-  "dimension": 3,
-  "equation": "Heat",
-  "exact_legacy_partition_replay_validated": false,
-  "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-  "global_configuration": {
-    "accumulation_dtype": "float64",
-    "alpha": 0.1,
-    "architecture": {
-      "layers": 4,
-      "width": 128
-    },
-    "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
-    "certification_caveat": "Analytically certified conditional on the derivative-bound formulas; cell kernels use ordinary float32 arithmetic and are not outward-rounded intervals.",
-    "checkpoint_file": "/mn/sarpanitu/studenter-u1/emilhau/vincent/worktrees/sine-series-ic-training/experiments/Heat/3d_separable/num_layers4_width128/num_layers4_width128_weights.pt",
+  "configuration": {
     "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
-    "checkpoint_source_dtypes": [
-      "torch.float64"
-    ],
-    "children_per_split": 16,
-    "dimension": 3,
-    "equation": "Heat",
     "execution_dtype": "float32",
-    "git_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-    "grid": [
-      100,
-      100,
-      100,
-      500
-    ],
-    "initial_data": "separable",
-    "kernel_batch_size": 1600,
-    "leaf_certificate_rule": "minimum_appendix_Hessian_quadratic_moment_minkowski_and_affine_cross",
-    "max_depth": 2,
-    "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
+    "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
     "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
-    "n_taylor": null,
-    "ordinary_float32_not_outward_rounded": true,
-    "partition_method": "operator_aware_affine_spacetime_Q1_certified_Hessian_remainder_recursive_adaptive_dyadic",
-    "quadrature_rule": "Q1",
     "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
-    "root_block_size": 2048,
-    "root_radii": [
-      0.005,
-      0.005,
-      0.005,
-      0.001
-    ],
-    "schema_version": 1,
     "spatial_radius_policy": "coordinatewise_eps_vec_spatial",
-    "split_axes": "all_4_spacetime_axes",
-    "split_excess_density": 0.000490161357447505,
-    "split_rule": "legacy_certified_excess_l2_squared_divided_by_leaf_volume_strictly_greater_than_threshold",
-    "total_base_roots": 500000000
-  },
-  "global_configuration_sha256": "efe240be461057e37d77ef180d415c1f0f6d2686552b6ac265e936af52a4d9cd",
-  "grid": [
-    100,
-    100,
-    100,
-    500
-  ],
-  "initial_data": "separable",
-  "kernel_batch_size": 1600,
-  "kernel_cells_evaluated": 1715973440,
-  "kind": "netbounds_current_paper_heat3_accepted_merged_certificate",
-  "l2_bound": 0.0018909963946260886,
-  "l2_squared_bound": 3.5758673644888656e-06,
-  "leaf_counts_by_depth": [
-    473979322,
-    366353186,
-    799642592
-  ],
-  "legacy_partition_replay_validated": false,
-  "max_depth": 2,
-  "merged_utc": "2026-08-26T06:36:41.543438+00:00",
-  "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
-  "midpoint_l2": 0.0010001983526562942,
-  "midpoint_l2_squared": 1.0003967446563646e-06,
-  "moment_cross_integral": 6.433999394626896e-07,
-  "moment_cross_l2": 0.0018986417077828128,
-  "moment_cross_l2_squared": 3.6048403345324358e-06,
-  "moment_minkowski_l2": 0.0019124579418581939,
-  "moment_minkowski_l2_squared": 3.657495379376479e-06,
-  "moment_remainder_l2": 0.0011461967366239842,
-  "moment_remainder_l2_squared": 1.3137669590474708e-06,
-  "num_base_roots": 500000000,
-  "num_shards": 7,
-  "ordinary_float32_not_outward_rounded": true,
-  "partition_method": "operator_aware_affine_spacetime_Q1_certified_Hessian_remainder_recursive_adaptive_dyadic",
-  "partition_policy_provenance": {
-    "historical_partition_authority_sha256": "38f0c744c6a8a624888909517e0cb7344d5acfda6a1859f8621781bf10083dcc",
-    "old_numerical_bound_not_retained": true,
-    "split_excess_density": 0.000490161357447505,
-    "split_rule": "legacy_certified_excess_l2_squared_divided_by_leaf_volume_strictly_greater_than_threshold"
-  },
-  "partition_replay_acceptance": {
-    "accepted_as_final": true,
-    "accepted_utc": "2026-08-26T06:36:41.547936+00:00",
-    "complete_coverage_and_internal_partition_identities": true,
-    "historical_adaptive_leaf_count": 1639964105,
-    "historical_partition_authority_sha256": "38f0c744c6a8a624888909517e0cb7344d5acfda6a1859f8621781bf10083dcc",
-    "leaf_count_difference": 10995,
-    "new_adaptive_leaf_count": 1639975100,
-    "reason": "The user accepted the completed seven-shard appendix-direct Heat-3D same-policy re-evaluation as the final NetBounds authority despite the nonzero historical leaf-count replay difference.",
-    "relative_leaf_count_difference": 6.704415033587097e-06,
-    "status": "user_accepted_complete_re_evaluation"
-  },
-  "partition_units_at_max_depth": 128000000000,
-  "processed_base_roots": 500000000,
-  "producer_global_configuration_sha256": "2cb283368ef4a0dea6a7287dc28e36f0882a0ee612bb11ec1df911eb8d55e0f0",
-  "quadrature_rule": "Q1",
-  "root_block_size": 2048,
-  "same_policy_re_evaluation_validated": true,
-  "schema_version": 1,
-  "shards_merged": [
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0000_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0001_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0002_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0003_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0004_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0005_of_0007.json",
-    "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0006_of_0007.json"
-  ],
-  "source_shards": [
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0000_of_0007.json",
-      "sha256": "97e966aae1659380592ffaf8ae14b3b9e0ef6507b2799ecb7847b1455708dd2a",
-      "size": 8249
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0001_of_0007.json",
-      "sha256": "20d62586653ce0927da3b53299e9ca52ba0fd6df398919d4e260e88d5dc5557f",
-      "size": 8263
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0002_of_0007.json",
-      "sha256": "530068cba87dc970cb1ac69b4066cb2158465d996dc7f88bf8d1086fb4605edb",
-      "size": 8271
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0003_of_0007.json",
-      "sha256": "d7fb6a362f36d0ced0220c260cef81991e68036753548e427db5edbfa30a5d3c",
-      "size": 8269
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0004_of_0007.json",
-      "sha256": "2a18977a93fe0b13a11a3e2844b6b3c9b959a1b7032af8d7feee77aad661ca56",
-      "size": 8266
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0005_of_0007.json",
-      "sha256": "14a4ea1d4010c38ef30b5881b2610c22bef37616baa7e53e8a9cec2b93083def",
-      "size": 8265
-    },
-    {
-      "path": "/mn/sarpanitu/studenter-u1/emilhau/vincent/results/pde_current_paper_appendix_direct_20260820/heat3/shards/shard_0006_of_0007.json",
-      "sha256": "7765a4dcb727783202305085b0922c810d3b9e02d01532b5cec2b7ec4f8280f9",
-      "size": 8268
-    }
-  ],
-  "source_tracked_dirty": false,
-  "split_counts_by_depth": [
-    26020678,
-    49977662
-  ],
-  "sums": {
-    "affine_l2_squared": 1.0042734965453978e-06,
-    "bound_l2_squared": 3.5758673644888656e-06,
-    "midpoint_l2_squared": 1.0003967446563646e-06,
-    "moment_cross_integral": 6.433999394626896e-07,
-    "moment_cross_l2_squared": 3.6048403345324358e-06,
-    "moment_minkowski_l2_squared": 3.657495379376479e-06,
-    "moment_remainder_l2_squared": 1.3137669590474708e-06,
-    "rho": 5118041.94818462,
-    "rho_boundary": 586245.6930184265,
-    "rho_hyper": 4531796.255154684
-  },
-  "total_shard_elapsed_seconds": 658201.3479083276
+    "kernel_batch_size": 1600,
+    "children_per_split": 16,
+    "root_block_size": 2048,
+    "max_depth": 2,
+    "split_excess_density": 0.000490161357447505
+  }
 }
