@@ -39,7 +39,7 @@ def test_all_tables_render_byte_exactly() -> None:
 
 def test_numerical_source_closure_is_active_and_fails_closed(tmp_path: Path) -> None:
     catalog = load_catalog(ROOT)
-    assert verify_numerical_source_closure(ROOT, catalog) == 30
+    assert verify_numerical_source_closure(ROOT, catalog) == 31
 
     root = _working_copy(tmp_path)
     copied_sources = root / "src" / "netbounds"
@@ -78,6 +78,6 @@ def test_cli_verifies_repository(capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["verify", "--root", str(ROOT)]) == 0
     output = capsys.readouterr().out
     assert "30 initial + 6 PDE" in output
-    assert "numerical source closure: 30 files" in output
+    assert "numerical source closure: 31 files" in output
     assert "5 tables (byte-exact)" in output
     assert "6/6 checkpoints bundled" in output

@@ -1,8 +1,8 @@
-"""Fixed reproductions from reached traces at 2add560, 1003b544, and 53bb374.
+"""Fixed current-paper reproductions for all retained initial and PDE rows.
 
 The trace and source-hash evidence is retained in
-``provenance/checkpoint-reproduction-1d.json``. This module intentionally
-contains only the twelve selected 1D cases, never campaign or training APIs.
+``provenance/current-paper-reproduction.json``. This module intentionally
+contains only the 36 selected paper computations, never campaign or training APIs.
 """
 
 from __future__ import annotations
@@ -26,6 +26,12 @@ from .initial_data import (
     velocity_q1,
 )
 from .model import TanhNetwork, load_checkpoint
+from .pde_adaptive import (
+    PUBLIC_SUM_KEYS,
+    certify_heat3_adaptive_block,
+    partition_units,
+    validate_adaptive_counts,
+)
 from .pde import heat_hyper_taylor_rect_batch, wave_hyper_taylor_rect_batch
 from .cases import CASES, Case, case_names
 
@@ -288,7 +294,7 @@ def _pde_result(
         "bound_to_midpoint_ratio": math.sqrt(
             sums["bound_l2_squared"] / sums["midpoint_l2_squared"]
         ),
-        "cell_radii": [float(eps[0].item()), float(eps[1].item())],
+        "cell_radii": [float(value.item()) for value in eps],
         "num_boxes": total,
         "processed_boxes": total,
         "diagnostics": {
@@ -302,6 +308,108 @@ def _pde_result(
         },
     }
     return result
+
+
+def _heat3_adaptive_result(
+    case: Case,
+    model: TanhNetwork,
+    kernel_batch_size: int,
+    progress: Callable[[int, int], None] | None,
+) -> dict[str, object]:
+    """Recompute the fixed accepted Heat-3D adaptive paper case."""
+
+    device = model.input_layer.weight.device
+    grid = tuple(case.grid)
+    total_roots = math.prod(grid)
+    root_eps = torch.tensor(
+        [1.0 / (2.0 * cells) for cells in grid],
+        dtype=torch.float32,
+        device=device,
+    )
+    root_block_size = 2048
+    max_depth = 2
+    split_excess_density = 0.000490161357447505
+    sums = {key: 0.0 for key in PUBLIC_SUM_KEYS}
+    leaf_counts = [0] * (max_depth + 1)
+    split_counts = [0] * max_depth
+    kernel_cells_evaluated = 0
+    rho_max = 0.0
+
+    for start in range(0, total_roots, root_block_size):
+        stop = min(start + root_block_size, total_roots)
+        centers = _decode_centers(start, stop, grid=grid, device=device)
+        block = certify_heat3_adaptive_block(
+            model=model,
+            root_centers=centers,
+            root_eps=root_eps,
+            split_excess_density=split_excess_density,
+            max_depth=max_depth,
+            kernel_batch_size=kernel_batch_size,
+        )
+        for key in PUBLIC_SUM_KEYS:
+            sums[key] += float(block["sums"][key])
+        for depth, value in enumerate(block["leaf_counts_by_depth"]):
+            leaf_counts[depth] += int(value)
+        for depth, value in enumerate(block["split_counts_by_depth"]):
+            split_counts[depth] += int(value)
+        kernel_cells_evaluated += int(block["kernel_cells_evaluated"])
+        rho_max = max(rho_max, float(block["rho_max"]))
+        if progress is not None:
+            progress(stop, total_roots)
+
+    validate_adaptive_counts(
+        root_count=total_roots,
+        leaf_counts_by_depth=leaf_counts,
+        split_counts_by_depth=split_counts,
+        max_depth=max_depth,
+        kernel_cells_evaluated=kernel_cells_evaluated,
+    )
+    if not (
+        sums["moment_minkowski_l2_squared"] >= sums["bound_l2_squared"]
+        and sums["moment_cross_l2_squared"] >= sums["bound_l2_squared"]
+        and sums["bound_l2_squared"] >= sums["affine_l2_squared"]
+        >= sums["midpoint_l2_squared"]
+        >= 0.0
+    ):
+        raise FloatingPointError("invalid adaptive Heat-3D bound ordering")
+
+    return {
+        "sums": sums,
+        "l2_squared_bound": sums["bound_l2_squared"],
+        "l2_bound": math.sqrt(sums["bound_l2_squared"]),
+        "moment_minkowski_l2_squared": sums["moment_minkowski_l2_squared"],
+        "moment_minkowski_l2": math.sqrt(sums["moment_minkowski_l2_squared"]),
+        "moment_cross_l2_squared": sums["moment_cross_l2_squared"],
+        "moment_cross_l2": math.sqrt(sums["moment_cross_l2_squared"]),
+        "moment_remainder_l2_squared": sums["moment_remainder_l2_squared"],
+        "moment_remainder_l2": math.sqrt(sums["moment_remainder_l2_squared"]),
+        "moment_cross_integral": sums["moment_cross_integral"],
+        "affine_l2_squared": sums["affine_l2_squared"],
+        "affine_l2": math.sqrt(sums["affine_l2_squared"]),
+        "midpoint_l2_squared": sums["midpoint_l2_squared"],
+        "midpoint_l2": math.sqrt(sums["midpoint_l2_squared"]),
+        "bound_to_affine_ratio": math.sqrt(
+            sums["bound_l2_squared"] / sums["affine_l2_squared"]
+        ),
+        "bound_to_midpoint_ratio": math.sqrt(
+            sums["bound_l2_squared"] / sums["midpoint_l2_squared"]
+        ),
+        "num_base_roots": total_roots,
+        "processed_base_roots": total_roots,
+        "root_block_size": root_block_size,
+        "max_depth": max_depth,
+        "adaptive_leaf_count": sum(leaf_counts),
+        "leaf_counts_by_depth": leaf_counts,
+        "split_counts_by_depth": split_counts,
+        "kernel_cells_evaluated": kernel_cells_evaluated,
+        "partition_units_at_max_depth": partition_units(leaf_counts, max_depth),
+        "diagnostics": {
+            "rho_sum": sums["rho"],
+            "rho_hyper_sum": sums["rho_hyper"],
+            "rho_boundary_sum": sums["rho_boundary"],
+            "max_rho": rho_max,
+        },
+    }
 
 
 def _select_device(requested: str | None, *, default: str) -> torch.device:
@@ -352,6 +460,8 @@ def reproduce(
     if case.quantity == "pde":
         default = "cuda" if torch.cuda.is_available() else "cpu"
         selected = _select_device(device, default=default)
+        if case.d == 3 and selected.type != "cuda":
+            raise ValueError("3D PDE paper cases require a CUDA device")
         if batch_size is not None and batch_size != case.batch_size:
             raise ValueError(
                 f"PDE paper case {case.name} requires batch_size={case.batch_size}"
@@ -370,13 +480,14 @@ def reproduce(
     ):
         raise ValueError("batch_size must be positive")
     model = _checked_model(case, checkout, selected)
-    if case.quantity == "pde" and case.d > 2:
-        raise RuntimeError("3D PDE closure is intentionally deferred")
-    numerical = (
-        _pde_result(case, model, selected_batch, progress)
-        if case.quantity == "pde"
-        else _initial_result(case, model, selected_batch)
-    )
+    if case.name == "heat3-pde-q1":
+        numerical = _heat3_adaptive_result(
+            case, model, selected_batch, progress
+        )
+    elif case.quantity == "pde":
+        numerical = _pde_result(case, model, selected_batch, progress)
+    else:
+        numerical = _initial_result(case, model, selected_batch)
     return {
         "schema_version": 1,
         "kind": "netbounds_paper_checkpoint_reproduction",

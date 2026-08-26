@@ -1,78 +1,58 @@
 {
-  "schema_version": 1,
-  "purpose": "Producer revisions and reached entry points for the 36 selected numerical artifacts.",
+  "schema_version": 2,
+  "purpose": "Producer revisions and reached entry points for the 36 current-paper numerical artifacts.",
   "producer_revisions": [
     {
-      "commit": "2add56070e88dc16def9accbed953fa854f22d39",
-      "artifacts": "all 15 initial Q0 artifacts",
+      "commit": "0dc10fcd69738511e29b004711cea094a127fdc7",
+      "artifacts": "all 12 scalar initial-displacement Q0/Q1 artifacts",
       "entry_points": [
-        "run_initial_residual_bounds.py",
-        "run_initial_gradient_residual_bounds.py",
-        "scripts/run_wave_residual_bounds.py"
+        "run_initial_residual_bounds.py"
       ],
-      "core_modules": [
-        "residual_bounds/initial.py",
-        "residual_bounds/initial_grad.py",
-        "residual_bounds/initial_modulus.py",
-        "residual_bounds/moment.py",
-        "derivative_bounds/"
+      "public_closure": [
+        "src/netbounds/numerics/initial_q0.py",
+        "src/netbounds/numerics/initial_q1.py",
+        "src/netbounds/numerics/initial_data.py"
       ]
     },
     {
-      "commit": "1003b5448260462e888dede918904d8391fd2a78",
-      "artifacts": "all 15 initial Q1 artifacts",
+      "commit": "f84289b14c61e13bcfd3f781d49252c529976401",
+      "artifacts": "all 12 initial-displacement-gradient and all 6 initial-velocity Q0/Q1 artifacts",
       "entry_points": [
-        "run_initial_residual_bounds.py",
         "run_initial_gradient_residual_bounds.py",
         "scripts/run_wave_residual_bounds.py"
       ],
-      "core_modules": [
-        "residual_bounds/initial.py",
-        "residual_bounds/initial_grad.py",
-        "residual_bounds/initial_modulus.py",
-        "residual_bounds/moment.py",
-        "derivative_bounds/"
+      "public_closure": [
+        "src/netbounds/numerics/initial_gradient_q0.py",
+        "src/netbounds/numerics/initial_gradient_q1.py",
+        "src/netbounds/numerics/initial_q0.py",
+        "src/netbounds/numerics/initial_q1.py",
+        "src/netbounds/numerics/initial_data.py"
       ]
     },
     {
-      "commit": "53bb374b79718bef7273ba56a1f0396fb610afcf",
-      "artifacts": ["Heat-1D PDE Q1", "Wave-1D PDE Q1"],
-      "entry_points": ["scripts/run_ima_pde_q1_d1_moment_full.py"],
-      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
-    },
-    {
-      "commit": "80694d3eb1b1bf19a0107b889fffe025e516eb72",
-      "artifacts": ["Heat-2D PDE Q1", "Wave-2D PDE Q1"],
+      "commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
+      "artifacts": "all six appendix-direct PDE Q1 artifacts",
       "entry_points": [
+        "scripts/run_ima_pde_q1_d1_moment_full.py",
         "scripts/run_ima_pde_q1_d2_moment_full.py",
-        "scripts/merge_ima_pde_q1_d2_moment_shards.py"
-      ],
-      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
-    },
-    {
-      "commit": "ae87aa0825e5ae73f18c1980c95aaedc8ff8485e",
-      "artifacts": ["Heat-3D adaptive PDE Q1 same-policy result"],
-      "entry_points": [
+        "scripts/merge_ima_pde_q1_d2_moment_shards.py",
         "scripts/run_ima_pde_q1_d3_heat_adaptive_moment_full.py",
-        "scripts/merge_ima_pde_q1_d3_heat_adaptive_moment_shards.py"
-      ],
-      "qualification": "The selected accepted wrapper is a documented same-policy acceptance record, not an exact historical partition replay.",
-      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
-    },
-    {
-      "commit": "9ae849bcdbb665479d52021657f50e936acab88a",
-      "artifacts": ["Wave-3D PDE Q1"],
-      "entry_points": [
+        "scripts/merge_ima_pde_q1_d3_heat_adaptive_moment_shards.py",
         "scripts/run_ima_pde_q1_d3_wave_moment_full.py",
         "scripts/merge_ima_pde_q1_d3_wave_moment_shards.py"
       ],
-      "core_modules": ["residual_bounds/pde.py", "residual_bounds/moment.py", "derivative_bounds/"]
+      "public_closure": [
+        "src/netbounds/numerics/pde.py",
+        "src/netbounds/numerics/pde_adaptive.py",
+        "src/netbounds/numerics/reproduce.py"
+      ],
+      "heat3_qualification": "Complete user-accepted same-policy re-evaluation with a 10,995-leaf difference from the unavailable historical partition map; complete root coverage and internal tree identities passed.",
+      "wave3_qualification": "Strict seven-shard merge over all 1,000,000,000 fixed-grid cells passed."
     }
   ],
-  "preservation": {
-    "bundle_manifest": "producer-bundles.json",
-    "bundles_are_self_contained": true,
-    "bundles_are_repository_payload": false,
-    "reason": "The 139 MiB history bundles preserve source authority during extraction but are larger than the eventual reached-source closure."
+  "portable_source_authority": {
+    "manifest": "provenance/current-paper-reproduction.json",
+    "hash_algorithm": "SHA-256",
+    "runtime_depends_on_private_repository": false
   }
 }

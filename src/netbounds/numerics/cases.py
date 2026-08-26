@@ -72,7 +72,15 @@ def _case(equation: str, dimension: int, quantity: str, rule: str) -> Case:
     if quantity == "pde":
         authority = f"data/artifacts/pde/q1/{key}.json"
         grid = _PDE_GRIDS[key]
-        batch_size = 8192 if dimension == 2 else (32768 if key == "wave1" else 65536)
+        batch_size = (
+            1600
+            if key == "heat3"
+            else 8192
+            if dimension in {2, 3}
+            else 32768
+            if key == "wave1"
+            else 65536
+        )
     else:
         authority = f"data/artifacts/initial/{rule}/{key}_{quantity}.json"
         grid = (_INITIAL_CELLS_PER_DIM,) * d
@@ -130,12 +138,6 @@ def all_case_names() -> tuple[str, ...]:
 
 
 def case_names() -> tuple[str, ...]:
-    """Return current public cases: all initial data and d=1/2 PDE bounds."""
+    """Return all 36 fixed current-paper reproductions."""
 
-    return tuple(
-        sorted(
-            name
-            for name, case in CASES.items()
-            if case.quantity != "pde" or case.d <= 2
-        )
-    )
+    return all_case_names()

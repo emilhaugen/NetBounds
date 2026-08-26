@@ -51,7 +51,7 @@ def parser() -> argparse.ArgumentParser:
 
     reproduce = subcommands.add_parser(
         "reproduce",
-        help="recompute one fixed checkpoint-backed 1D paper case",
+        help="recompute one fixed checkpoint-backed paper case",
     )
     _root_argument(reproduce)
     reproduce.add_argument("--case", choices=case_names(), required=True)
@@ -92,7 +92,7 @@ def _verify(root: Path, catalog: dict[str, Any]) -> None:
     print(
         "NOTE checkpoint reproduction: "
         f"{bundled}/{len(checkpoints)} checkpoints bundled; "
-        "34/36 fixed computations exposed (all initial data and PDE d=1/2)"
+        "36/36 fixed computations exposed (all initial data and all PDE rows)"
     )
 
 
