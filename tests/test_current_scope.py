@@ -1,20 +1,122 @@
 from __future__ import annotations
 
+import json
+from copy import deepcopy
+from pathlib import Path
+
 import pytest
 
 from netbounds.cli import main
 from netbounds.numerics.cases import CASES, case_names
 from netbounds.tables import INITIAL_CAPTIONS, PDE_CAPTION
+from netbounds.data import VerificationError, load_catalog
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_public_scope_is_all_initial_plus_d1_d2_pde() -> None:
+def test_public_scope_is_all_36_fixed_computations() -> None:
     names = case_names()
-    assert len(names) == 34
-    assert {name for name, case in CASES.items() if name not in names} == {
+    assert len(names) == 36
+    assert names == tuple(sorted(CASES))
+
+
+@pytest.mark.parametrize(
+    "case_name",
+    [
+        "heat1-pde-q1",
+        "heat2-pde-q1",
         "heat3-pde-q1",
+        "wave1-pde-q1",
+        "wave2-pde-q1",
         "wave3-pde-q1",
+    ],
+)
+def test_all_pde_authorities_pass_full_semantic_comparison(case_name: str) -> None:
+    from netbounds.numerics.compare import (
+        _PDE_ADAPTIVE_NUMERICAL_FIELDS,
+        _PDE_NUMERICAL_FIELDS,
+        compare_reproduction,
+    )
+
+    case = CASES[case_name]
+    authority = json.loads((ROOT / case.authority).read_text())
+    fields = (
+        _PDE_ADAPTIVE_NUMERICAL_FIELDS
+        if case_name == "heat3-pde-q1"
+        else _PDE_NUMERICAL_FIELDS
+    )
+    payload = {
+        "schema_version": 1,
+        "kind": "netbounds_paper_checkpoint_reproduction",
+        "case": case.name,
+        "authority": case.authority,
+        "identity": {
+            "equation": case.equation,
+            "quantity": case.quantity,
+            "quadrature_rule": "Q1",
+            "architecture": {"layers": case.L, "width": case.width},
+            "checkpoint": case.checkpoint,
+            "checkpoint_sha256": case.checkpoint_sha256,
+            "dtype": "float32",
+            "grid": list(case.grid),
+        },
+        "execution": {
+            "device": "cuda:0",
+            "batch_size": case.batch_size,
+            "accumulation_dtype": "float64",
+        },
+        "numerical": {field: authority[field] for field in fields},
     }
-    assert all(CASES[name].quantity != "pde" or CASES[name].d <= 2 for name in names)
+    comparison = compare_reproduction(payload, root=ROOT)
+    assert comparison["passed"], comparison
+
+
+def test_heat3_public_artifact_retains_no_historical_bound() -> None:
+    authority = json.loads(
+        (ROOT / "data/artifacts/pde/q1/heat3.json").read_text()
+    )
+    assert "legacy_bound_l2_squared" not in authority["sums"]
+    assert "legacy_l2_bound_on_replayed_partition" not in authority
+    assert authority["partition_policy_provenance"][
+        "old_numerical_bound_not_retained"
+    ] is True
+
+
+@pytest.mark.parametrize(
+    ("case_name", "mutation"),
+    [
+        (
+            "heat3-pde-q1",
+            lambda data: data["partition_replay_acceptance"].__setitem__(
+                "leaf_count_difference", 0
+            ),
+        ),
+        (
+            "wave3-pde-q1",
+            lambda data: data.__setitem__("cell_radii", [0.005] * 4),
+        ),
+        (
+            "wave3-pde-q1",
+            lambda data: data["acceptance"].__setitem__(
+                "accepted_as_final", False
+            ),
+        ),
+    ],
+)
+def test_3d_policy_mutations_fail_closed(case_name, mutation) -> None:
+    from netbounds.tables import _validate_pde_artifact
+
+    case = CASES[case_name]
+    data = json.loads((ROOT / case.authority).read_text())
+    changed = deepcopy(data)
+    mutation(changed)
+    policy = next(
+        row
+        for row in load_catalog(ROOT)["pde_rows"]
+        if row["artifact"]["path"] == case.authority
+    )
+    with pytest.raises(VerificationError):
+        _validate_pde_artifact(changed, policy, ROOT / case.authority)
 
 
 @pytest.mark.torch

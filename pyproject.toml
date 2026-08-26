@@ -20,13 +20,6 @@ netbounds-paper = "netbounds.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.setuptools.package-data]
-netbounds = [
-  "_payload/data/**/*",
-  "_payload/paper/**/*",
-  "_payload/provenance/**/*",
-]
-
 [tool.pytest.ini_options]
 addopts = "-ra"
 markers = ["torch: requires the declared PyTorch numerical dependency"]

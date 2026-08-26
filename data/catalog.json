@@ -5,7 +5,7 @@
       "initial_displacement": "0dc10fcd69738511e29b004711cea094a127fdc7",
       "initial_gradient_velocity": "f84289b14c61e13bcfd3f781d49252c529976401",
       "pde_d1_d2": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-      "pde_d3": "frozen_previous_authority_pending_current_run"
+      "pde_d3": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53"
     },
     "source_repository": "65industries/NetBounds-dev",
     "tables": [
@@ -26,12 +26,12 @@
       },
       {
         "path": "paper/tables/pde_residuals_q1_master.tex",
-        "sha256": "0409bf55a32a50e44228ff03f6052da69f11921e357754926952062f37edc6c9",
+        "sha256": "f8bd91704e318f7944d1c5ff1e7bf5318a906a3f5b87840184b58a3f6f7d20e2",
         "size": 1062
       },
       {
         "path": "paper/tables/energy_estimate_q1_master.tex",
-        "sha256": "89a769019fd6d0827af532d98b646e1a05e51bf7bfd5d37aeae0abed80b49e6a",
+        "sha256": "6359dcd99ce14380eec5d992fe5eb9c32b16e0a6df273061625d81315c726cdd",
         "size": 2219
       }
     ]
@@ -95,17 +95,16 @@
     }
   },
   "capabilities": {
-    "checkpoint_backed_1d_sanity_reproduction": true,
+    "checkpoint_backed_all_pde_reproduction": true,
     "checkpoint_backed_initial_reproduction": true,
-    "checkpoint_backed_pde_up_to_2d": true,
-    "full_checkpoint_reproduction": false,
+    "full_checkpoint_reproduction": true,
     "gpu_numerical_recomputation": true,
     "offline_artifact_verification": true,
     "offline_table_rendering": true
   },
   "checkpoint_reproduction": {
-    "covered_artifact_computations": 34,
-    "full_table_recomputation": false,
+    "covered_artifact_computations": 36,
+    "full_table_recomputation": true,
     "supported_initial_dimensions": [
       1,
       2,
@@ -113,7 +112,8 @@
     ],
     "supported_pde_dimensions": [
       1,
-      2
+      2,
+      3
     ],
     "total_artifact_computations": 36
   },
@@ -501,36 +501,6 @@
   ],
   "payload_files": [
     {
-      "path": "data/checkpoints/heat1-l2-w128.pt",
-      "sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
-      "size": 139034
-    },
-    {
-      "path": "data/checkpoints/heat2-l3-w128.pt",
-      "sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
-      "size": 272700
-    },
-    {
-      "path": "data/checkpoints/heat3-l4-w128.pt",
-      "sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
-      "size": 406430
-    },
-    {
-      "path": "data/checkpoints/wave1-l2-w256.pt",
-      "sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
-      "size": 537370
-    },
-    {
-      "path": "data/checkpoints/wave2-l3-w256.pt",
-      "sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
-      "size": 1066364
-    },
-    {
-      "path": "data/checkpoints/wave3-l3-w256.pt",
-      "sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
-      "size": 35946245
-    },
-    {
       "path": "data/artifacts/initial/q0/heat1_displacement.json",
       "sha256": "3bf9fa12c440346fbcc506d5b2da7998b89c4b46bc991eaccafcab4d28a51413",
       "size": 1775
@@ -682,37 +652,67 @@
     },
     {
       "path": "data/artifacts/pde/q1/heat1.json",
-      "sha256": "a8566d2d367d4937858770303eaaf79b7f0eff7a1a76db7d1be3226e5cee0eb3",
-      "size": 5097
+      "sha256": "6b839737c2fb288e13811f6295e5e8f26f5f7eaab7da7aef58fd9e3d7201f637",
+      "size": 5012
     },
     {
       "path": "data/artifacts/pde/q1/heat2.json",
-      "sha256": "410d44702748fe6899ac033fc350e98f0b6afb1cfb91811a35e9ffb3c3f8ae79",
-      "size": 10776
+      "sha256": "fc50f20bad788b8cb0f1bab3f6d01462f427066b8623468a2c7b29edfaf0ddf2",
+      "size": 10794
     },
     {
       "path": "data/artifacts/pde/q1/heat3.json",
-      "sha256": "19646f98c705633ded8be6d08d479d7c952f592813677dfad1330880daa329a1",
-      "size": 9866
+      "sha256": "1a8f8a87dc4ce0d908ca92f75491d758f069b84b45d903649b98b9fc8abd43bf",
+      "size": 9923
     },
     {
       "path": "data/artifacts/pde/q1/wave1.json",
-      "sha256": "5f0016a2f3926c481dfb77937763179f296be85cc6b16aca989d731280baf3c2",
-      "size": 5113
+      "sha256": "635a5fcbde47a08bea5c0993457f2bf3c9e071d0e8b5751dc9bd866be9ab7727",
+      "size": 5028
     },
     {
       "path": "data/artifacts/pde/q1/wave2.json",
-      "sha256": "84123e5c768e80ae2b690fea434fb679e5f58b1e0a14937103c6d6e0468d7a1d",
-      "size": 10772
+      "sha256": "0945915c940f1865cfb78a2eca85794652fb4f4961b822bab8e9b82f97c45851",
+      "size": 10790
     },
     {
       "path": "data/artifacts/pde/q1/wave3.json",
-      "sha256": "cf7e7139ea65e15254092e0932a03251a981e7db4be962d289901fd1b0b21d66",
-      "size": 5823
+      "sha256": "8f4fd4da45111dae067dbf371b1008b571aa03398b23d2b4466c9b9bbaefa455",
+      "size": 7897
+    },
+    {
+      "path": "data/checkpoints/heat1-l2-w128.pt",
+      "sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
+      "size": 139034
+    },
+    {
+      "path": "data/checkpoints/heat2-l3-w128.pt",
+      "sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
+      "size": 272700
+    },
+    {
+      "path": "data/checkpoints/heat3-l4-w128.pt",
+      "sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
+      "size": 406430
+    },
+    {
+      "path": "data/checkpoints/wave1-l2-w256.pt",
+      "sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
+      "size": 537370
+    },
+    {
+      "path": "data/checkpoints/wave2-l3-w256.pt",
+      "sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
+      "size": 1066364
+    },
+    {
+      "path": "data/checkpoints/wave3-l3-w256.pt",
+      "sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
+      "size": 35946245
     },
     {
       "path": "paper/tables/energy_estimate_q1_master.tex",
-      "sha256": "89a769019fd6d0827af532d98b646e1a05e51bf7bfd5d37aeae0abed80b49e6a",
+      "sha256": "6359dcd99ce14380eec5d992fe5eb9c32b16e0a6df273061625d81315c726cdd",
       "size": 2219
     },
     {
@@ -732,7 +732,7 @@
     },
     {
       "path": "paper/tables/pde_residuals_q1_master.tex",
-      "sha256": "0409bf55a32a50e44228ff03f6052da69f11921e357754926952062f37edc6c9",
+      "sha256": "f8bd91704e318f7944d1c5ff1e7bf5318a906a3f5b87840184b58a3f6f7d20e2",
       "size": 1062
     },
     {
@@ -776,6 +776,16 @@
       "size": 80
     },
     {
+      "path": "provenance/current-paper-reproduction.json",
+      "sha256": "2cc4e729ce82942934490c7fe5ddd287ccf65adf38e0aeb1776678160e145cb5",
+      "size": 10015
+    },
+    {
+      "path": "provenance/final-3d-differential-validation.json",
+      "sha256": "be7b1eccca8bca99e36fa3a6a73613fead440d8d78f08eb8fc48768b9155fced",
+      "size": 1601
+    },
+    {
       "path": "provenance/formulas/section2.tex",
       "sha256": "290563b843d2283efee9830b58bc80517d86393de6cbbc9c6293858f22c1b65d",
       "size": 17683
@@ -787,26 +797,21 @@
     },
     {
       "path": "provenance/numerical-trust-boundary.md",
-      "sha256": "27711e58f6c383ccaf9e909a1399fdf0eae00b3b6dff4f340c738b8f42597e34",
-      "size": 5810
-    },
-    {
-      "path": "provenance/current-paper-reproduction.json",
-      "sha256": "0df8717e171baeb927e2917c4248060463d123149d84c4cb68aceaef6bc946c5",
-      "size": 8528
+      "sha256": "5b74715334b5832725b3d2a77874f9a817795da3deb0899e4e33a4450d498eb5",
+      "size": 6211
     },
     {
       "path": "provenance/producer-inventory.json",
-      "sha256": "78c785e97210ab3ad54049a13f05b2da6b9ed1f3af4e98604ac23766ecbca6e4",
-      "size": 3083
+      "sha256": "f39fb4ff6c91b614f6443d8d581d4659cdec9936ad5c0688821a78a6bc39796a",
+      "size": 2419
     }
   ],
   "pde_rows": [
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat1.json",
-        "sha256": "a8566d2d367d4937858770303eaaf79b7f0eff7a1a76db7d1be3226e5cee0eb3",
-        "size": 5097
+        "sha256": "6b839737c2fb288e13811f6295e5e8f26f5f7eaab7da7aef58fd9e3d7201f637",
+        "size": 5012
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
@@ -829,8 +834,8 @@
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat2.json",
-        "sha256": "410d44702748fe6899ac033fc350e98f0b6afb1cfb91811a35e9ffb3c3f8ae79",
-        "size": 10776
+        "sha256": "fc50f20bad788b8cb0f1bab3f6d01462f427066b8623468a2c7b29edfaf0ddf2",
+        "size": 10794
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
@@ -854,14 +859,14 @@
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/heat3.json",
-        "sha256": "19646f98c705633ded8be6d08d479d7c952f592813677dfad1330880daa329a1",
-        "size": 9866
+        "sha256": "1a8f8a87dc4ce0d908ca92f75491d758f069b84b45d903649b98b9fc8abd43bf",
+        "size": 9923
       },
-      "certificate": "hyper_taylor_centered_quadratic_moment_cross_min",
+      "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
       "dimension": 3,
       "equation": "Heat",
-      "family": "heat3_adaptive_same_policy",
+      "family": "heat3_adaptive_current_paper",
       "grid": [
         100,
         100,
@@ -869,19 +874,19 @@
         500
       ],
       "grid_tex": "$100^3\\times 500\\,\\mathrm{(adaptive)}^{*}$",
-      "kind": "ima_pde_q1_d3_heat_adaptive_moment_same_policy_accepted",
+      "kind": "netbounds_current_paper_heat3_accepted_merged_certificate",
       "layers": 4,
-      "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
-      "method_identifier": null,
-      "producer_commit": "ae87aa0825e5ae73f18c1980c95aaedc8ff8485e",
-      "rigorous_remainder": null,
+      "method": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min_recursive_adaptive_dyadic_fixed_legacy_partition",
+      "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
+      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
+      "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 128
     },
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave1.json",
-        "sha256": "5f0016a2f3926c481dfb77937763179f296be85cc6b16aca989d731280baf3c2",
-        "size": 5113
+        "sha256": "635a5fcbde47a08bea5c0993457f2bf3c9e071d0e8b5751dc9bd866be9ab7727",
+        "size": 5028
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
@@ -904,8 +909,8 @@
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave2.json",
-        "sha256": "84123e5c768e80ae2b690fea434fb679e5f58b1e0a14937103c6d6e0468d7a1d",
-        "size": 10772
+        "sha256": "0945915c940f1865cfb78a2eca85794652fb4f4961b822bab8e9b82f97c45851",
+        "size": 10790
       },
       "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
@@ -929,10 +934,10 @@
     {
       "artifact": {
         "path": "data/artifacts/pde/q1/wave3.json",
-        "sha256": "cf7e7139ea65e15254092e0932a03251a981e7db4be962d289901fd1b0b21d66",
-        "size": 5823
+        "sha256": "8f4fd4da45111dae067dbf371b1008b571aa03398b23d2b4466c9b9bbaefa455",
+        "size": 7897
       },
-      "certificate": "hyper_taylor_centered_quadratic_moment_cross_min",
+      "certificate": "hyper_taylor_appendix_quadratic_moment_cross_min",
       "checkpoint_sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
       "dimension": 3,
       "equation": "Wave",
@@ -944,18 +949,18 @@
         500
       ],
       "grid_tex": "$200\\times 100^2\\times 500\\,\\mathrm{(x-refined)}$",
-      "kind": "ima_pde_q1_d3_wave_moment_merged_certificate",
+      "kind": "netbounds_current_paper_wave3_accepted_merged_certificate",
       "layers": 3,
-      "method": "operator-aware affine spacetime Q1 Wave certificate with centered-BA Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
-      "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_centered_BA_quadratic_moment_cross_min",
-      "producer_commit": null,
-      "rigorous_remainder": "componentwise_centered_BA_plus_boundary_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
+      "method": "operator-aware affine spacetime Q1 Wave certificate with the appendix PDE-residual Hessian bounds, exact quadratic remainder moments, and a per-cell minimum of Minkowski-moment and affine-cross-moment bounds",
+      "method_identifier": "operator_aware_affine_spacetime_Q1_certified_Hessian_appendix_direct_quadratic_moment_cross_min",
+      "producer_commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
+      "rigorous_remainder": "componentwise_appendix_pde_Hessian_envelope_integrated_exactly_in_L2_with_affine_cross_moment_minimum",
       "width": 256
     }
   ],
-  "release_complete": false,
+  "release_complete": true,
   "schema_version": 1,
-  "scope": "current_paper_initial_and_pde_d1_d2_with_frozen_pde_d3",
+  "scope": "current_paper_all_initial_and_pde_d1_d2_d3",
   "trust_boundary": {
     "accumulation_dtype": "float64",
     "details": "provenance/numerical-trust-boundary.md",

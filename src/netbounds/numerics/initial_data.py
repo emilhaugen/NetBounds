@@ -75,7 +75,7 @@ def sine_hessian_l1_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
 
 
 def sine_hessian_abs_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
-    """Entrywise Hessian envelope $\mathsf G^{e_q+e_\ell}=\pi^2$."""
+    r"""Entrywise Hessian envelope $\mathsf G^{e_q+e_\ell}=\pi^2$."""
 
     del radius
     d = x.shape[1]
@@ -88,7 +88,7 @@ def sine_hessian_abs_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
 
 
 def sine_gradient_third_abs_bound(x: torch.Tensor, radius: float) -> torch.Tensor:
-    """Entrywise third-derivative envelope $\mathsf G^{e_j+e_q+e_\ell}=\pi^3$."""
+    r"""Entrywise third-derivative envelope $\mathsf G^{e_j+e_q+e_\ell}=\pi^3$."""
 
     del radius
     d = x.shape[1]

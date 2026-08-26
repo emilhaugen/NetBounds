@@ -25,10 +25,7 @@ def repository_root(explicit: Path | None = None) -> Path:
     else:
         candidates.extend((Path.cwd(), *Path.cwd().parents))
         source_checkout = Path(__file__).resolve().parents[2]
-        packaged_payload = Path(__file__).resolve().parent / "_payload"
-        candidates.extend(
-            (packaged_payload, source_checkout, *source_checkout.parents)
-        )
+        candidates.extend((source_checkout, *source_checkout.parents))
 
     seen: set[Path] = set()
     for candidate in candidates:
@@ -75,6 +72,7 @@ def load_catalog(root: Path) -> dict[str, Any]:
     if catalog.get("scope") not in {
         "artifact_table_replay",
         "current_paper_initial_and_pde_d1_d2_with_frozen_pde_d3",
+        "current_paper_all_initial_and_pde_d1_d2_d3",
     }:
         raise VerificationError(f"{path}: unexpected reproduction scope")
     return catalog

@@ -35,18 +35,17 @@ def test_bundled_checkpoint_entries_are_integrity_checked() -> None:
     for entry in bundled:
         assert verify_file(ROOT, entry).is_file()
     assert catalog["checkpoint_reproduction"] == {
-        "covered_artifact_computations": 34,
-        "full_table_recomputation": False,
+        "covered_artifact_computations": 36,
+        "full_table_recomputation": True,
         "supported_initial_dimensions": [1, 2, 3],
-        "supported_pde_dimensions": [1, 2],
+        "supported_pde_dimensions": [1, 2, 3],
         "total_artifact_computations": 36,
     }
-    assert catalog["capabilities"]["checkpoint_backed_1d_sanity_reproduction"] is True
-    assert catalog["capabilities"]["full_checkpoint_reproduction"] is False
+    assert catalog["capabilities"]["full_checkpoint_reproduction"] is True
     assert catalog["capabilities"]["checkpoint_backed_initial_reproduction"] is True
-    assert catalog["capabilities"]["checkpoint_backed_pde_up_to_2d"] is True
+    assert catalog["capabilities"]["checkpoint_backed_all_pde_reproduction"] is True
     assert catalog["capabilities"]["gpu_numerical_recomputation"] is True
-    assert catalog["release_complete"] is False
+    assert catalog["release_complete"] is True
 
 
 def test_comparator_rejects_empty_pde_payload_before_authority_read() -> None:
@@ -77,16 +76,8 @@ def test_comparator_rejects_empty_pde_payload_before_authority_read() -> None:
         compare_reproduction(payload, root=ROOT)
 
 
-def test_comparator_rejects_declared_but_unvalidated_case() -> None:
-    with pytest.raises(ValueError, match="declared but not yet public"):
-        compare_reproduction(
-            {
-                "schema_version": 1,
-                "kind": "netbounds_paper_checkpoint_reproduction",
-                "case": "wave3-pde-q1",
-            },
-            root=ROOT,
-        )
+def test_every_declared_case_is_public() -> None:
+    assert case_names() == tuple(sorted(CASES))
 
 
 def test_pde_comparator_rejects_unsupported_execution_device() -> None:
@@ -121,11 +112,11 @@ def test_pde_comparator_rejects_unsupported_execution_device() -> None:
 
 
 @pytest.mark.torch
-def test_python_reproducer_rejects_pending_pde_and_cpu_3d_initial() -> None:
+def test_python_reproducer_rejects_cpu_3d_cases() -> None:
     _torch()
     from netbounds.numerics.reproduce import reproduce
 
-    with pytest.raises(ValueError, match="declared but not yet public"):
+    with pytest.raises(ValueError, match="3D PDE paper cases require a CUDA device"):
         reproduce("wave3-pde-q1", root=ROOT, device="cpu")
     with pytest.raises(ValueError, match="require a CUDA device"):
         reproduce("wave3-displacement-q0", root=ROOT, device="cpu")

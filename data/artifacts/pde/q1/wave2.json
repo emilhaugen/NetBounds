@@ -9,6 +9,11 @@
   },
   "bound_to_affine_ratio": 1.0482286978195268,
   "bound_to_midpoint_ratio": 1.0485277140700777,
+  "cell_radii": [
+    0.0016666667070239782,
+    0.0016666667070239782,
+    0.0006666666595265269
+  ],
   "certification_caveat": "Analytically rigorous conditional on the existing derivative-bound machinery; ordinary float32 arithmetic is not an outward-rounded interval computation.",
   "certified": true,
   "coverage": {
@@ -88,11 +93,9 @@
   "moment_remainder_l2_squared": 2.2556804603502855e-07,
   "num_boxes": 67500000,
   "num_shards": 7,
-  "old_operator_aware_q1_preserved": true,
   "ordinary_float32_not_outward_rounded": true,
   "processed_boxes": 67500000,
   "quadrature_rule": "Q1",
-  "replaces_existing_q1_artifact": false,
   "schema_version": 1,
   "shard_execution": [
     {

@@ -3,47 +3,58 @@
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/heat1-l2-w128.pt",
-      "reproduction_scope": "validated_1d",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "514531c1d38d138b053de85842e4c4a92de0bc82a629d448437ad1c8b5028ba6",
       "stored_dtype": "float64"
     },
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/heat2-l3-w128.pt",
-      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "1f3c05a3b8a93322dba8b666fd772858bdcb8217a91bb7c1c087ada85b2b000f",
       "stored_dtype": "float64"
     },
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/heat3-l4-w128.pt",
-      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "71a01a8f97081ae6e8b1ef9466c3ff04a246fc5426acc8eab94e87cacf2abe64",
       "stored_dtype": "float64"
     },
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/wave1-l2-w256.pt",
-      "reproduction_scope": "validated_1d",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "a9f625f853c3c1b7bcefd2ce7ab6c5418056f03092a3e055054e4c793b1564c2",
       "stored_dtype": "float64"
     },
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/wave2-l3-w256.pt",
-      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "382e464004cb1a723df708e09b07c72a1d2fed0d2b97669d0bf18ef37d9fd40f",
       "stored_dtype": "float64"
     },
     {
       "execution_dtype": "float32",
       "path": "data/checkpoints/wave3-l3-w256.pt",
-      "reproduction_scope": "bundled_pending_fixed_case_validation",
+      "reproduction_scope": "validated_current_paper_fixed_case",
       "sha256": "4ad49e0334fd05b99d68106fa3846353014b86a57a8fe6640beeb965feba3f06",
       "stored_dtype": "float32"
     }
   ],
   "comparison_policy": {
+    "heat3_adaptive_policy": {
+      "acceptance": "user_accepted_complete_same_policy_re_evaluation",
+      "accepted_leaf_count": 1639975100,
+      "children_per_split": 16,
+      "historical_leaf_count": 1639964105,
+      "kernel_batch_size": 1600,
+      "leaf_count_difference": 10995,
+      "max_depth": 2,
+      "root_block_size": 2048,
+      "split_excess_density": 0.000490161357447505
+    },
     "initial_cpu_portability_d1": {
       "atol": 5e-12,
       "rtol": 0.00015
@@ -60,22 +71,33 @@
     "pde_batches": {
       "heat1": 65536,
       "heat2": 8192,
+      "heat3": 1600,
       "wave1": 32768,
-      "wave2": 8192
+      "wave2": 8192,
+      "wave3": 8192
     },
     "pde_cpu_portability": {
       "atol": 5e-12,
+      "dimensions": [
+        1,
+        2
+      ],
       "rtol": 5e-05
     },
     "pde_cuda_float32_float64_accumulation": {
       "atol": 5e-14,
+      "dimensions": [
+        1,
+        2,
+        3
+      ],
       "rtol": 5e-07
     },
     "unknown_or_missing_fields": "fail_closed"
   },
   "extracted_source_closure": {
     "hash_algorithm": "sha256 of each UTF-8 source byte stream; manifest digest is sha256 of canonical JSON sorted by path with compact separators",
-    "source_manifest_sha256": "b693b249c8861ba0cc7bad557ee8a41e6dea3151a955b55413a49093d51bd106",
+    "source_manifest_sha256": "fc24b1a2eb85fac5242a0a807223338893994cea1f8290b335eb38e0330c3fcb",
     "sources": [
       {
         "path": "src/netbounds/__init__.py",
@@ -83,11 +105,11 @@
       },
       {
         "path": "src/netbounds/cli.py",
-        "sha256": "1d083f0b291c8a7fd00abc06738d949bbfb3eddd78b9206cc99030e79abc2745"
+        "sha256": "e4d24ab6b9c8d4d67e61800da4ed841823a9c60b06f9daa6d197f988b9380948"
       },
       {
         "path": "src/netbounds/data.py",
-        "sha256": "c4786a5bc9e333d37d292e80dbca993e89da90a0b8b7c5a0f5bd3c3d98ef42b0"
+        "sha256": "65e6abcb84176bd520eb277e09aecd1997310a3777e9d591130d789df7d77147"
       },
       {
         "path": "src/netbounds/numerics/__init__.py",
@@ -155,15 +177,15 @@
       },
       {
         "path": "src/netbounds/numerics/cases.py",
-        "sha256": "5d8e367f0ba1f59aa92d55cae9d44e0898ff0ced5cea298faf5137fa1a4c878c"
+        "sha256": "5ee7b5f8748ed20d82cee8146429be176544b676ef5d45f901fcc016ec0cf1d8"
       },
       {
         "path": "src/netbounds/numerics/compare.py",
-        "sha256": "f37dbfe5a82502b177e24d145f7ecedf97e77a3474636f3904c511d569fd8f65"
+        "sha256": "4022f47fc7a67a342f5179583306d0395cddcbb0a567d3ddf48dfb972fe0d2c5"
       },
       {
         "path": "src/netbounds/numerics/initial_data.py",
-        "sha256": "69b6c7f5d7ae826cd44c3d6057a6b57b07f26b2b6809846cb500a5d2de960d0b"
+        "sha256": "ce5f97871da135343fc81adfa10aeea2dfa60e788810cf203025d519c434d2dc"
       },
       {
         "path": "src/netbounds/numerics/initial_gradient_q0.py",
@@ -190,14 +212,38 @@
         "sha256": "45c518739f117b52dbdfe42f3dc5772a67c16aaa0d273f6b63a225d569664f4e"
       },
       {
+        "path": "src/netbounds/numerics/pde_adaptive.py",
+        "sha256": "e2cdef0865dfe6f337300ef299dab2b89d6e1caae8a87b5f284030888edbc5e9"
+      },
+      {
         "path": "src/netbounds/numerics/reproduce.py",
-        "sha256": "f6591fd616662c5bc14ec39636bea5ab9aceace1a4a4e56f1a74e9257211323f"
+        "sha256": "23bcbcc020f063d5c0e113eceb46e8d7db27bf9d5d0b01a5c4b9da1d78513fc3"
       },
       {
         "path": "src/netbounds/tables.py",
-        "sha256": "953125a7a00a6eae21fd6627d09e8bf6e5177d0abb8170f30f61655251c2dcba"
+        "sha256": "657d0c793652b9110a3c0ad73b5066a5f62a85dd2b2f81e882927b3dd06db3b8"
       }
     ]
+  },
+  "final_3d_authorities": {
+    "heat3": {
+      "accepted_partition_leaf_difference": 10995,
+      "moment_cross_l2": 0.0018986417077828128,
+      "path": "data/artifacts/pde/q1/heat3.json",
+      "sha256": "1a8f8a87dc4ce0d908ca92f75491d758f069b84b45d903649b98b9fc8abd43bf"
+    },
+    "wave3": {
+      "moment_cross_l2": 0.010746479682427241,
+      "path": "data/artifacts/pde/q1/wave3.json",
+      "sha256": "8f4fd4da45111dae067dbf371b1008b571aa03398b23d2b4466c9b9bbaefa455",
+      "strict_shard_merge_passed": true
+    }
+  },
+  "final_3d_differential_validation": {
+    "passed": true,
+    "path": "provenance/final-3d-differential-validation.json",
+    "sha256": "be7b1eccca8bca99e36fa3a6a73613fead440d8d78f08eb8fc48768b9155fced",
+    "size": 1601
   },
   "historical_reached_function_trace_basis": {},
   "producer_revisions": [
@@ -211,16 +257,16 @@
     },
     {
       "commit": "e5c0ca8b01bf14b9381ccbc3d5b0f2c944417e53",
-      "scope": "Heat/Wave d=1/2 appendix-direct PDE Q1 artifacts"
+      "scope": "all six appendix-direct PDE Q1 artifacts"
     }
   ],
-  "purpose": "Current-paper provenance for all initial-data reproductions and the fixed d=1/2 appendix-direct PDE reproductions.",
+  "purpose": "Current-paper provenance for all 30 initial-data and all six appendix-direct PDE reproductions.",
   "schema_version": 1,
   "scope": {
     "bundled_selected_checkpoints": 6,
-    "covered_artifact_computations": 34,
-    "full_checkpoint_reproduction": false,
-    "release_complete": false,
+    "covered_artifact_computations": 36,
+    "full_checkpoint_reproduction": true,
+    "release_complete": true,
     "supported_initial_dimensions": [
       1,
       2,
@@ -228,7 +274,8 @@
     ],
     "supported_pde_dimensions": [
       1,
-      2
+      2,
+      3
     ],
     "total_retained_artifact_computations": 36
   }

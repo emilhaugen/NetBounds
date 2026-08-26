@@ -1,4 +1,4 @@
-"""Field-aware comparison of recomputations with retained 1D authority."""
+"""Field-aware comparison of all fixed recomputations with retained authority."""
 
 from __future__ import annotations
 
@@ -94,9 +94,21 @@ _PDE_ADAPTIVE_NUMERICAL_FIELDS = (
     "bound_to_midpoint_ratio",
     "num_base_roots",
     "processed_base_roots",
+    "root_block_size",
+    "max_depth",
     "adaptive_leaf_count",
+    "leaf_counts_by_depth",
+    "split_counts_by_depth",
     "kernel_cells_evaluated",
+    "partition_units_at_max_depth",
     "diagnostics",
+)
+
+_PDE_ADAPTIVE_DIAGNOSTIC_FIELDS = (
+    "rho_sum",
+    "rho_hyper_sum",
+    "rho_boundary_sum",
+    "max_rho",
 )
 
 
@@ -252,7 +264,11 @@ def _validate_reproduction_shape(
         if not isinstance(sums, Mapping) or not isinstance(diagnostics, Mapping):
             raise ValueError("PDE sums and diagnostics must be objects")
         _require_exact_keys(sums, _PDE_SUM_FIELDS, "PDE numerical.sums")
-        _require_exact_keys(diagnostics, _PDE_DIAGNOSTIC_FIELDS, "PDE numerical.diagnostics")
+        _require_exact_keys(
+            diagnostics,
+            _PDE_ADAPTIVE_DIAGNOSTIC_FIELDS,
+            "PDE adaptive numerical.diagnostics",
+        )
         for field, value in sums.items():
             _require_finite_number(value, f"PDE numerical.sums.{field}")
         for field, value in diagnostics.items():
@@ -278,12 +294,26 @@ def _validate_reproduction_shape(
         for field in (
             "num_base_roots",
             "processed_base_roots",
+            "root_block_size",
+            "max_depth",
             "adaptive_leaf_count",
             "kernel_cells_evaluated",
+            "partition_units_at_max_depth",
         ):
             value = numerical[field]
             if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
                 raise ValueError(f"PDE numerical.{field} must be a positive integer")
+        leaves = numerical["leaf_counts_by_depth"]
+        splits = numerical["split_counts_by_depth"]
+        if (
+            not isinstance(leaves, list)
+            or len(leaves) != 3
+            or not all(isinstance(value, int) and value >= 0 for value in leaves)
+            or not isinstance(splits, list)
+            or len(splits) != 2
+            or not all(isinstance(value, int) and value >= 0 for value in splits)
+        ):
+            raise ValueError("PDE adaptive depth counts are malformed")
         return identity, execution, numerical
 
     _require_exact_keys(numerical, _PDE_NUMERICAL_FIELDS, "PDE numerical")
@@ -318,10 +348,11 @@ def _validate_reproduction_shape(
 def _exact_checks(case_name: str, authority: Mapping[str, Any]) -> dict[str, Any]:
     case = CASES[case_name]
     if case.quantity == "pde":
+        checkpoint_field = "checkpoint_sha256" if case.d == 3 else "weights_sha256"
         expected: dict[str, Any] = {
             "equation": case.equation,
             "quadrature_rule": case.rule.upper(),
-            "weights_sha256": case.checkpoint_sha256,
+            checkpoint_field: case.checkpoint_sha256,
             "dimension": case.d,
             "grid": list(case.grid),
             "accumulation_dtype": "float64",
@@ -417,6 +448,8 @@ def compare_reproduction(
 
     device = str(execution.get("device", ""))
     if case.quantity == "pde":
+        if case.d == 3 and not device.startswith("cuda"):
+            raise ValueError("3D PDE comparison requires CUDA execution")
         if device.startswith("cuda"):
             tolerance = PDE_CUDA_TOLERANCE
             tolerance_class = "pde_cuda_float32_float64_accumulation"
