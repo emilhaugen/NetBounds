@@ -9,7 +9,7 @@ description = "Reproduce the numerical tables for NetBounds."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "NetBounds authors"}]
-dependencies = ["torch==2.12.0"]
+dependencies = ["matplotlib>=3.9", "torch==2.12.0"]
 
 [project.optional-dependencies]
 test = ["pytest>=8"]
