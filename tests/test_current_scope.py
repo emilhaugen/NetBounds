@@ -76,9 +76,7 @@ def test_all_pde_authorities_pass_full_semantic_comparison(case_name: str) -> No
     [
         (
             "heat3-pde-q1",
-            lambda data: data["partition_replay_acceptance"].__setitem__(
-                "leaf_count_difference", 0
-            ),
+            lambda data: data.__setitem__("all_adaptive_leaves_enumerated", False),
         ),
         (
             "wave3-pde-q1",

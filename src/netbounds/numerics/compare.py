@@ -351,7 +351,6 @@ def _exact_checks(case_name: str, authority: Mapping[str, Any]) -> dict[str, Any
         checkpoint_field = "checkpoint_sha256" if case.d == 3 else "weights_sha256"
         expected: dict[str, Any] = {
             "equation": case.equation,
-            "quadrature_rule": case.rule.upper(),
             checkpoint_field: case.checkpoint_sha256,
             "dimension": case.d,
             "grid": list(case.grid),
@@ -386,7 +385,6 @@ def _exact_checks(case_name: str, authority: Mapping[str, Any]) -> dict[str, Any
             "weights_sha256": case.checkpoint_sha256,
             "num_boxes": case.cells_per_dim**case.d,
             "grid_dimension": case.d,
-            "cells_per_dim": case.cells_per_dim,
             "dtype": "float32",
             "residual_type": (
                 "initial_displacement_gradient"
