@@ -63,6 +63,7 @@ four; `--plot` optionally overrides the default output filename.
 src/netbounds/              code for numerics and table generation
 data/catalog.json           list of files used to build the tables
 data/artifacts/             JSON files containing quadrature results
+data/checkpoints/           trained neural-network weights
 paper/tables/               LaTeX tables
 scripts/                    standalone derivative-bound checker and plots
 tests/                      tests 
