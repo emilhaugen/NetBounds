@@ -1,8 +1,7 @@
-"""Torch-free registry for the fixed checkpoint-backed paper cases.
+"""Registry for the fixed checkpoint-backed paper cases.
 
 This is deliberately a closed list of the 36 retained computations behind
-the five current IMA tables. The checkpoint identities are repeated here so command-line argument
-validation remains available without importing PyTorch; ``reproduce`` checks
+the five current TeX tables. ``reproduce`` checks
 that each identity agrees with the hash-pinned catalog before execution.
 """
 

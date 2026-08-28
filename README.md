@@ -38,6 +38,23 @@ The five outputs are:
 4. PDE residual Q1 bounds
 5. combined energy estimate bounds.
 
+## Scripts
+
+`scripts/check_derivative_bounds.py` compares sampled derivatives of a tanh
+network with the local derivative bounds used in the paper. It loads a trained
+paper network when `n`, `L`, and `w` match one; otherwise it uses a seeded random
+network. It checks every symmetric multi-index of the requested order and saves
+one bar-chart panel per component in `scripts/plots/`.
+
+```
+.venv/bin/python scripts/check_derivative_bounds.py
+.venv/bin/python scripts/check_derivative_bounds.py --n 4 --L 3 --w 256 --order 4 --eps 0.001
+```
+
+The default arguments are `n=2`, `L=2`, `w=128`, `N=100`, `Nsamples=10`,
+`eps=1e-2`, and `seed=123`. `--order` selects derivative orders one through
+four; `--plot` optionally overrides the default output filename.
+
 
 
 ## Layout
@@ -47,6 +64,7 @@ src/netbounds/              code for numerics and table generation
 data/catalog.json           list of files used to build the tables
 data/artifacts/             JSON files containing quadrature results
 paper/tables/               LaTeX tables
+scripts/                    standalone derivative-bound checker and plots
 tests/                      tests 
 ```
 
